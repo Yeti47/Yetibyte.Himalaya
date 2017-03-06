@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content.Pipeline;
 using TInput = System.String;
 using TOutput = System.String;
 
-namespace Yetibyte.Himalaya.Content.Pipeline {
+namespace Yetibyte.Himalaya.Content.Pipeline.SpriteAnimation {
     /// <summary>
     /// This class will be instantiated by the XNA Framework Content Pipeline
     /// to import a file from disk into the specified type, TImport.
@@ -19,8 +19,8 @@ namespace Yetibyte.Himalaya.Content.Pipeline {
     /// extension, display name, and default processor for this importer.
     /// </summary>
 
-    [ContentImporter(".xyz", DisplayName = "XYZ Importer", DefaultProcessor = "ContentProcessor1")]
-    public class ContentImporter1 : ContentImporter<TInput> {
+    [ContentImporter(".anim", DisplayName = "Sprite Animation", DefaultProcessor = "SpriteAnimationProcessor")]
+    public class SpriteAnimationImporter : ContentImporter<TInput> {
 
         public override TInput Import(string filename, ContentImporterContext context) {
             // TODO: process the input object, and return the modified data.
