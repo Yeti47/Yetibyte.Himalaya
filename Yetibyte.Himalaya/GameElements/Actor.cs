@@ -19,7 +19,11 @@ namespace Yetibyte.Himalaya.GameElements {
         protected Actor(Scene scene, string name, Vector2 position) : base(scene, name, position) {
 
         }
-		
-	}
+
+        protected Actor(Scene scene, string name, Vector2 position, GameEntity parentEntity) : base(scene, name, position, parentEntity) {
+
+        }
+
+    }
 	
 }

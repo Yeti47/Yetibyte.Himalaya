@@ -41,6 +41,8 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 		}
 
+        public GameEntity ParentEntity { get; protected set; }
+
 		public List<GameEntity> ChildEntities {
 			
 			get { return _childEntities; }
@@ -57,6 +59,15 @@ namespace Yetibyte.Himalaya.GameElements {
 			this.Position = position;
 						
 		}
+
+        protected GameEntity(Scene scene, string name, Vector2 position, GameEntity parentEntitiy) {
+
+            this.Scene = scene;
+            this.Name = name;
+            this.Position = position;
+            this.ParentEntity = parentEntitiy;
+
+        }
 		
 		// Methods
 		
