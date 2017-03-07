@@ -63,7 +63,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         // Methods
 
-        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 position) {
             
             
 
