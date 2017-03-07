@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
-	public abstract class GameEntity {
+	public abstract class GameEntity : Transformable {
 		
 		// Fields
 		
@@ -13,11 +13,6 @@ namespace Yetibyte.Himalaya.GameElements {
 		
 		// Properties
 		
-        public Vector2 Position { get; set; }
-        public Vector2 Origin { get; set; }
-        public Vector2 Rotation { get; set; }
-        public Vector2 Scale { get; set; }
-
         public bool IsActive {
 
             get { return _isActive; }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
@@ -65,7 +66,7 @@ namespace Yetibyte.Himalaya.GameElements {
 						
 		}
 		
-		public virtual void Draw(GameTime gameTime) {
+		public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 			
 			foreach(GameEntity gameEntity in GameEntities) {
 				
