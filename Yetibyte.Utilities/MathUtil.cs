@@ -1,13 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: alexhe
- * Date: 27.01.2017
- * Time: 13:51
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
-using System;
+﻿using System;
 
 namespace Yetibyte.Utilities {
 	
