@@ -8,6 +8,9 @@ using MonoGame.Framework;
 
 namespace Yetibyte.Himalaya.GameElements {
 
+    /// <summary>
+    /// Abstract base class for any object that can be positioned, scaled and rotated.
+    /// </summary>
     public abstract class Transformable {
 
         // Properties
