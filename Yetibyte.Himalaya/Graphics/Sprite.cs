@@ -82,6 +82,35 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        /// <summary>
+        /// Convenience method that uses an enumerator to set the origin of this sprite to one of the sprite's corners or the sprite's center.
+        /// </summary>
+        /// <param name="originPoint">The new origin of this sprite.</param>
+        public void SetOrigin(OriginPoint originPoint) {
+
+            switch (originPoint) {
+                case OriginPoint.TopLeft:
+                    Origin = Vector2.Zero;
+                    break;
+                case OriginPoint.TopRight:
+                    Origin = new Vector2(Texture.Width, 0);
+                    break;
+                case OriginPoint.Center:
+                    Origin = new Vector2((float)Texture.Width / 2f, (float)Texture.Height / 2f);
+                    break;
+                case OriginPoint.BottomLeft:
+                    Origin = new Vector2(0, Texture.Height);
+                    break;
+                case OriginPoint.BottomRight:
+                    Origin = new Vector2(Texture.Width, Texture.Height);
+                    break;
+                default:
+                    Origin = Vector2.Zero;
+                    break;
+            }
+
+        }
+
 
     }
 
