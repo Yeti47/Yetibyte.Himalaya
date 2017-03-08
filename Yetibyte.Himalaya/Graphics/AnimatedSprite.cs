@@ -10,7 +10,7 @@ using MonoGame.Framework;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public class AnimatedSprite : Sprite {
+    public class AnimatedSprite : Sprite, IUpdate {
 
         // Nested Enum
 
