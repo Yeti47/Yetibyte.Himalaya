@@ -55,11 +55,8 @@ namespace Yetibyte.Himalaya.GameElements {
 						
 		}
 
-        protected GameEntity(Scene scene, string name, Vector2 position, GameEntity parentEntitiy) {
+        protected GameEntity(Scene scene, string name, Vector2 position, GameEntity parentEntitiy) : this(scene, name, position) {
 
-            this.Scene = scene;
-            this.Name = name;
-            this.Position = position;
             this.ParentEntity = parentEntitiy;
 
         }
