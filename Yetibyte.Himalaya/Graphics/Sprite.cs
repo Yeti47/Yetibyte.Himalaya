@@ -78,7 +78,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation , float layerDepth) {
 
-            Draw(spriteBatch, position, rotation, Vector2.Zero, layerDepth);
+            Draw(spriteBatch, position, rotation, Vector2.One, layerDepth);
 
         }
 
