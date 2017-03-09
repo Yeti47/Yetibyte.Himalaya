@@ -7,9 +7,11 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Yetibyte.Himalaya.GameElements {
 	
 	public abstract class Scene {
-						
-		// Properties
-		
+
+        // Properties
+
+        public float TimeScale { get; set } = 1f;
+
 		public List<GameEntity> GameEntities { get; protected set; }
 		public Queue<GameEntity> GameEntitiesToAdd { get; protected set; }
 		public Queue<GameEntity> GameEntitiesToRemove { get; protected set;}
@@ -60,7 +62,7 @@ namespace Yetibyte.Himalaya.GameElements {
 			foreach(GameEntity gameEntity in GameEntities) {
 				
 				if(gameEntity.IsActive)
-					gameEntity.Update(gameTime);
+					gameEntity.Update(gameTime, TimeScale);
 				
 			}
 						
