@@ -51,7 +51,7 @@ namespace Yetibyte.Himalaya.Graphics {
             if (State == PlayingState.Playing) {
 
                 PlaybackTime += deltaTime;
-                float frameEndingTime = 1f / (float)Animation.FramesPerSecond * (CurrentFrameIndex + 1);
+                float frameEndingTime = Animation.FrameDuration * (CurrentFrameIndex + 1);
 
                 if (PlaybackTime >= frameEndingTime) {
 
