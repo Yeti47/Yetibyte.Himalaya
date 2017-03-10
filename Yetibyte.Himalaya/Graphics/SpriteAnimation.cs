@@ -17,8 +17,6 @@ namespace Yetibyte.Himalaya.Graphics {
         public string Name { get; private set; }
 
         public float FrameDuration { get; private set; }
-        public int SpriteWidth { get; private set; }
-        public int SpriteHeight { get; private set; }
         public List<Point> SpriteIndices { get; set; }
 
         public bool IsLooping { get; set; }

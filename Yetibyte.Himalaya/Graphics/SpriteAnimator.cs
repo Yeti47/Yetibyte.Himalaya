@@ -10,7 +10,7 @@ using MonoGame.Framework;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public class AnimatedSprite : Sprite, IUpdate {
+    public class SpriteAnimator : IUpdate {
 
         // Nested Enum
 
@@ -18,23 +18,27 @@ namespace Yetibyte.Himalaya.Graphics {
 
         // Properties
 
+        public Sprite Sprite { get; private set; }
         public SpriteAnimation Animation { get; private set; }
         public PlayingState State { get; set; }
         public float PlaybackTime { get; private set; }
-        public int CurrentFrameIndex { get; private set; }
+        public int CurrentFrameIndex { get; private set; } = 0;
 
         // Constructors
 
-        public AnimatedSprite(Texture2D texture, SpriteAnimation animation) : base(texture) {
+        /// <summary>
+        /// Creates a new <see cref="SpriteAnimator"/> for the given <see cref="Yetibyte.Himalaya.Graphics.Sprite"/>.
+        /// </summary>
+        /// <param name="sprite">The sprite to animate.</param>
+        /// <param name="animation">The animation to use.</param>
+        public SpriteAnimator(Sprite sprite, SpriteAnimation animation) {
                         
             if(animation.FrameCount > 0) {
 
-                this.Index = animation.SpriteIndices[0];
-                
-            }
+                UpdateSprite();
 
-            this.Width = animation.SpriteWidth;
-            this.Height = animation.SpriteHeight;
+            }
+            
             this.State = PlayingState.Stopped;
 
         }
@@ -42,11 +46,11 @@ namespace Yetibyte.Himalaya.Graphics {
         // Methods
 
         /// <summary>
-        /// Updated the animation logic.
+        /// Updates the animation logic.
         /// </summary>
         /// <param name="gameTime">A snapshot of the current game timing values.</param>
         /// <param name="timeScale">Scaling value for elapsed time.</param>
-        public override void Update(GameTime gameTime, float timeScale) {
+        public void Update(GameTime gameTime, float timeScale) {
 
             if (Animation.FrameCount <= 0)
                 return;
@@ -71,6 +75,7 @@ namespace Yetibyte.Himalaya.Graphics {
                     else {
 
                         CurrentFrameIndex++;
+                        UpdateSprite();
 
                     }
 
@@ -80,26 +85,48 @@ namespace Yetibyte.Himalaya.Graphics {
             
         }
 
+        /// <summary>
+        /// Applies all changes determined by the animation logic to the <see cref="Yetibyte.Himalaya.Graphics.Sprite"/>.
+        /// </summary>
+        private void UpdateSprite() {
+
+            Sprite.Index = Animation.SpriteIndices[CurrentFrameIndex];
+
+        }
+
+        /// <summary>
+        /// Plays the animation.
+        /// </summary>
         public void Play() {
 
             State = PlayingState.Playing;
 
         }
 
+        /// <summary>
+        /// Pauses the animation. When <see cref="Play()"/> is called again, the state of the animation will be resumed.
+        /// </summary>
         public void Pause() {
 
             State = PlayingState.Paused;
 
         }
 
+        /// <summary>
+        /// Stops the animation. When <see cref="Play()"/> is called again, the animation will restart from the first frame.
+        /// </summary>
         public void Stop() {
 
             State = PlayingState.Stopped;
             PlaybackTime = 0f;
             CurrentFrameIndex = 0;
+            UpdateSprite();
 
         }
 
+        /// <summary>
+        /// Stops the animation and restarts it from the first frame.
+        /// </summary>
         public void Restart() {
 
             Stop();

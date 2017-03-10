@@ -14,25 +14,22 @@ namespace Yetibyte.Himalaya.GameElements {
 		// Properties
 		
 		public Sprite Sprite { get; set; }
+        public SpriteAnimator Animator { get; set; }
         public int RenderLayer { get; set; }
 
         // Constructor
 
-        protected Actor(Scene scene, string name, Vector2 position) : base(scene, name, position) {
+        protected Actor(Scene scene, string name, Vector2 position, Sprite sprite, SpriteAnimator animator = null, GameEntity parentEntity = null) : base(scene, name, position, parentEntity) {
 
         }
-
-        protected Actor(Scene scene, string name, Vector2 position, GameEntity parentEntity) : base(scene, name, position, parentEntity) {
-
-        }
-
+        
         // Methods
 
         public override void Update(GameTime gameTime, float timeScale) {
 
             base.Update(gameTime, timeScale);
 
-            Sprite.Update(gameTime, timeScale);
+            Animator.Update(gameTime, timeScale);
 
         }
 
