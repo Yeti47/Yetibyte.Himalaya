@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,10 +26,12 @@ namespace Yetibyte.Himalaya.GameElements {
 		public Queue<GameEntity> GameEntitiesToRemove { get; protected set;}
 		
 		public Game Game { get; protected set; }
-				
-		// Constructor
-				
-		protected Scene(Game game) {
+
+        public List<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>().ToList();
+
+        // Constructor
+
+        protected Scene(Game game) {
 			
 			this.Game = game;
 			this.GameEntities = new List<GameEntity>();
@@ -64,13 +67,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
 		public virtual void Update(GameTime gameTime) {
-			
-			while(GameEntitiesToAdd.Count > 0) {
-				
-				GameEntities.Add(GameEntitiesToAdd.Dequeue());
-				
-			}
-			
+									
 			while(GameEntitiesToRemove.Count > 0) {
 				
 				GameEntities.Remove(GameEntitiesToRemove.Dequeue());
@@ -83,8 +80,19 @@ namespace Yetibyte.Himalaya.GameElements {
 					gameEntity.Update(gameTime, TimeScale);
 				
 			}
-						
-		}
+
+            while (GameEntitiesToAdd.Count > 0) {
+
+                GameEntity newEntity = GameEntitiesToAdd.Dequeue();
+
+                if (newEntity.IsActive)
+                    newEntity.Update(gameTime, TimeScale);
+
+                GameEntities.Add(newEntity);
+
+            }
+
+        }
 
         /// <summary>
         /// Calls the Draw method of each GameEntity within this Scene.
@@ -102,8 +110,7 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 		}
 		/// <summary>
-        /// Adds the given GameEntity to this Scene. Please note that the processing of newly added GameEntities will start in the next
-        /// Update interval.
+        /// Adds the given GameEntity to this Scene. Processing of newly added Entity will start after all existing Entities have been processed.
         /// </summary>
         /// <param name="gameEntity">The GameEntity to add to the Scene.</param>
 		public void AddGameEntity(GameEntity gameEntity) {
@@ -123,6 +130,16 @@ namespace Yetibyte.Himalaya.GameElements {
 			GameEntitiesToRemove.Enqueue(gameEntity);
 			
 		}
+
+        /// <summary>
+        /// Returns a list of all <see cref="GameEntity"/> objects of the given Type that currently live in this scene.
+        /// </summary>
+        /// <typeparam name="T">The type of the GameEntities to filter out.</typeparam>
+        public List<T> GetGameEntitiesOfType<T>() where T : GameEntity {
+
+            return GameEntities.Where(e => e is T).Cast<T>().ToList();
+
+        }
 		
 	}
 	
