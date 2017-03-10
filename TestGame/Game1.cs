@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Yetibyte.Himalaya;
+using Yetibyte.Himalaya.GameElements;
+using Yetibyte.Himalaya.Graphics;
+using Yetibyte.Himalaya.Procedural;
 
 namespace TestGame {
     /// <summary>
@@ -9,6 +13,11 @@ namespace TestGame {
     public class Game1 : Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        KeyboardState previousKeyboardState;
+
+        DungeonGenerator dunGen = new DungeonGenerator();
+        Texture2D dungeonTexture;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -24,6 +33,8 @@ namespace TestGame {
         protected override void Initialize() {
             // TODO: Add your initialization logic here
 
+            GenerateDungeon();
+                       
             base.Initialize();
         }
 
@@ -52,11 +63,18 @@ namespace TestGame {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
+
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            if (currentKeyboardState.IsKeyDown(Keys.F4) && previousKeyboardState.IsKeyUp(Keys.F4))
+                GenerateDungeon();
 
+            previousKeyboardState = currentKeyboardState;
+
+            // TODO: Add your update logic here
             base.Update(gameTime);
         }
 
@@ -68,8 +86,18 @@ namespace TestGame {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            spriteBatch.Draw(dungeonTexture,new Vector2(GraphicsDevice.Viewport.Width/2f, GraphicsDevice.Viewport.Height/2f), null, null, new Vector2(dungeonTexture.Width/2f, dungeonTexture.Height/2f), 0, new Vector2(3, 3));
+            spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void GenerateDungeon() {
+
+            dunGen.Generate(150, 150);
+            dungeonTexture = dunGen.ConvertToTexture(GraphicsDevice);
+
         }
     }
 }

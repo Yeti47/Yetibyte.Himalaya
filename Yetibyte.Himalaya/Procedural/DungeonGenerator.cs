@@ -257,13 +257,15 @@ namespace Yetibyte.Himalaya.Procedural {
                 for (int x = 0; x < DungeonWidth; x++) {
 
                     if (TileMatrix[x][y] == TileType.Blocked)
-                        data[x * y] = Color.Black;
+                        data[y * DungeonWidth + x] = Color.Black;
                     else
-                        data[x * y] = Color.White;
+                        data[y * DungeonWidth + x] = Color.White;
 
                 }
 
             }
+
+            texture.SetData(data);
 
             return texture;
 
