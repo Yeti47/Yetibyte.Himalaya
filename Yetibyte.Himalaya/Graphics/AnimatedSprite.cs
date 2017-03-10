@@ -41,7 +41,12 @@ namespace Yetibyte.Himalaya.Graphics {
 
         // Methods
 
-        public void Update(GameTime gameTime, float timeScale) {
+        /// <summary>
+        /// Updated the animation logic.
+        /// </summary>
+        /// <param name="gameTime">A snapshot of the current game timing values.</param>
+        /// <param name="timeScale">Scaling value for elapsed time.</param>
+        public override void Update(GameTime gameTime, float timeScale) {
 
             if (Animation.FrameCount <= 0)
                 return;

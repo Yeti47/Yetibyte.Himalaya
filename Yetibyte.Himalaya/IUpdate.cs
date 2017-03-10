@@ -12,6 +12,11 @@ namespace Yetibyte.Himalaya {
     /// </summary>
     public interface IUpdate {
 
+        /// <summary>
+        /// Updates the logic. 
+        /// </summary>
+        /// <param name="gameTime">A snapshot of the current game timing values.</param>
+        /// <param name="timeScale">Scaling value for elapsed time.</param>
         void Update(GameTime gameTime, float timeScale);
 
     }
