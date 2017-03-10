@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
-	public abstract class Scene {
+	public abstract class Scene : ITimeScale {
 
         // Properties
 

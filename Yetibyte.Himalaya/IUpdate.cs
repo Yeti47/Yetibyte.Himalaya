@@ -16,8 +16,8 @@ namespace Yetibyte.Himalaya {
         /// Updates the logic. 
         /// </summary>
         /// <param name="gameTime">A snapshot of the current game timing values.</param>
-        /// <param name="timeScale">Scaling value for elapsed time.</param>
-        void Update(GameTime gameTime, float timeScale);
+        /// <param name="globalTimeScale">Scaling value for elapsed time.</param>
+        void Update(GameTime gameTime, float globalTimeScale);
 
     }
 }

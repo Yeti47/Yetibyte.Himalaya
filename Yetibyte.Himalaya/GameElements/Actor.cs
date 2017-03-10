@@ -25,11 +25,11 @@ namespace Yetibyte.Himalaya.GameElements {
         
         // Methods
 
-        public override void Update(GameTime gameTime, float timeScale) {
+        public override void Update(GameTime gameTime, float globalTimeScale) {
 
-            base.Update(gameTime, timeScale);
+            base.Update(gameTime, globalTimeScale);
 
-            Animator.Update(gameTime, timeScale);
+            Animator.Update(gameTime, globalTimeScale);
 
         }
 

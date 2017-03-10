@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
-	public abstract class GameEntity : Transformable, IUpdate {
+	public abstract class GameEntity : Transformable, IUpdate, ITimeScale {
 		
 		// Fields
 		
@@ -44,7 +44,9 @@ namespace Yetibyte.Himalaya.GameElements {
 			set { _childEntities = value; }
 			
 		}
-		
+
+        public float TimeScale { get; set; } = 1f;
+
 		// Constructor
 				
 		protected GameEntity(Scene scene, string name, Vector2 position, GameEntity parentEntity = null) {
@@ -62,7 +64,7 @@ namespace Yetibyte.Himalaya.GameElements {
 						
 		}
 		
-		public virtual void Update(GameTime gameTime, float timeScale) {
+		public virtual void Update(GameTime gameTime, float globalTimeScale) {
 			
 			foreach(GameEntity childEntity in ChildEntities) {
 				

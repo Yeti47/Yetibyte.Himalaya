@@ -10,7 +10,7 @@ using MonoGame.Framework;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public class SpriteAnimator : IUpdate {
+    public class SpriteAnimator : IUpdate, ITimeScale {
 
         // Nested Enum
 
@@ -23,6 +23,8 @@ namespace Yetibyte.Himalaya.Graphics {
         public PlayingState State { get; set; }
         public float PlaybackTime { get; private set; }
         public int CurrentFrameIndex { get; private set; } = 0;
+
+        public float TimeScale { get; set; } = 1f;
 
         // Constructors
 
@@ -49,13 +51,13 @@ namespace Yetibyte.Himalaya.Graphics {
         /// Updates the animation logic.
         /// </summary>
         /// <param name="gameTime">A snapshot of the current game timing values.</param>
-        /// <param name="timeScale">Scaling value for elapsed time.</param>
-        public void Update(GameTime gameTime, float timeScale) {
+        /// <param name="globalTimeScale">Scaling value for elapsed time.</param>
+        public void Update(GameTime gameTime, float globalTimeScale) {
 
             if (Animation.FrameCount <= 0)
                 return;
 
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * timeScale;
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * globalTimeScale;
             
             if (State == PlayingState.Playing) {
 
