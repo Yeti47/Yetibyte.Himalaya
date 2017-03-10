@@ -10,7 +10,7 @@ using MonoGame.Framework;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public class Sprite : IUpdate {
+    public class Sprite {
 
         // Nested Enum
 
@@ -111,14 +111,6 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
-        /// <summary>
-        /// Updates the logic. In case of an Animated Sprite, the animation logic is updated.
-        /// </summary>
-        /// <param name="gameTime">A snapshot of current game timing values.</param>
-        /// <param name="timeScale">Scaling value for elapsed time.</param>
-        public virtual void Update(GameTime gameTime, float timeScale) {
-            
-        }
     }
 
 }
