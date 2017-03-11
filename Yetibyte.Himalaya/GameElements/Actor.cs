@@ -18,7 +18,7 @@ namespace Yetibyte.Himalaya.GameElements {
         public int RenderLayer { get; set; }
 
         /// <summary>
-        /// If set to true, the Update method of <see cref="Animator"/> will not be called autmatically.
+        /// If set to true, the Update method of <see cref="Animator"/> will not be called automatically.
         /// </summary>
         public bool IgnoreAnimator { get; set; } = false;
 
