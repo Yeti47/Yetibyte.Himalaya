@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E7C20A45-F64C-4BEA-BDAD-1FF54AD44AFD}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		..\..\..\..\Pictures\inkscape\yetibyteLogoName.png = ..\..\..\..\Pictures\inkscape\yetibyteLogoName.png
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{3E41B1F8-29FD-40D7-82E2-4736EF19FA08}"
