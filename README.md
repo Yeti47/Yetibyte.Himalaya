@@ -1,4 +1,4 @@
-![alt tag](https://raw.githubusercontent.com/Yeti47/Yetibyte.Himalaya/master/Resources/yetibyteLogoText384px.png)
+![alt tag](https://raw.githubusercontent.com/Yeti47/Yetibyte.Himalaya/master/Resources/yetibyteLogoText384px.png) ![alt tag](https://raw.githubusercontent.com/Yeti47/Yetibyte.Himalaya/master/Resources/himalayaEngineLogoBigger.png)
 
 # Yetibyte.Himalaya
 
