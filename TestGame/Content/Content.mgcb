@@ -10,6 +10,12 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\Yetibyte.Himalaya.Content.Pipeline\bin\Debug\Yetibyte.Himalaya.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin testSpriteAnimation.anim
+/importer:SpriteAnimationImporter
+/processor:SpriteAnimationProcessor
+/build:testSpriteAnimation.anim
 

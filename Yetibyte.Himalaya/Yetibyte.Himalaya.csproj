@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Content\SpriteAnimationReader.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
     <Compile Include="GameElements\Scene.cs" />

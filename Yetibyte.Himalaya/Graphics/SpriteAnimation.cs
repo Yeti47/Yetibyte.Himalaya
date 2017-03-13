@@ -29,7 +29,7 @@ namespace Yetibyte.Himalaya.Graphics {
         
         // Constructor
 
-        public SpriteAnimation() {
+        public SpriteAnimation(string name, float frameDuration, bool isLooping) {
             
         }
 

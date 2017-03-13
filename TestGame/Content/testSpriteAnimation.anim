@@ -1,0 +1,14 @@
+animation = {
+
+	name = "testAnimation",
+	frameDuration = 0.25,
+	isLooping = true,
+
+	frames = {
+
+		{spriteIndex = { x = 0, y = 0 }},
+		{spriteIndex = { x = 1, y = 0 }}
+
+	}
+
+}

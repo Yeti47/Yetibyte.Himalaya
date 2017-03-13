@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
+using Microsoft.Xna.Framework;
 using MonoGame.Framework.Content.Pipeline.Builder;
+using Yetibyte.Himalaya.Content;
 
 namespace Yetibyte.Himalaya.Content.Pipeline.SpriteAnimation {
 
@@ -14,26 +16,27 @@ namespace Yetibyte.Himalaya.Content.Pipeline.SpriteAnimation {
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform) {
 
-            return typeof(ContentTypeReader1).AssemblyQualifiedName;
+            return typeof(SpriteAnimationReader).AssemblyQualifiedName;
 
         }
 
         
         public override string GetRuntimeType(TargetPlatform targetPlatform) {
-            return typeof(Animation).AssemblyQualifiedName;
+
+            return typeof(Graphics.SpriteAnimation).AssemblyQualifiedName;
+
         }
         
         protected override void Write(ContentWriter output, SpriteAnimationData value) {
 
             output.Write(value.Name);
-            output.Write(value.TexturePath);
-            output.Write(value.Loop);
+            output.Write(value.IsLooping);
+            output.Write(value.FrameDuration);
             output.Write(value.FrameCount);
             
             for (int i = 0; i < value.FrameCount; i++) {
 
                 output.Write(value.SpriteIndices[i]);
-                output.Write(value.EndTimeStamps[i]);
 
             }
             

@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="SpriteAnimation\SpriteAnimationWriter.cs" />
     <Compile Include="SpriteAnimation\SpriteAnimationData.cs" />
-    <Compile Include="SpriteAnimation\SpriteAnimationFrameData.cs" />
     <Compile Include="SpriteAnimation\SpriteAnimationImporter.cs" />
     <Compile Include="SpriteAnimation\SpriteAnimationProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

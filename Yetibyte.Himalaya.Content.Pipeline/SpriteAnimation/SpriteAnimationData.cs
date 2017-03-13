@@ -15,7 +15,7 @@ namespace Yetibyte.Himalaya.Content.Pipeline.SpriteAnimation {
         public bool IsLooping { get; set; }
         public float FrameDuration { get; set; }
         public int FrameCount { get; set; }
-        public Point[] SpriteIndices { get; set; }
+        public Vector2[] SpriteIndices { get; set; }
 
 
     }

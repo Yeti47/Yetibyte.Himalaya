@@ -1,26 +1,53 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Content.Pipeline;
-// TODO: replace these with the processor input and output types.
+using Microsoft.Xna.Framework;
+using MoonSharp.Interpreter;
+
 using TInput = System.String;
-using TOutput = System.String;
+using TOutput = Yetibyte.Himalaya.Content.Pipeline.SpriteAnimation.SpriteAnimationData;
 
 namespace Yetibyte.Himalaya.Content.Pipeline.SpriteAnimation {
-    /// <summary>
-    /// This class will be instantiated by the XNA Framework Content Pipeline
-    /// to apply custom processing to content data, converting an object of
-    /// type TInput to TOutput. The input and output types may be the same if
-    /// the processor wishes to alter data without changing its type.
-    ///
-    /// This should be part of a Content Pipeline Extension Library project.
-    ///
-    /// TODO: change the ContentProcessor attribute to specify the correct
-    /// display name for this processor.
-    /// </summary>
+    
     [ContentProcessor(DisplayName = "Himalaya Sprite Animation Processor")]
     public class SpriteAnimationProcessor : ContentProcessor<TInput, TOutput> {
+
         public override TOutput Process(TInput input, ContentProcessorContext context) {
-            // TODO: process the input object, and return the modified data.
-            throw new NotImplementedException();
+
+            Script luaScript = new Script();
+            DynValue dv = luaScript.DoString(input);
+
+            Table animationTable = luaScript.Globals.Get("animation").Table;
+            string name = animationTable.Get("name").String;
+            float frameDuration = (float)animationTable.Get("frameDuration").Number;
+            bool isLooping = animationTable.Get("isLooping").Boolean;
+            Table frames = animationTable.Get("frames").Table;
+
+            TOutput animationData = new TOutput {
+
+                Name = name,
+                IsLooping = isLooping,
+                FrameDuration = frameDuration,
+                FrameCount = frames.Length
+
+            };
+
+            animationData.SpriteIndices = new Vector2[frames.Length];
+
+            for (int i = 1; i < frames.Length + 1; i++) {
+
+                Table currentFrame = frames.Get(i).Table;
+                Table spriteIndex = currentFrame.Get("spriteIndex").Table;
+                int spriteIndexX = (int)spriteIndex.Get("x").Number;
+                int spriteIndexY = (int)spriteIndex.Get("y").Number;
+
+                animationData.SpriteIndices[i - 1] = new Vector2(spriteIndexX, spriteIndexY);
+
+            }
+
+            return animationData;
+
         }
+
     }
+
 }
