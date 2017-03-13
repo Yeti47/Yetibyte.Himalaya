@@ -29,6 +29,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public List<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>().ToList();
 
+        /// <summary>
+        /// Returns a list of all GameEntities in this scene that are currently active and not destroyed.
+        /// </summary>
+        public List<GameEntity> LiveGameEntities => GameEntities.Where(e => e.IsActive && !e.IsDestroyed).ToList();
+
         // Constructor
 
         protected Scene(Game game) {
