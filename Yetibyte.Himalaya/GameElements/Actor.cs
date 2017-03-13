@@ -35,13 +35,13 @@ namespace Yetibyte.Himalaya.GameElements {
             base.Update(gameTime, globalTimeScale);
 
             if(!IgnoreAnimator)
-                Animator.Update(gameTime, globalTimeScale);
+                Animator?.Update(gameTime, globalTimeScale);
 
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 
-            Sprite.Draw(spriteBatch, Position, Rotation, RenderLayer);
+            Sprite?.Draw(spriteBatch, Position, Rotation, RenderLayer);
 
         }
 
