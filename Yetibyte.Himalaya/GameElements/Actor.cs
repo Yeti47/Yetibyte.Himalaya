@@ -24,7 +24,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Constructor
 
-        protected Actor(Scene scene, string name, Vector2 position, Sprite sprite, SpriteAnimator animator = null, GameEntity parentEntity = null) : base(scene, name, position, parentEntity) {
+        protected Actor(Scene scene, string name, Vector2 position, Sprite sprite, SpriteAnimator animator = null) : base(scene, name, position) {
 
         }
         
