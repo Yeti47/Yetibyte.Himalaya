@@ -76,7 +76,7 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 			foreach(GameEntity gameEntity in GameEntities) {
 				
-				if(gameEntity.IsActive)
+				if(gameEntity.IsActive && !gameEntity.IsDestroyed)
 					gameEntity.Update(gameTime, TimeScale);
 				
 			}
@@ -85,7 +85,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
                 GameEntity newEntity = GameEntitiesToAdd.Dequeue();
 
-                if (newEntity.IsActive)
+                if (newEntity.IsActive && !newEntity.IsDestroyed)
                     newEntity.Update(gameTime, TimeScale);
 
                 GameEntities.Add(newEntity);

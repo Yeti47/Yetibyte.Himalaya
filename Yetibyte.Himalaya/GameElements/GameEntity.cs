@@ -47,9 +47,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public float TimeScale { get; set; } = 1f;
 
-		// Constructor
-				
-		protected GameEntity(Scene scene, string name, Vector2 position, GameEntity parentEntity = null) {
+        public bool IsDestroyed { get; set; }
+
+        // Constructor
+
+        protected GameEntity(Scene scene, string name, Vector2 position, GameEntity parentEntity = null) {
 			
 			this.Scene = scene;
 			this.Name = name;
@@ -85,7 +87,8 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 			foreach(GameEntity childEntity in ChildEntities)
 				childEntity.DestroyEntity();
-			
+
+            IsDestroyed = true;
 			Scene.RemoveGameEntity(this);
 			
 		}
