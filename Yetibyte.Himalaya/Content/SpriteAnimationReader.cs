@@ -21,7 +21,7 @@ namespace Yetibyte.Himalaya.Content {
 
             for (int i = 0; i < frameCount; i++) {
 
-                animation.SpriteIndices[i] = input.ReadVector2().ToPoint();
+                animation.SpriteIndices.Add(input.ReadVector2().ToPoint());
 
             }
 
