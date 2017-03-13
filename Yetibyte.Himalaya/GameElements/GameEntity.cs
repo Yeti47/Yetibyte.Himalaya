@@ -47,7 +47,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public float TimeScale { get; set; } = 1f;
 
-        public bool IsDestroyed { get; set; }
+        public bool IsDestroyed { get; protected set; }
 
         // Constructor
 
