@@ -24,8 +24,12 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Constructor
 
-        protected Actor(Scene scene, string name, Vector2 position, Sprite sprite, SpriteAnimator animator = null) : base(scene, name, position) {
+        protected Actor(Scene scene, string name, Vector2 position, Sprite sprite, int renderLayer = 1, SpriteAnimator animator = null) : base(scene, name, position) {
 
+            this.Sprite = sprite;
+            this.Animator = animator;
+            this.RenderLayer = renderLayer;
+            
         }
         
         // Methods
