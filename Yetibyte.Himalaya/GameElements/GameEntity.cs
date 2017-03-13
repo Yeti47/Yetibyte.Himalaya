@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
@@ -36,12 +37,12 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 		}
 
-        public GameEntity ParentEntity { get; protected set; }
+        public GameEntity ParentEntity { get; set; }
 
 		public List<GameEntity> ChildEntities {
 			
 			get { return _childEntities; }
-			set { _childEntities = value; }
+			protected set { _childEntities = value; }
 			
 		}
 
@@ -51,12 +52,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Constructor
 
-        protected GameEntity(Scene scene, string name, Vector2 position, GameEntity parentEntity = null) {
+        protected GameEntity(Scene scene, string name, Vector2 position) {
 			
 			this.Scene = scene;
 			this.Name = name;
 			this.Position = position;
-            this.ParentEntity = parentEntity;
 						
 		}
         		
@@ -88,11 +88,29 @@ namespace Yetibyte.Himalaya.GameElements {
 			foreach(GameEntity childEntity in ChildEntities)
 				childEntity.DestroyEntity();
 
-            IsDestroyed = true;
-			Scene.RemoveGameEntity(this);
-			
+            if(!IsDestroyed) {
+
+                IsDestroyed = true;
+                Scene.RemoveGameEntity(this);
+
+            }
+            			
 		}
+
+        public void AddChildEntity(GameEntity childEntity) {
+
+            childEntity.ParentEntity = this;
+            ChildEntities.Add(childEntity);
+
+        }
 		
+        public void RemoveChildEntity(GameEntity childEntity) {
+
+            childEntity.ParentEntity = null;
+            ChildEntities.Remove(childEntity);
+
+        }
+
 	}
 	
 }
