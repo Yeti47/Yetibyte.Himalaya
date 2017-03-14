@@ -45,7 +45,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 
-            Sprite?.Draw(spriteBatch, Position, Rotation, RenderLayer);
+            Sprite?.Draw(spriteBatch, Transform.Position, Transform.Rotation, RenderLayer);
 
         }
 

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
-	public abstract class GameEntity : IUpdate, ITimeScale {
+	public abstract class GameEntity : IUpdate, ITimeScale, IDraw {
 		
 		// Fields
 		
@@ -82,18 +83,11 @@ namespace Yetibyte.Himalaya.GameElements {
 		
 		public virtual void Update(GameTime gameTime, float globalTimeScale) {
 			
-			foreach(GameEntity childEntity in ChildEntities) {
-				
-				childEntity.Transform.Position = Transform.Position;
-				childEntity.Transform.Origin = Transform.Origin;
-				childEntity.Transform.Rotation = Transform.Rotation;
-				childEntity.Transform.Scale = Transform.Scale;
-								
-			}
+			
 					
 		}
 		
-		public virtual void Draw(GameTime gameTime) {
+		public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 									
 		}
 		

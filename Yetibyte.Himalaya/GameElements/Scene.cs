@@ -109,7 +109,7 @@ namespace Yetibyte.Himalaya.GameElements {
 			foreach(GameEntity gameEntity in GameEntities) {
 				
 				if(gameEntity.IsActive)
-					gameEntity.Draw(gameTime);
+					gameEntity.Draw(spriteBatch, gameTime);
 				
 			}				
 			
