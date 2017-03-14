@@ -5,12 +5,13 @@ using System.Linq;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
-	public abstract class GameEntity : Transformable, IUpdate, ITimeScale {
+	public abstract class GameEntity : IUpdate, ITimeScale {
 		
 		// Fields
 		
 		private bool _isActive = true;
 		private List<GameEntity> _childEntities = new List<GameEntity>();
+        private GameEntity _parentEntity;
 		
 		// Properties
 		
@@ -37,7 +38,18 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 		}
 
-        public GameEntity ParentEntity { get; set; }
+        public GameEntity ParentEntity {
+
+            get { return _parentEntity; }
+
+            set {
+
+                _parentEntity = value;
+                this.Transform.Parent = value?.Transform;
+
+            }
+
+        }
 
 		public List<GameEntity> ChildEntities {
 			
@@ -50,14 +62,16 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool IsDestroyed { get; protected set; }
 
+        public Transform Transform { get; set; } = new Transform();
+
         // Constructor
 
         protected GameEntity(Scene scene, string name, Vector2 position) {
 			
 			this.Scene = scene;
 			this.Name = name;
-			this.Position = position;
-						
+			this.Transform.Position = position;
+            
 		}
         		
 		// Methods
@@ -70,10 +84,10 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 			foreach(GameEntity childEntity in ChildEntities) {
 				
-				childEntity.Position = Position;
-				childEntity.Origin = Origin;
-				childEntity.Rotation = Rotation;
-				childEntity.Scale = Scale;
+				childEntity.Transform.Position = Transform.Position;
+				childEntity.Transform.Origin = Transform.Origin;
+				childEntity.Transform.Rotation = Transform.Rotation;
+				childEntity.Transform.Scale = Transform.Scale;
 								
 			}
 					

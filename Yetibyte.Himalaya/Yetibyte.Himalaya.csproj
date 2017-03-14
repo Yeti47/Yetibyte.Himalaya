@@ -45,7 +45,7 @@
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
     <Compile Include="GameElements\Scene.cs" />
-    <Compile Include="GameElements\Transformable.cs" />
+    <Compile Include="GameElements\Transform.cs" />
     <Compile Include="Graphics\SpriteAnimator.cs" />
     <Compile Include="Graphics\SpriteAnimation.cs" />
     <Compile Include="Graphics\Sprite.cs" />
@@ -59,7 +59,6 @@
     <Compile Include="Procedural\TyleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
