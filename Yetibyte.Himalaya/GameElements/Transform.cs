@@ -26,14 +26,12 @@ namespace Yetibyte.Himalaya.GameElements {
             {
                 Vector2 relation = Parent != null ? Parent.LocalPosition : Vector2.Zero;
                 return Position - relation;
-
             }
 
             set
             {
                 Vector2 relation = Parent != null ? Parent.Position : Vector2.Zero;
                 Position = value + relation;
-
             }
 
         }
