@@ -7,7 +7,7 @@ using Yetibyte.Himalaya.Graphics;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
-	public abstract class Actor : GameEntity, IDraw {
+	public abstract class Actor : GameEntity {
 		
 		// Fields
 		
@@ -43,7 +43,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 
             Sprite?.Draw(spriteBatch, Transform.Position, Transform.Rotation, RenderLayer);
 
