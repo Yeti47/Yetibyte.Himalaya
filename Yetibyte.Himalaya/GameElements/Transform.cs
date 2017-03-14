@@ -36,10 +36,38 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        /// <summary>
+        /// The global scale of this Transform (read-only). Use <see cref="LocalScale"/> to manipulate the scaling value.
+        /// </summary>
+        public Vector2 Scale
+        {
+
+            get
+            {
+                Vector2 relation = Parent != null ? Parent.Scale : Vector2.One;
+                return LocalScale * relation;
+            }
+
+        }
+
+        /// <summary>
+        /// The global rotation of this Transform in radians (read-only). Use <see cref="LocalRotation"/> to manipulate the rotation value.
+        /// </summary>
+        public float Rotation
+        {
+
+            get
+            {
+                float relation = Parent != null ? Parent.Rotation : 0f;
+                return relation + LocalRotation;
+            }
+
+        }
+        
         public Vector2 Position { get; set; }
         public Vector2 Origin { get; set; }
-        public Vector2 Scale { get; set; }
-        public float Rotation { get; set; }
+        public Vector2 LocalScale { get; set; }
+        public float LocalRotation { get; set; }
 
         // Methods
 
