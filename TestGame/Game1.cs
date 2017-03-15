@@ -65,9 +65,9 @@ namespace TestGame {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
-
+            
             KeyboardState currentKeyboardState = Keyboard.GetState();
-
+            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
