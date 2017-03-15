@@ -47,14 +47,6 @@ namespace Yetibyte.Himalaya.Controls {
                 Keys currentAlternativeKey = control.AlternativeKey;
                 Buttons currentAlternativeButton = control.AlternativeButton;
 
-                bool isKeyDown = CurrentKeyboardState.IsKeyDown(currentKey) || CurrentKeyboardState.IsKeyDown(currentAlternativeKey);
-                bool isButtonDown = CurrentGamePadState.IsConnected && (CurrentGamePadState.IsButtonDown(currentButton) || CurrentGamePadState.IsButtonDown(currentAlternativeButton));
-
-                control.IsDown = isKeyDown || isButtonDown;
-                control.IsPressed = control.IsDown && !control.WasDown;
-                control.IsReleased = !control.IsDown && control.WasDown;
-                control.WasDown = control.IsDown;
-
                 if(control.IsDown) {
 
                     control.HoldTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -68,6 +60,15 @@ namespace Yetibyte.Himalaya.Controls {
                     control.HoldTime = 0f;
 
                 }
+
+                bool isKeyDown = CurrentKeyboardState.IsKeyDown(currentKey) || CurrentKeyboardState.IsKeyDown(currentAlternativeKey);
+                bool isButtonDown = CurrentGamePadState.IsConnected && (CurrentGamePadState.IsButtonDown(currentButton) || CurrentGamePadState.IsButtonDown(currentAlternativeButton));
+
+                control.IsDown = isKeyDown || isButtonDown;
+                control.IsPressed = control.IsDown && !control.WasDown;
+                control.IsReleased = !control.IsDown && control.WasDown;
+                control.WasDown = control.IsDown;
+
 
             }
 
