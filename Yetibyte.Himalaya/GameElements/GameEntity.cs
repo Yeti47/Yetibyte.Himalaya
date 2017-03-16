@@ -99,11 +99,11 @@ namespace Yetibyte.Himalaya.GameElements {
 			this.Scene = scene;
 			this.Name = name;
 			this.Transform.Position = position;
-            
+
 		}
         		
 		// Methods
-        
+
 		public virtual void Initialize() {
 						
 		}
