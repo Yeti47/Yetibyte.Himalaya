@@ -7,15 +7,15 @@ using System.Linq;
 namespace Yetibyte.Himalaya.GameElements {
 	
 	public abstract class GameEntity : IUpdate, ITimeScale, IDraw {
-		
-		// Fields
-		
-		private bool _isActive = true;
+
+        // Fields
+
+        private bool _isActive = true;
 		private List<GameEntity> _childEntities = new List<GameEntity>();
         private GameEntity _parentEntity;
 		
 		// Properties
-		
+
         /// <summary>
         /// A <see cref="GameEntity"/> that is inactive will be ignored by the <see cref="Yetibyte.Himalaya.GameElements.Scene"/> and will
         /// therefore not be updated.
@@ -103,7 +103,7 @@ namespace Yetibyte.Himalaya.GameElements {
 		}
         		
 		// Methods
-		
+        
 		public virtual void Initialize() {
 						
 		}
