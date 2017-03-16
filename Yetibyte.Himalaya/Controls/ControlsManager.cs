@@ -18,7 +18,6 @@ namespace Yetibyte.Himalaya.Controls {
         // Events
 
         public event EventHandler<GameControlEventArgs> ButtonDown;
-        public event EventHandler<GameControlEventArgs> ButtonUp;
         public event EventHandler<GameControlEventArgs> ButtonPressed;
         public event EventHandler<GameControlEventArgs> ButtonReleased;
 
@@ -124,8 +123,6 @@ namespace Yetibyte.Himalaya.Controls {
 
             if(gameControl.IsDown)
                 ButtonDown?.Invoke(this, args);
-            else if(!gameControl.IsDown)
-                ButtonUp?.Invoke(this, args);
 
             if(gameControl.IsPressed)
                 ButtonPressed?.Invoke(this, args);
