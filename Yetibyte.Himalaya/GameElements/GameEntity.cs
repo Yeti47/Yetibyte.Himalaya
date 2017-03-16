@@ -101,8 +101,8 @@ namespace Yetibyte.Himalaya.GameElements {
 			this.Transform.Position = position;
 
 		}
-        		
-		// Methods
+        
+        // Methods
 
 		public virtual void Initialize() {
 						
