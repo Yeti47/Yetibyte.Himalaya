@@ -51,7 +51,7 @@ namespace Yetibyte.Himalaya.Controls {
 
                     control.HoldTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    if (control.HoldTime >= control.RepeatInterval)
+                    if (control.DoRepeat && (control.HoldTime >= control.RepeatInterval))
                         control.ResetState();
 
                 }

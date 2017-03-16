@@ -45,8 +45,17 @@ namespace Yetibyte.Himalaya.GameElements {
 
             set {
 
-                _parentEntity = value;
-                this.Transform.Parent = value?.Transform;
+                GameEntity futureParent = value;
+
+                if(this.HasParent) {
+
+                    _parentEntity.RemoveChildEntity(this);
+
+                }
+
+                futureParent?.AddChildEntity(this);
+
+                _parentEntity = futureParent;
 
             }
 
@@ -64,6 +73,8 @@ namespace Yetibyte.Himalaya.GameElements {
         public bool IsDestroyed { get; protected set; }
 
         public Transform Transform { get; set; } = new Transform();
+
+        public bool HasParent => _parentEntity != null;
 
         // Constructor
 
@@ -107,15 +118,31 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public void AddChildEntity(GameEntity childEntity) {
 
-            childEntity.ParentEntity = this;
-            ChildEntities.Add(childEntity);
+            if (!HasChild(childEntity)) {
 
+                ChildEntities.Add(childEntity);
+                Transform.AddChild(childEntity.Transform);
+                childEntity.ParentEntity = this;
+
+            }
+            
         }
 		
         public void RemoveChildEntity(GameEntity childEntity) {
 
-            childEntity.ParentEntity = null;
-            ChildEntities.Remove(childEntity);
+            if (HasChild(childEntity)) {
+
+                ChildEntities.Remove(childEntity);
+                Transform.RemoveChild(childEntity.Transform);
+                childEntity.ParentEntity = null;
+
+            }
+            
+        }
+
+        public bool HasChild(GameEntity childEntity) {
+
+            return ChildEntities.Contains(childEntity);
 
         }
 

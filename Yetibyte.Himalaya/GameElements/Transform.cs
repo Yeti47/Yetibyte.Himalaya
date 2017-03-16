@@ -15,7 +15,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Properties
 
-        public Transform Parent { get; set; }
+        public Transform Parent { get; private set; }
+        public List<Transform> Children { get; private set; }
 
         /// <summary>
         /// The position relative to the parent Transform.
@@ -82,6 +83,20 @@ namespace Yetibyte.Himalaya.GameElements {
 
             LocalPosition += offset;
             return LocalPosition;
+
+        }
+
+        public void AddChild(Transform childTransform) {
+
+            Children.Add(childTransform);
+            childTransform.Parent = this;
+
+        }
+
+        public void RemoveChild(Transform childTransform) {
+
+            Children.Remove(childTransform);
+            childTransform.Parent = null;
 
         }
 
