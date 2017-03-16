@@ -16,6 +16,10 @@ namespace Yetibyte.Himalaya.GameElements {
 		
 		// Properties
 		
+        /// <summary>
+        /// A <see cref="GameEntity"/> that is inactive will be ignored by the <see cref="Yetibyte.Himalaya.GameElements.Scene"/> and will
+        /// therefore not be updated.
+        /// </summary>
         public bool IsActive {
 
             get { return _isActive; }
@@ -24,6 +28,10 @@ namespace Yetibyte.Himalaya.GameElements {
 		}
 		
 		public String Name { get; protected set; }
+
+        /// <summary>
+        /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
+        /// </summary>
 	    public Scene Scene { get; protected set; }
 		
 		public Game Game {
@@ -39,6 +47,11 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 		}
 
+        /// <summary>
+        /// Sets the parent <see cref="GameEntity"/> of this <see cref="GameEntity"/>. Will automatically call AddChildEntity and RemoveChildEntity methods where needed.
+        /// That means: When the parent entity changes, this GameEntity will be added to the child entity list of the future parent and removed from the orignal parent's list of child entities
+        /// (unless the original parent was null.
+        /// </summary>
         public GameEntity ParentEntity {
 
             get { return _parentEntity; }
@@ -61,6 +74,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        /// <summary>
+        /// A list of Game Entities that are children of this <see cref="GameEntity"/>.
+        /// </summary>
 		public List<GameEntity> ChildEntities {
 			
 			get { return _childEntities; }
@@ -102,6 +118,9 @@ namespace Yetibyte.Himalaya.GameElements {
 									
 		}
 		
+        /// <summary>
+        /// Destroys this <see cref="GameEntity"/>. It will be removed from the <see cref="Yetibyte.Himalaya.GameElements.Scene"/> it lived in.
+        /// </summary>
 		public void DestroyEntity() {
 			
 			foreach(GameEntity childEntity in ChildEntities)
@@ -116,6 +135,10 @@ namespace Yetibyte.Himalaya.GameElements {
             			
 		}
 
+        /// <summary>
+        /// Adds the given <see cref="GameEntity"/> to the list of child entities. Also sets the parent entity respectively.
+        /// </summary>
+        /// <param name="childEntity">The child entity to add.</param>
         public void AddChildEntity(GameEntity childEntity) {
 
             if (!HasChild(childEntity)) {
@@ -127,7 +150,11 @@ namespace Yetibyte.Himalaya.GameElements {
             }
             
         }
-		
+
+        /// <summary>
+        /// Removes the given  <see cref="GameEntity"/> from the list of child entities. Also sets the parent of the given entity to null.
+        /// </summary>
+        /// <param name="childEntity">The child entity to remove.</param>
         public void RemoveChildEntity(GameEntity childEntity) {
 
             if (HasChild(childEntity)) {
@@ -140,6 +167,11 @@ namespace Yetibyte.Himalaya.GameElements {
             
         }
 
+        /// <summary>
+        /// Checks whether the given <see cref="GameEntity"/> is included in the list of child entities fo this <see cref="GameEntity"/>.
+        /// </summary>
+        /// <param name="childEntity">The child game entity.</param>
+        /// <returns>True if the given entity is a child of this GameEntity.</returns>
         public bool HasChild(GameEntity childEntity) {
 
             return ChildEntities.Contains(childEntity);
