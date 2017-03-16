@@ -28,7 +28,10 @@ namespace Yetibyte.Himalaya.Controls {
         // Constructor
 
         public GameControl(bool doRepeat = false, float repeatInterval = 2f) {
-            
+
+            this.DoRepeat = doRepeat;
+            this.RepeatInterval = repeatInterval;
+
         }
 
         // Methods
