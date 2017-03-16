@@ -13,10 +13,14 @@ namespace Yetibyte.Himalaya.GameElements {
     /// </summary>
     public class Transform {
 
+        // Fields
+
+        private Vector2 _position = Vector2.Zero;
+
         // Properties
 
         public Transform Parent { get; private set; }
-        public List<Transform> Children { get; private set; }
+        public List<Transform> Children { get; private set; } = new List<Transform>();
 
         /// <summary>
         /// The position relative to the parent Transform.
@@ -65,7 +69,27 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
         
-        public Vector2 Position { get; set; }
+        /// <summary>
+        /// The global position. Setting this value will also manipulate the position of all child Transforms.
+        /// </summary>
+        public Vector2 Position
+        {
+
+            get { return _position; }
+
+            set
+            {
+
+                Vector2 delta = value - _position;
+
+                foreach (Transform child in Children)
+                    child.Position += delta;
+
+                _position = value;
+
+            }
+
+        }
         public Vector2 Origin { get; set; }
         public Vector2 LocalScale { get; set; }
         public float LocalRotation { get; set; }
