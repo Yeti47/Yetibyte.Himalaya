@@ -47,7 +47,10 @@ namespace Yetibyte.Himalaya.Controls {
             CurrentKeyboardState = Keyboard.GetState();
             CurrentGamePadState = GamePad.GetState(PlayerIndex);
 
-            foreach (GameControl control in Settings.Controls) {
+            foreach (KeyValuePair<string, GameControl> keyValuePair in Settings.ControlMap) {
+
+                GameControl control = keyValuePair.Value;
+                string controlName = keyValuePair.Key;
 
                 Keys currentKey = control.Key;
                 Buttons currentButton = control.Button;
@@ -76,7 +79,7 @@ namespace Yetibyte.Himalaya.Controls {
                 control.IsReleased = !control.IsDown && control.WasDown;
                 control.WasDown = control.IsDown;
 
-                RaiseGameControlEvents(control);
+                RaiseGameControlEvents(controlName, control);
                 
             }
 
@@ -115,9 +118,9 @@ namespace Yetibyte.Himalaya.Controls {
 
         }
 
-        private void RaiseGameControlEvents(GameControl gameControl) {
+        private void RaiseGameControlEvents(string controlName, GameControl gameControl) {
 
-            GameControlEventArgs args = new GameControlEventArgs(gameControl);
+            GameControlEventArgs args = new GameControlEventArgs(controlName, gameControl);
 
             if(gameControl.IsDown)
                 ButtonDown?.Invoke(this, args);

@@ -8,10 +8,12 @@ namespace Yetibyte.Himalaya.Controls {
 
     public class GameControlEventArgs : EventArgs {
 
+        public string ControlName { get; private set; }
         public GameControl GameControl { get; private set; }
 
-        public GameControlEventArgs(GameControl gameControl) {
+        public GameControlEventArgs(string controlName, GameControl gameControl) {
 
+            this.ControlName = controlName;
             this.GameControl = gameControl;
 
         }

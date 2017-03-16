@@ -12,6 +12,7 @@ namespace Yetibyte.Himalaya.Controls {
 
         public Dictionary<string, GameControl> ControlMap { get; set; } = new Dictionary<string, GameControl>();
         public Dictionary<string, GameControl>.ValueCollection Controls => ControlMap.Values;
+        public Dictionary<string, GameControl>.KeyCollection DictKeys => ControlMap.Keys;
 
     }
 
