@@ -45,6 +45,7 @@
     <Compile Include="Controls\ControlSettings.cs" />
     <Compile Include="Controls\ControlsManager.cs" />
     <Compile Include="Controls\GameControl.cs" />
+    <Compile Include="Controls\GameControlEventArgs.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
     <Compile Include="GameElements\Scene.cs" />

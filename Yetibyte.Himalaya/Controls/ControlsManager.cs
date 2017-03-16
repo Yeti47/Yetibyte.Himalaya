@@ -15,6 +15,13 @@ namespace Yetibyte.Himalaya.Controls {
         private KeyboardState _previousKeyboardState;
         private GamePadState _previousGamePadState;
 
+        // Events
+
+        public event EventHandler<GameControlEventArgs> ButtonDown;
+        public event EventHandler<GameControlEventArgs> ButtonUp;
+        public event EventHandler<GameControlEventArgs> ButtonPressed;
+        public event EventHandler<GameControlEventArgs> ButtonReleased;
+
         // Properties
 
         public PlayerIndex PlayerIndex { get; private set; }
@@ -69,7 +76,8 @@ namespace Yetibyte.Himalaya.Controls {
                 control.IsReleased = !control.IsDown && control.WasDown;
                 control.WasDown = control.IsDown;
 
-
+                RaiseGameControlEvents(control);
+                
             }
 
             _previousKeyboardState = CurrentKeyboardState;
@@ -98,6 +106,29 @@ namespace Yetibyte.Himalaya.Controls {
         public bool GetButtonRelease(string controlName) {
 
             return Settings.ControlMap[controlName].IsReleased;
+
+        }
+
+        public float GetButtonHoldTime(string controlName) {
+
+            return Settings.ControlMap[controlName].HoldTime;
+
+        }
+
+        private void RaiseGameControlEvents(GameControl gameControl) {
+
+            GameControlEventArgs args = new GameControlEventArgs(gameControl);
+
+            if(gameControl.IsDown)
+                ButtonDown?.Invoke(this, args);
+            else if(!gameControl.IsDown)
+                ButtonUp?.Invoke(this, args);
+
+            if(gameControl.IsPressed)
+                ButtonPressed?.Invoke(this, args);
+
+            if (gameControl.IsReleased)
+                ButtonReleased?.Invoke(this, args);
 
         }
 
