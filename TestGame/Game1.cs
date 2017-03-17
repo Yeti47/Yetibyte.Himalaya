@@ -5,6 +5,7 @@ using Yetibyte.Himalaya;
 using Yetibyte.Himalaya.GameElements;
 using Yetibyte.Himalaya.Graphics;
 using Yetibyte.Himalaya.Procedural;
+using Yetibyte.Himalaya.Controls;
 
 namespace TestGame {
     /// <summary>
@@ -23,6 +24,8 @@ namespace TestGame {
 
         public Texture2D PlayerTexture { get; set; }
 
+        public ControlsManager ControlsManager { get; private set; }
+
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -36,7 +39,15 @@ namespace TestGame {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-                                               
+
+            ControlSettings controlSettings = new ControlSettings();
+            controlSettings.ControlMap.Add("Left", new GameControl { Key = Keys.Left, AlternativeKey = Keys.A });
+            controlSettings.ControlMap.Add("Right", new GameControl { Key = Keys.Right, AlternativeKey = Keys.D });
+            controlSettings.ControlMap.Add("Up", new GameControl { Key = Keys.Up, AlternativeKey = Keys.W });
+            controlSettings.ControlMap.Add("Down", new GameControl { Key = Keys.Down, AlternativeKey = Keys.S });
+
+            ControlsManager = new ControlsManager(PlayerIndex.One, controlSettings);
+
             base.Initialize();
         }
 
@@ -82,6 +93,7 @@ namespace TestGame {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            ControlsManager.Update(gameTime);
             CurrentScene.Update(gameTime);
 
             previousKeyboardState = currentKeyboardState;

@@ -15,10 +15,7 @@ using System.Diagnostics;
 namespace TestGame {
 
     public class Player : Actor {
-
-        private ControlSettings controlSettings;
-        private ControlsManager controlManager;
-
+        
         public float Speed { get; set; } = 150f;
 
         // Constructor
@@ -32,22 +29,14 @@ namespace TestGame {
         public override void Initialize() {
             base.Initialize();
 
-            controlSettings = new ControlSettings();
-            controlSettings.ControlMap.Add("Left", new GameControl { Key = Keys.Left, AlternativeKey = Keys.A } );
-            controlSettings.ControlMap.Add("Right", new GameControl { Key = Keys.Right, AlternativeKey = Keys.D });
-            controlSettings.ControlMap.Add("Up", new GameControl { Key = Keys.Up, AlternativeKey = Keys.W });
-            controlSettings.ControlMap.Add("Down", new GameControl { Key = Keys.Down, AlternativeKey = Keys.S });
-
-            controlManager = new ControlsManager(PlayerIndex.One, controlSettings);
-
         }
 
         public override void Update(GameTime gameTime, float globalTimeScale) {
             base.Update(gameTime, globalTimeScale);
 
-            controlManager.Update(gameTime);
-
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            ControlsManager controlManager = ((Game1)Game).ControlsManager;
 
             if(controlManager.GetButtonDown("Left")) {
 

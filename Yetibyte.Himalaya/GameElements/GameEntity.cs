@@ -32,7 +32,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <summary>
         /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
         /// </summary>
-	    public Scene Scene { get; protected set; }
+	    public Scene Scene { get; protected set; } 
 		
 		public Game Game {
 			
