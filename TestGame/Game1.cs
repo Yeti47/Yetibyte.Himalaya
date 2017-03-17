@@ -11,13 +11,17 @@ namespace TestGame {
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game {
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         KeyboardState previousKeyboardState;
 
-        DungeonGenerator dunGen = new DungeonGenerator();
-        Texture2D dungeonTexture;
+        // ----
+
+        public Scene CurrentScene { get; private set; }
+
+        public Texture2D PlayerTexture { get; set; }
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -32,9 +36,7 @@ namespace TestGame {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-
-            GenerateDungeon();
-                       
+                                               
             base.Initialize();
         }
 
@@ -45,9 +47,18 @@ namespace TestGame {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            SpriteAnimation animation = Content.Load<SpriteAnimation>("testSpriteAnimation");
 
             // TODO: use this.Content to load your game content here
+
+            PlayerTexture = Content.Load<Texture2D>("axeGun1");
+            Sprite playerSprite = new Sprite(PlayerTexture, 0, 0, 16, 16);
+
+            CurrentScene = new TestScene1(this);
+            CurrentScene.Initialize();
+
+            Player player = new Player(CurrentScene, "player", new Vector2(50, 50), playerSprite);
+            CurrentScene.AddGameEntity(player);
+
         }
 
         /// <summary>
@@ -71,8 +82,7 @@ namespace TestGame {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (currentKeyboardState.IsKeyDown(Keys.F4) && previousKeyboardState.IsKeyUp(Keys.F4))
-                GenerateDungeon();
+            CurrentScene.Update(gameTime);
 
             previousKeyboardState = currentKeyboardState;
 
@@ -89,17 +99,14 @@ namespace TestGame {
 
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            spriteBatch.Draw(dungeonTexture,new Vector2(GraphicsDevice.Viewport.Width/2f, GraphicsDevice.Viewport.Height/2f), null, null, new Vector2(dungeonTexture.Width/2f, dungeonTexture.Height/2f), 0, new Vector2(3, 3));
+
+            CurrentScene.Draw(spriteBatch, gameTime);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
-
-        private void GenerateDungeon() {
-
-            dunGen.Generate(150, 150);
-            dungeonTexture = dunGen.ConvertToTexture(GraphicsDevice);
-
-        }
+                
     }
+
 }

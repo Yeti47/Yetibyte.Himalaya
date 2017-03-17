@@ -91,7 +91,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
         public Vector2 Origin { get; set; }
-        public Vector2 LocalScale { get; set; }
+        public Vector2 LocalScale { get; set; } = Vector2.One;
         public float LocalRotation { get; set; }
 
         // Methods

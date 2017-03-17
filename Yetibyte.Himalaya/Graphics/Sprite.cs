@@ -41,7 +41,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
-        public Color TintColor { get; set; }
+        public Color TintColor { get; set; } = Color.White;
         public Vector2 Origin { get; set; }
         public SpriteEffects SpriteEffect { get; set; } = SpriteEffects.None;
 
@@ -66,7 +66,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation, Vector2 scale, float layerDepth) {
 
-            spriteBatch.Draw(Texture, position, SourceRect, TintColor, rotation, Origin, scale, SpriteEffect, layerDepth);
+            spriteBatch.Draw(Texture, position, null, SourceRect, Origin, rotation, scale, TintColor, SpriteEffect, layerDepth);
 
         }
 

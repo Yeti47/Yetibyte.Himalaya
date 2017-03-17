@@ -33,9 +33,10 @@ namespace Yetibyte.Himalaya.Controls {
 
         // Constructor
 
-        public ControlsManager(PlayerIndex playerIndex, ControlSettings settings, ) {
+        public ControlsManager(PlayerIndex playerIndex, ControlSettings settings) {
 
             this.PlayerIndex = playerIndex;
+            this.Settings = settings;
 
         }
 
