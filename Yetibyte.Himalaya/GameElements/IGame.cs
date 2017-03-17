@@ -7,7 +7,7 @@ using Yetibyte.Himalaya.Controls;
 
 namespace Yetibyte.Himalaya.GameElements {
 
-    public interface IGame {
+    public interface IGame<T> {
         
         Scene CurrentScene { get; set; }
 
