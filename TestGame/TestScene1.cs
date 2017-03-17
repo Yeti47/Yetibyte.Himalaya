@@ -14,7 +14,7 @@ namespace TestGame {
 
         // Constructor
 
-        public TestScene1(Game game) : base(game) {
+        public TestScene1(IGame game) : base(game) {
 
         }
 
