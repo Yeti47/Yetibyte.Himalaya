@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Yetibyte.Himalaya.Controls {
 
-    public class GameControl {
+    public class GameControl : ICloneable {
 
         // Properties
 
@@ -16,10 +16,10 @@ namespace Yetibyte.Himalaya.Controls {
         public Buttons Button { get; set; }
         public Keys AlternativeKey { get; set; }
         public Buttons AlternativeButton { get; set; }
-
-        public float HoldTime { get; set; }
         public bool DoRepeat { get; set; }
         public float RepeatInterval { get; set; }
+
+        public float HoldTime { get; set; }
         public bool IsDown { get; set; }
         public bool WasDown { get; set; }
         public bool IsPressed { get; set; }
@@ -44,6 +44,21 @@ namespace Yetibyte.Himalaya.Controls {
             IsReleased = false;
             HoldTime = 0f;
             
+        }
+
+        public object Clone() {
+
+            GameControl clone = new GameControl();
+
+            clone.Key = this.Key;
+            clone.Button = this.Button;
+            clone.AlternativeKey = this.AlternativeKey;
+            clone.AlternativeButton = this.AlternativeButton;
+            clone.DoRepeat = this.DoRepeat;
+            clone.RepeatInterval = this.RepeatInterval;
+
+            return clone;
+
         }
 
     }
