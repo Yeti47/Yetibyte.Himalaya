@@ -25,7 +25,7 @@ namespace Yetibyte.Himalaya.GameElements {
 		public Queue<GameEntity> GameEntitiesToAdd { get; protected set; }
 		public Queue<GameEntity> GameEntitiesToRemove { get; protected set;}
 		
-		public IGame Game { get; protected set; }
+		public Game Game { get; protected set; }
 
         public List<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>().ToList();
 
@@ -36,7 +36,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Constructor
 
-        protected Scene(IGame game) {
+        protected Scene(Game game) {
 			
 			this.Game = game;
 			this.GameEntities = new List<GameEntity>();
