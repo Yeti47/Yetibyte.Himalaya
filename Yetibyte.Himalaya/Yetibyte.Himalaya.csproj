@@ -48,6 +48,7 @@
     <Compile Include="Controls\GameControlEventArgs.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
+    <Compile Include="GameElements\IGame.cs" />
     <Compile Include="GameElements\Scene.cs" />
     <Compile Include="GameElements\Transform.cs" />
     <Compile Include="Graphics\SpriteAnimator.cs" />

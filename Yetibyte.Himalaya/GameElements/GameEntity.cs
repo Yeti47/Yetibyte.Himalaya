@@ -34,7 +34,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
 	    public Scene Scene { get; protected set; }
 		
-		public Game Game {
+		public IGame Game {
 			
 			get { 
 			

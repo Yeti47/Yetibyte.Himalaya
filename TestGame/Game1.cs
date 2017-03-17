@@ -10,7 +10,7 @@ namespace TestGame {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game {
+    public class Game1 : Game, IGame {
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -19,7 +19,7 @@ namespace TestGame {
 
         // ----
 
-        public Scene CurrentScene { get; private set; }
+        public Scene CurrentScene { get; set; }
 
         public Texture2D PlayerTexture { get; set; }
 
