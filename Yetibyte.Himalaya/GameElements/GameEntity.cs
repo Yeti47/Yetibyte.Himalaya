@@ -32,7 +32,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <summary>
         /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
         /// </summary>
-	    public Scene Scene { get; protected set; } 
+	    public Scene Scene { get; set; } 
 		
 		public Game Game {
 			
@@ -96,9 +96,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Constructor
 
-        protected GameEntity(Scene scene, string name, Vector2 position) {
+        protected GameEntity(string name, Vector2 position) {
 			
-			this.Scene = scene;
 			this.Name = name;
 			this.Transform.Position = position;
 
@@ -138,10 +137,12 @@ namespace Yetibyte.Himalaya.GameElements {
 		}
 
         /// <summary>
-        /// Adds the given <see cref="GameEntity"/> to the list of child entities. Also sets the parent entity respectively.
+        /// Adds the given <see cref="GameEntity"/> to the list of child entities. Also sets the parent entity respectively. The child
+        /// Game Entity will also optionally be added to the Scene the parent lives in (if it wasn't already).
         /// </summary>
         /// <param name="childEntity">The child entity to add.</param>
-        public void AddChildEntity(GameEntity childEntity) {
+        /// <param name="doAddToScene">Should the child Game Entity be added to the Scene as well? True by default.</param>
+        public void AddChildEntity(GameEntity childEntity, bool doAddToScene = true) {
 
             if (!IsParentOf(childEntity)) {
 
@@ -149,21 +150,29 @@ namespace Yetibyte.Himalaya.GameElements {
                 Transform.AddChild(childEntity.Transform);
                 childEntity.ParentEntity = this;
 
+                if(doAddToScene)
+                    Scene.AddGameEntity(childEntity);
+
             }
             
         }
 
         /// <summary>
         /// Removes the given  <see cref="GameEntity"/> from the list of child entities. Also sets the parent of the given entity to null.
+        /// The child Game Entity will also optionally be removed from the Scene the parent lives in (if it wasn't already).
         /// </summary>
         /// <param name="childEntity">The child entity to remove.</param>
-        public void RemoveChildEntity(GameEntity childEntity) {
+        /// <param name="doRemoveFromScene">Should the child Game Entity be removed from the Scene as well? False by default.</param>
+        public void RemoveChildEntity(GameEntity childEntity, bool doRemoveFromScene = false) {
 
             if (IsParentOf(childEntity)) {
 
                 ChildEntities.Remove(childEntity);
                 Transform.RemoveChild(childEntity.Transform);
                 childEntity.ParentEntity = null;
+
+                if (doRemoveFromScene)
+                    Scene.RemoveGameEntity(childEntity);
 
             }
             

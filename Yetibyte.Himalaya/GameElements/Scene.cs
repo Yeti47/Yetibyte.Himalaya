@@ -119,7 +119,12 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="gameEntity">The GameEntity to add to the Scene.</param>
 		public void AddGameEntity(GameEntity gameEntity) {
-			
+
+            // Cancel if the Game Entity was already added to the Scene.
+            if (GameEntities.Contains(gameEntity) || GameEntitiesToAdd.Contains(gameEntity))
+                return;
+
+            gameEntity.Scene = this;
 			GameEntitiesToAdd.Enqueue(gameEntity);
 			gameEntity.Initialize();
 			
@@ -131,8 +136,12 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="gameEntity">The GameEntity to remove from this Scene.</param>
 		public void RemoveGameEntity(GameEntity gameEntity) {
-			
-			GameEntitiesToRemove.Enqueue(gameEntity);
+
+            // Cancel if the Game Entity is not in this Scene or was already enqueued to be removed.
+            if (!GameEntities.Contains(gameEntity) || GameEntitiesToRemove.Contains(gameEntity))
+                return;
+
+            GameEntitiesToRemove.Enqueue(gameEntity);
 			
 		}
 

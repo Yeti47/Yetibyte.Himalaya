@@ -21,7 +21,7 @@ namespace TestGame {
 
         // Constructor
 
-        public Player(Scene scene, string name, Vector2 position, Sprite sprite, int renderLayer = 1, SpriteAnimator animator = null) : base(scene, name, position, sprite, renderLayer, animator) {
+        public Player(string name, Vector2 position, Sprite sprite, int renderLayer = 1, SpriteAnimator animator = null) : base(name, position, sprite, renderLayer, animator) {
             
         }
 
