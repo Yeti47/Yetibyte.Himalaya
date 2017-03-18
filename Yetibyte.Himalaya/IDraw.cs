@@ -10,6 +10,8 @@ namespace Yetibyte.Himalaya {
 
     public interface IDraw {
 
+        int DrawOrder { get; set; }
+
         void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
     }

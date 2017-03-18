@@ -92,6 +92,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool HasParent => _parentEntity != null;
 
+        public int DrawOrder { get; set; }
+
         // Constructor
 
         protected GameEntity(Scene scene, string name, Vector2 position) {

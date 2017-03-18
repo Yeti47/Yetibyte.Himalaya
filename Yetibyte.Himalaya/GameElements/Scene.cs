@@ -106,7 +106,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 			
-			foreach(GameEntity gameEntity in GameEntities) {
+			foreach(GameEntity gameEntity in GameEntities.OrderBy(e => e.DrawOrder)) {
 				
 				if(gameEntity.IsActive)
 					gameEntity.Draw(spriteBatch, gameTime);
