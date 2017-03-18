@@ -141,7 +141,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="childEntity">The child entity to add.</param>
         public void AddChildEntity(GameEntity childEntity) {
 
-            if (!HasChild(childEntity)) {
+            if (!IsParentOf(childEntity)) {
 
                 ChildEntities.Add(childEntity);
                 Transform.AddChild(childEntity.Transform);
@@ -157,7 +157,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="childEntity">The child entity to remove.</param>
         public void RemoveChildEntity(GameEntity childEntity) {
 
-            if (HasChild(childEntity)) {
+            if (IsParentOf(childEntity)) {
 
                 ChildEntities.Remove(childEntity);
                 Transform.RemoveChild(childEntity.Transform);
@@ -172,7 +172,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="childEntity">The child game entity.</param>
         /// <returns>True if the given entity is a child of this GameEntity.</returns>
-        public bool HasChild(GameEntity childEntity) {
+        public bool IsParentOf(GameEntity childEntity) {
 
             return ChildEntities.Contains(childEntity);
 

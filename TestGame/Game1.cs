@@ -23,6 +23,7 @@ namespace TestGame {
         public Scene CurrentScene { get; private set; }
 
         public Texture2D PlayerTexture { get; set; }
+        public Texture2D GunTexture { get; set; }
 
         public ControlListener ControlListenerPlayer1 { get; private set; }
 
@@ -64,11 +65,21 @@ namespace TestGame {
             PlayerTexture = Content.Load<Texture2D>("axeGun1");
             Sprite playerSprite = new Sprite(PlayerTexture, 0, 0, 16, 16);
 
+            GunTexture = Content.Load<Texture2D>("gunHands1");
+            Sprite gunSprite = new Sprite(GunTexture);
+
             CurrentScene = new TestScene1(this);
             CurrentScene.Initialize();
 
             Player player = new Player(CurrentScene, "player", new Vector2(50, 50), playerSprite);
             CurrentScene.AddGameEntity(player);
+
+            Gun gun = new Gun(CurrentScene, "playerGun", player.Transform.Position, gunSprite);
+            CurrentScene.AddGameEntity(gun);
+
+            player.AddChildEntity(gun);
+
+            player.Transform.LocalScale = new Vector2(4f, 4f);
 
         }
 

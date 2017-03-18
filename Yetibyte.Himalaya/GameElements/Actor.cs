@@ -15,7 +15,7 @@ namespace Yetibyte.Himalaya.GameElements {
 		
 		public Sprite Sprite { get; set; }
         public SpriteAnimator Animator { get; set; }
-        public int RenderLayer { get; set; }
+        public float RenderLayerDepth { get; set; }
 
         /// <summary>
         /// If set to true, the Update method of <see cref="Animator"/> will not be called automatically.
@@ -24,11 +24,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Constructor
 
-        protected Actor(Scene scene, string name, Vector2 position, Sprite sprite, int renderLayer = 1, SpriteAnimator animator = null) : base(scene, name, position) {
+        protected Actor(Scene scene, string name, Vector2 position, Sprite sprite, float renderLayerDepth = 0, SpriteAnimator animator = null) : base(scene, name, position) {
 
             this.Sprite = sprite;
             this.Animator = animator;
-            this.RenderLayer = renderLayer;
+            this.RenderLayerDepth = renderLayerDepth;
             
         }
         
@@ -45,7 +45,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 
-            Sprite?.Draw(spriteBatch, Transform.Position, Transform.Rotation, Transform.Scale, RenderLayer);
+            Sprite?.Draw(spriteBatch, Transform.Position, Transform.Rotation, Transform.Scale, RenderLayerDepth);
 
         }
 
