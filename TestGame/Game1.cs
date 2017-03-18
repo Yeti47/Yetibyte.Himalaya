@@ -24,7 +24,7 @@ namespace TestGame {
 
         public Texture2D PlayerTexture { get; set; }
 
-        public ControlsManager ControlsManager { get; private set; }
+        public ControlListener ControlListenerPlayer1 { get; private set; }
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -46,7 +46,7 @@ namespace TestGame {
             controlSettings.ControlMap.Add("Up", new GameControl { Key = Keys.Up, AlternativeKey = Keys.W });
             controlSettings.ControlMap.Add("Down", new GameControl { Key = Keys.Down, AlternativeKey = Keys.S });
 
-            ControlsManager = new ControlsManager(PlayerIndex.One, controlSettings);
+            ControlListenerPlayer1 = new ControlListener(PlayerIndex.One, controlSettings);
 
             base.Initialize();
         }
@@ -93,7 +93,7 @@ namespace TestGame {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            ControlsManager.Update(gameTime);
+            ControlListenerPlayer1.Update(gameTime);
             CurrentScene.Update(gameTime);
 
             previousKeyboardState = currentKeyboardState;

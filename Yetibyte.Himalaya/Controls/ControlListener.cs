@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Yetibyte.Himalaya.Controls {
 
-    public class ControlsManager {
+    public class ControlListener {
 
         // Fields
         
@@ -33,7 +33,7 @@ namespace Yetibyte.Himalaya.Controls {
 
         // Constructor
 
-        public ControlsManager(PlayerIndex playerIndex, ControlSettings settings) {
+        public ControlListener(PlayerIndex playerIndex, ControlSettings settings) {
 
             this.PlayerIndex = playerIndex;
             this.Settings = settings;

@@ -36,14 +36,14 @@ namespace TestGame {
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            ControlsManager controlManager = Scene.GetGame<Game1>().ControlsManager;
+            ControlListener controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
 
-            if(controlManager.GetButtonDown("Left")) {
+            if(controlListener.GetButtonDown("Left")) {
 
                 Transform.Position -= new Vector2(Speed * deltaTime, 0f);
 
             }
-            else if(controlManager.GetButtonDown("Right")) {
+            else if(controlListener.GetButtonDown("Right")) {
 
                 Transform.Position += new Vector2(Speed * deltaTime, 0f);
 
