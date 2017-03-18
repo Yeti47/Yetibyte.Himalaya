@@ -152,6 +152,26 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <typeparam name="T">A subclass of <see cref="Microsoft.Xna.Framework.Game"/>.</typeparam>
         public T GetGame<T>() where T : Game => (T)Game;
+
+        /// <summary>
+        /// Searches this Scene for the first <see cref="GameEntity"/> with the given name (that is not destroyed) and returns it.
+        /// </summary>
+        /// <typeparam name="T">The type of GameEntity to search for.</typeparam>
+        /// <param name="name">The name to search for.</param>
+        /// <returns>The first <see cref="GameEntity"/> of type T in this Scene that is not destroyed and has the given name.
+        /// Null if no Entity was found.</returns>
+        public T FindGameEntity<T>(string name) where T : GameEntity {
+
+            foreach(GameEntity gameEntity in GameEntities) {
+
+                if (gameEntity.Name == name && !gameEntity.IsDestroyed && gameEntity is T)
+                    return (T)gameEntity;
+
+            }
+
+            return null;
+
+        }
 		
 	}
 	
