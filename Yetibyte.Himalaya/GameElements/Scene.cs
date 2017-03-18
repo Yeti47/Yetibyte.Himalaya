@@ -145,6 +145,17 @@ namespace Yetibyte.Himalaya.GameElements {
             return GameEntities.Where(e => e is T).Cast<T>().ToList();
 
         }
+
+        /// <summary>
+        /// Returns the <see cref="Microsoft.Xna.Framework.Game"/> this Scene belongs to casted to
+        /// the derived class defined by T.
+        /// </summary>
+        /// <typeparam name="T">A subclass of <see cref="Microsoft.Xna.Framework.Game"/>.</typeparam>
+        public T GetGame<T> () where T : Game {
+
+            return (T)Game;
+
+        }
 		
 	}
 	

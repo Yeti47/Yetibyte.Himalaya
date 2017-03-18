@@ -36,7 +36,7 @@ namespace TestGame {
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            ControlsManager controlManager = ((Game1)Game).ControlsManager;
+            ControlsManager controlManager = Scene.GetGame<Game1>().ControlsManager;
 
             if(controlManager.GetButtonDown("Left")) {
 
