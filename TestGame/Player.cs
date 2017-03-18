@@ -8,6 +8,7 @@ using Yetibyte.Himalaya;
 using Yetibyte.Himalaya.GameElements;
 using Yetibyte.Himalaya.Graphics;
 using Yetibyte.Himalaya.Controls;
+using Yetibyte.Himalaya.Extensions;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
@@ -34,7 +35,7 @@ namespace TestGame {
         public override void Update(GameTime gameTime, float globalTimeScale) {
             base.Update(gameTime, globalTimeScale);
 
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float deltaTime = gameTime.DeltaTime();
 
             ControlListener controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
 

@@ -46,6 +46,7 @@
     <Compile Include="Controls\ControlListener.cs" />
     <Compile Include="Controls\GameControl.cs" />
     <Compile Include="Controls\GameControlEventArgs.cs" />
+    <Compile Include="Extensions\GameTimeExtensions.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
     <Compile Include="GameElements\IGame.cs" />
