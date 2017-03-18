@@ -151,11 +151,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// the derived class defined by T.
         /// </summary>
         /// <typeparam name="T">A subclass of <see cref="Microsoft.Xna.Framework.Game"/>.</typeparam>
-        public T GetGame<T> () where T : Game {
-
-            return (T)Game;
-
-        }
+        public T GetGame<T>() where T : Game => (T)Game;
 		
 	}
 	
