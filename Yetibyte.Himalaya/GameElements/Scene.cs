@@ -147,7 +147,7 @@ namespace Yetibyte.Himalaya.GameElements {
         }
 
         /// <summary>
-        /// Returns the <see cref="Microsoft.Xna.Framework.Game"/> this Scene belongs to casted to
+        /// Returns the <see cref="Microsoft.Xna.Framework.Game"/> this Scene belongs to cast to
         /// the derived class defined by T.
         /// </summary>
         /// <typeparam name="T">A subclass of <see cref="Microsoft.Xna.Framework.Game"/>.</typeparam>
