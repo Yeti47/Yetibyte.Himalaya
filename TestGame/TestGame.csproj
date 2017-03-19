@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="Gun.cs" />
+    <Compile Include="PCTest.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\Yetibyte.Himalaya\Yetibyte.Himalaya.csproj">
       <Project>{316162d8-8e7d-4a18-a2cd-871478ac631f}</Project>
       <Name>Yetibyte.Himalaya</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yetibyte.Utilities\Yetibyte.Utilities.csproj">
+      <Project>{7b4063b8-c89e-41ef-a291-e2e7ac41fad2}</Project>
+      <Name>Yetibyte.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

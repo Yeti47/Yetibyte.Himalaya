@@ -82,6 +82,18 @@ namespace TestGame {
 
             player.Transform.LocalScale = new Vector2(4f, 4f);
 
+            PCTest testParent = new PCTest() { TestProperty = "I am the ancestor of everyone!" };
+            PCTest testChildA = new PCTest();
+            PCTest testChildB = new PCTest();
+            PCTest testSubChild = new PCTest { TestProperty = "I am Test Sub Child" };
+
+            testParent.AddChild(testChildA);
+            testParent.AddChild(testChildB);
+            testChildA.AddChild(testSubChild);
+
+            System.Diagnostics.Debug.WriteLine(testParent.Children[0].Children[0].TestProperty);
+            System.Diagnostics.Debug.WriteLine(testSubChild.GetAncestor().TestProperty);
+
         }
 
         /// <summary>
