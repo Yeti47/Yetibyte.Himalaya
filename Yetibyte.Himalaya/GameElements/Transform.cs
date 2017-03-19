@@ -161,11 +161,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="childTransform">The child transform.</param>
         /// <returns>True if the given Transform is a child of this Transform.</returns>
-        public bool IsParentOf(Transform childTransform) {
-
-            return Children.Contains(childTransform);
-
-        }
+        public bool IsParentOf(Transform childTransform) => Children.Contains(childTransform);
 
     }
 
