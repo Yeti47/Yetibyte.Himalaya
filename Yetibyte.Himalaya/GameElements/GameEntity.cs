@@ -183,12 +183,8 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="childEntity">The child game entity.</param>
         /// <returns>True if the given entity is a child of this GameEntity.</returns>
-        public bool IsParentOf(GameEntity childEntity) {
+        public bool IsParentOf(GameEntity childEntity) => ChildEntities.Contains(childEntity);
 
-            return ChildEntities.Contains(childEntity);
-
-        }
-
-	}
+    }
 	
 }

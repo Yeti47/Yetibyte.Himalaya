@@ -15,11 +15,35 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Fields
 
+        private Transform _parent;
         private Vector2 _position = Vector2.Zero;
 
         // Properties
 
-        public Transform Parent { get; private set; }
+        public Transform Parent
+        {
+
+            get { return _parent; }
+
+            set
+            {
+
+                Transform futureParent = value;
+
+                if (this.HasParent) {
+
+                    _parent.RemoveChild(this);
+
+                }
+
+                futureParent?.AddChild(this);
+
+                _parent = futureParent;
+
+            }
+
+        }
+        
         public List<Transform> Children { get; private set; } = new List<Transform>();
 
         /// <summary>
@@ -94,6 +118,8 @@ namespace Yetibyte.Himalaya.GameElements {
         public Vector2 LocalScale { get; set; } = Vector2.One;
         public float LocalRotation { get; set; }
 
+        public bool HasParent => _parent != null;
+
         // Methods
 
         public Vector2 Translate(Vector2 offset) {
@@ -112,15 +138,32 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public void AddChild(Transform childTransform) {
 
+            if (IsParentOf(childTransform))
+                return;
+
             Children.Add(childTransform);
             childTransform.Parent = this;
-
+       
         }
 
         public void RemoveChild(Transform childTransform) {
 
+            if (!IsParentOf(childTransform))
+                return;
+
             Children.Remove(childTransform);
             childTransform.Parent = null;
+
+        }
+
+        /// <summary>
+        /// Checks whether the given <see cref="Transform"/> is included in the list of child entities of this <see cref="Transform"/>.
+        /// </summary>
+        /// <param name="childTransform">The child transform.</param>
+        /// <returns>True if the given Transform is a child of this Transform.</returns>
+        public bool IsParentOf(Transform childTransform) {
+
+            return Children.Contains(childTransform);
 
         }
 
