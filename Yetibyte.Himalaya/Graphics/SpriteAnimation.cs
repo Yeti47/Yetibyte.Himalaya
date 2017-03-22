@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Yetibyte.Himalaya.GameElements;
-using MonoGame.Framework;
 
 namespace Yetibyte.Himalaya.Graphics {
 

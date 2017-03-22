@@ -34,17 +34,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.Portable.3.6.0.1625\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MonoGame.Framework.Content.Pipeline, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.Content.Pipeline.Portable.3.6.0.1625\lib\portable-net45+win8+wpa81\MonoGame.Framework.Content.Pipeline.dll</HintPath>
+    </Reference>
     <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
       <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="MonoGame.Framework">
-      <HintPath>$(MSBuildExtensionsPath)\MonoGame\v3.0\Tools\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Framework.Content.Pipeline">
-      <HintPath>$(MSBuildExtensionsPath)\MonoGame\v3.0\Tools\MonoGame.Framework.Content.Pipeline.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SpriteAnimation\SpriteAnimationWriter.cs" />
