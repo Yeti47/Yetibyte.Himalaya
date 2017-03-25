@@ -42,13 +42,12 @@ namespace TestGame {
             // TODO: Add your initialization logic here
 
             ControlSettings controlSettings = new ControlSettings();
-            controlSettings.ControlMap.Add("Left", new GameControl { Key = Keys.Left, AlternativeKey = Keys.A });
-            controlSettings.ControlMap.Add("Right", new GameControl { Key = Keys.Right, AlternativeKey = Keys.D });
+            controlSettings.ControlMap.Add("Left", new GameControl { Key = Keys.Left, AlternativeKey = Keys.A, Button = Buttons.LeftThumbstickLeft});
+            controlSettings.ControlMap.Add("Right", new GameControl { Key = Keys.Right, AlternativeKey = Keys.D, Button = Buttons.LeftThumbstickRight});
             controlSettings.ControlMap.Add("Up", new GameControl { Key = Keys.Up, AlternativeKey = Keys.W });
             controlSettings.ControlMap.Add("Down", new GameControl { Key = Keys.Down, AlternativeKey = Keys.S });
 
             ControlListenerPlayer1 = new ControlListener(PlayerIndex.One, controlSettings);
-
             base.Initialize();
         }
 

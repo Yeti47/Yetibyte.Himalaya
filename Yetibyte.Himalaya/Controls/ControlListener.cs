@@ -71,8 +71,8 @@ namespace Yetibyte.Himalaya.Controls {
 
                 }
 
-                bool isKeyDown = !Settings.IgnoreKeyboard && (CurrentKeyboardState.IsKeyDown(currentKey) || CurrentKeyboardState.IsKeyDown(currentAlternativeKey));
-                bool isButtonDown = !Settings.IgnoreGamePad && (CurrentGamePadState.IsConnected && (CurrentGamePadState.IsButtonDown(currentButton) || CurrentGamePadState.IsButtonDown(currentAlternativeButton)));
+                bool isKeyDown = !Settings.IgnoreKeyboard && ((currentKey != 0 && CurrentKeyboardState.IsKeyDown(currentKey)) || (currentAlternativeKey != 0 && CurrentKeyboardState.IsKeyDown(currentAlternativeKey)));
+                bool isButtonDown = !Settings.IgnoreGamePad && (CurrentGamePadState.IsConnected && ((currentButton != 0 && CurrentGamePadState.IsButtonDown(currentButton)) || (currentAlternativeButton != 0 && CurrentGamePadState.IsButtonDown(currentAlternativeButton))));
 
                 control.IsDown = isKeyDown || isButtonDown;
                 control.IsPressed = control.IsDown && !control.WasDown;
