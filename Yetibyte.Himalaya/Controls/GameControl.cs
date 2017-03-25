@@ -25,6 +25,11 @@ namespace Yetibyte.Himalaya.Controls {
         public bool IsPressed { get; set; }
         public bool IsReleased { get; set; }
 
+        public GameControlAxes Axis { get; set; } = GameControlAxes.None;
+        public ControlAxisDirection AxisDirection { get; set; } = ControlAxisDirection.Horizontal;
+        public float AxisValue { get; set; }
+        public float AxisDeadzone { get; set; } = 0.15f;
+
         // Constructor
 
         public GameControl(bool doRepeat = false, float repeatInterval = 2f) {
@@ -42,6 +47,7 @@ namespace Yetibyte.Himalaya.Controls {
             WasDown = false;
             IsPressed = false;
             IsReleased = false;
+            AxisValue = 0f;
             HoldTime = 0f;
             
         }

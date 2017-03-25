@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 namespace Yetibyte.Himalaya.Controls {
 
     public enum GameControlAxes { None, LeftThumbstick, RightThumbstick, LeftTrigger, RightTrigger }
+    public enum ControlAxisDirection { Horizontal, Vertical }
 
 }
