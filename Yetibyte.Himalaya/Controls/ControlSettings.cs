@@ -12,7 +12,11 @@ namespace Yetibyte.Himalaya.Controls {
 
         public Dictionary<string, GameControl> ControlMap { get; set; } = new Dictionary<string, GameControl>();
         public Dictionary<string, GameControl>.ValueCollection Controls => ControlMap.Values;
-        public Dictionary<string, GameControl>.KeyCollection DictKeys => ControlMap.Keys;
+        public Dictionary<string, GameControl>.KeyCollection ControlNames => ControlMap.Keys;
+
+        public Dictionary<string, GameControlAxis> ControlAxesMap { get; set; } = new Dictionary<string, GameControlAxis>();
+        public Dictionary<string, GameControlAxis>.ValueCollection ControlAxes => ControlAxesMap.Values;
+        public Dictionary<string, GameControlAxis>.KeyCollection ControlAxesNames => ControlAxesMap.Keys;
 
         public bool IgnoreKeyboard { get; set; } = false;
         public bool IgnoreGamePad { get; set; } = false;
@@ -43,6 +47,12 @@ namespace Yetibyte.Himalaya.Controls {
                 foreach (KeyValuePair<string, GameControl> controlKeyValuePair in original.ControlMap) {
 
                     ControlMap.Add(controlKeyValuePair.Key, (GameControl)controlKeyValuePair.Value.Clone());
+
+                }
+
+                foreach (KeyValuePair<string, GameControlAxis> controlAxisKeyValuePair in original.ControlAxesMap) {
+
+                    ControlAxesMap.Add(controlAxisKeyValuePair.Key, (GameControlAxis)controlAxisKeyValuePair.Value.Clone());
 
                 }
 

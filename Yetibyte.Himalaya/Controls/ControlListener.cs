@@ -52,84 +52,16 @@ namespace Yetibyte.Himalaya.Controls {
                 GameControl control = keyValuePair.Value;
                 string controlName = keyValuePair.Key;
 
-                Keys currentKey = control.Key;
-                Buttons currentButton = control.Button;
-                Keys currentAlternativeKey = control.AlternativeKey;
-                Buttons currentAlternativeButton = control.AlternativeButton;
-                GameControlAxes currentAxis = control.Axis;
-
-                if(control.IsDown) {
-
-                    control.HoldTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    if (control.DoRepeat && (control.HoldTime >= control.RepeatInterval))
-                        control.ResetState();
-
-                }
-                else {
-
-                    control.HoldTime = 0f;
-
-                }
-
-                // Axes
-
-                switch (currentAxis) {
-
-                    case GameControlAxes.None:
-
-                        control.AxisValue = 0f;
-                        break;
-
-                    case GameControlAxes.LeftThumbstick:
-
-                        if (control.AxisDirection == ControlAxisDirection.Horizontal)
-                            control.AxisValue = CurrentGamePadState.ThumbSticks.Left.X;
-                        else
-                            control.AxisValue = CurrentGamePadState.ThumbSticks.Left.Y;
-
-                        break;
-
-                    case GameControlAxes.RightThumbstick:
-
-                        if (control.AxisDirection == ControlAxisDirection.Horizontal)
-                            control.AxisValue = CurrentGamePadState.ThumbSticks.Right.X;
-                        else
-                            control.AxisValue = CurrentGamePadState.ThumbSticks.Right.Y;
-
-                        break;
-
-                    case GameControlAxes.LeftTrigger:
-
-                        control.AxisValue = CurrentGamePadState.Triggers.Left;
-
-                        break;
-
-                    case GameControlAxes.RightTrigger:
-
-                        control.AxisValue = CurrentGamePadState.Triggers.Right;
-
-                        break;
-
-                    default:
-                        break;
-
-                }
-
-                bool axisRegistered = currentAxis != GameControlAxes.None && Math.Abs(control.AxisValue) >= control.AxisDeadzone;
-
-                // ####
-
-                bool isKeyDown = !Settings.IgnoreKeyboard && ((currentKey != 0 && CurrentKeyboardState.IsKeyDown(currentKey)) || (currentAlternativeKey != 0 && CurrentKeyboardState.IsKeyDown(currentAlternativeKey)));
-                bool isButtonDown = !Settings.IgnoreGamePad && (CurrentGamePadState.IsConnected && ((currentButton != 0 && CurrentGamePadState.IsButtonDown(currentButton)) || (currentAlternativeButton != 0 && CurrentGamePadState.IsButtonDown(currentAlternativeButton))));
-
-                control.IsDown = isKeyDown || isButtonDown || axisRegistered;
-                control.IsPressed = control.IsDown && !control.WasDown;
-                control.IsReleased = !control.IsDown && control.WasDown;
-                control.WasDown = control.IsDown;
+                control.Update(gameTime, CurrentKeyboardState, CurrentGamePadState, Settings.IgnoreKeyboard, Settings.IgnoreGamePad);
 
                 RaiseGameControlEvents(controlName, control);
                 
+            }
+
+            foreach (GameControlAxis axis in Settings.ControlAxes) {
+
+                axis.Update(CurrentKeyboardState, CurrentGamePadState, Settings.IgnoreKeyboard, Settings.IgnoreGamePad);
+
             }
 
             _previousKeyboardState = CurrentKeyboardState;
@@ -137,23 +69,14 @@ namespace Yetibyte.Himalaya.Controls {
 
         }
 
-        public bool GetButtonDown(string controlName) => Settings.ControlMap[controlName].IsDown;
+        public bool GetButtonDown(string controlName) => KnowsControl(controlName) ? Settings.ControlMap[controlName].IsDown : false;
+        public bool GetButtonUp(string controlName) => KnowsControl(controlName) ? !Settings.ControlMap[controlName].IsDown : false;
+        public bool GetButtonPress(string controlName) => KnowsControl(controlName) ? Settings.ControlMap[controlName].IsPressed : false;
+        public bool GetButtonRelease(string controlName) => KnowsControl(controlName) ? Settings.ControlMap[controlName].IsReleased : false;
 
-        public bool GetButtonUp(string controlName) => !Settings.ControlMap[controlName].IsDown;
+        public float GetButtonHoldTime(string controlName) => KnowsControl(controlName) ? Settings.ControlMap[controlName].HoldTime : 0f;
 
-        public bool GetButtonPress(string controlName) => Settings.ControlMap[controlName].IsPressed;
-
-        public bool GetButtonRelease(string controlName) => Settings.ControlMap[controlName].IsReleased;
-
-        public float GetButtonHoldTime(string controlName) => Settings.ControlMap[controlName].HoldTime;
-
-        public float GetAxisValue(string controlName) {
-
-            GameControl gameControl = Settings.ControlMap[controlName];
-
-            return Math.Abs(gameControl.AxisValue) >= gameControl.AxisDeadzone ? gameControl.AxisValue : 0f;
-
-        }
+        public float GetAxisValue(string controlAxisName) => KnowsControlAxis(controlAxisName) ? Settings.ControlAxesMap[controlAxisName].Value : 0f;
 
         private void RaiseGameControlEvents(string controlName, GameControl gameControl) {
 
@@ -169,6 +92,9 @@ namespace Yetibyte.Himalaya.Controls {
                 ButtonReleased?.Invoke(this, args);
 
         }
+
+        public bool KnowsControl(string controlName) => Settings.ControlMap.ContainsKey(controlName);
+        public bool KnowsControlAxis(string controlAxisName) => Settings.ControlAxesMap.ContainsKey(controlAxisName);
 
     }
 

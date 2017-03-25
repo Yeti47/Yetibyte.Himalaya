@@ -39,16 +39,7 @@ namespace TestGame {
 
             ControlListener controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
 
-            if(controlListener.GetButtonDown("Left")) {
-
-                Transform.Position -= new Vector2(Speed * deltaTime, 0f);
-
-            }
-            else if(controlListener.GetButtonDown("Right")) {
-
-                Transform.Position += new Vector2(Speed * deltaTime, 0f);
-
-            }
+            Transform.Position += new Vector2(controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f);
 
         }
 
