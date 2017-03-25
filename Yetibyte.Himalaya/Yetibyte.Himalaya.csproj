@@ -48,7 +48,8 @@
     <Compile Include="Controls\ControlSettings.cs" />
     <Compile Include="Controls\ControlListener.cs" />
     <Compile Include="Controls\GameControl.cs" />
-    <Compile Include="Controls\GameControlAxes.cs" />
+    <Compile Include="Controls\GameControlAxis.cs" />
+    <Compile Include="Controls\GamePadAxes.cs" />
     <Compile Include="Controls\GameControlEventArgs.cs" />
     <Compile Include="Extensions\GameTimeExtensions.cs" />
     <Compile Include="GameElements\Actor.cs" />

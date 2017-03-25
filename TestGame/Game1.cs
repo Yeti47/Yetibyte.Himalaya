@@ -42,8 +42,7 @@ namespace TestGame {
             // TODO: Add your initialization logic here
 
             ControlSettings controlSettings = new ControlSettings();
-            controlSettings.ControlMap.Add("Left", new GameControl { Key = Keys.Left, AlternativeKey = Keys.A, Button = Buttons.LeftThumbstickLeft, AlternativeButton = Buttons.DPadLeft});
-            controlSettings.ControlMap.Add("Right", new GameControl { Key = Keys.Right, AlternativeKey = Keys.D, Button = Buttons.LeftThumbstickRight, AlternativeButton = Buttons.DPadRight });
+            controlSettings.ControlAxesMap.Add("Horizontal", new GameControlAxis { PositiveKey = Keys.Right, AlternativePositiveKey = Keys.D, NegativeKey = Keys.Left, AlternativeNegativeKey = Keys.A, GamePadAxis = GamePadAxes.LeftThumbstick});
             controlSettings.ControlMap.Add("Up", new GameControl { Key = Keys.Up, AlternativeKey = Keys.W });
             controlSettings.ControlMap.Add("Down", new GameControl { Key = Keys.Down, AlternativeKey = Keys.S });
 

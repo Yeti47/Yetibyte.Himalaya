@@ -25,11 +25,6 @@ namespace Yetibyte.Himalaya.Controls {
         public bool IsPressed { get; set; }
         public bool IsReleased { get; set; }
 
-        public GameControlAxes Axis { get; set; } = GameControlAxes.None;
-        public ControlAxisDirection AxisDirection { get; set; } = ControlAxisDirection.Horizontal;
-        public float AxisValue { get; set; }
-        public float AxisDeadzone { get; set; } = 0.15f;
-
         // Constructor
 
         public GameControl(bool doRepeat = false, float repeatInterval = 2f) {
@@ -41,13 +36,40 @@ namespace Yetibyte.Himalaya.Controls {
 
         // Methods
 
+        public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState, bool ignoreKeyboard, bool ignoreGamePad) {
+
+            if (IsDown)
+            {
+
+                HoldTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (DoRepeat && (HoldTime >= RepeatInterval))
+                    ResetState();
+
+            }
+            else
+            {
+
+                HoldTime = 0f;
+
+            }
+
+            bool isKeyDown = !ignoreKeyboard && ((Key != 0 && keyboardState.IsKeyDown(Key)) || (AlternativeKey != 0 && keyboardState.IsKeyDown(AlternativeKey)));
+            bool isButtonDown = !ignoreGamePad && (gamePadState.IsConnected && ((Button != 0 && gamePadState.IsButtonDown(Button)) || (AlternativeButton != 0 && gamePadState.IsButtonDown(AlternativeButton))));
+
+            IsDown = isKeyDown || isButtonDown;
+            IsPressed = IsDown && !WasDown;
+            IsReleased = !IsDown && WasDown;
+            WasDown = IsDown;
+
+        }
+
         public void ResetState() {
 
             IsDown = false;
             WasDown = false;
             IsPressed = false;
             IsReleased = false;
-            AxisValue = 0f;
             HoldTime = 0f;
             
         }
