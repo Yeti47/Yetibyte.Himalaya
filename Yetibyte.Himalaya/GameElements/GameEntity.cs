@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
+using Yetibyte.Himalaya.Collision;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
@@ -90,6 +91,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public Transform Transform { get; set; } = new Transform();
 
+        public CollisionController CollisionController { get; protected set; }
+
         public bool HasParent => _parentEntity != null;
 
         public int DrawOrder { get; set; }
@@ -100,6 +103,7 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 			this.Name = name;
 			this.Transform.Position = position;
+            this.CollisionController = new CollisionController(this);
 
 		}
         
