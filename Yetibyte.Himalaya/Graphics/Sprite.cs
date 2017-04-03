@@ -30,14 +30,44 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        public Point TextureCoordinates {
+
+            get => _sourceRect.Location;
+            set => _sourceRect.Location = value;
+
+        }
+
         public int Width { get { return _sourceRect.Width; } set { _sourceRect.Width = value; } }
         public int Height { get { return _sourceRect.Height; } set { _sourceRect.Height = value; } }
 
+        /// <summary>
+        /// Assuming that all Sprites in the underlying Texture are the same size, this convenience property will set
+        /// the <see cref="TextureCoordinates"/> based on the given index values, where the X component is the column
+        /// and the Y component is the row of the Sprite (beginning from the top left corner).
+        /// </summary>
         public Point Index {
 
-            get { return _sourceRect.Location; }
-            set { _sourceRect.Location = value; }
+            get {
 
+                if (Width <= 0 || Height <= 0)
+                    return Point.Zero;
+
+                return new Point(_sourceRect.X / Width, _sourceRect.Y / Height);
+
+            }
+
+            set {
+
+                if (value.X < 0)
+                    value.X = 0;
+
+                if (value.Y < 0)
+                    value.Y = 0;
+
+                _sourceRect.Location = new Point(value.X * Width, value.Y * Height);
+
+            }
+            
         }
 
         public Color TintColor { get; set; } = Color.White;
@@ -50,7 +80,7 @@ namespace Yetibyte.Himalaya.Graphics {
                        
         }
         
-        public Sprite(Texture2D texture, int sourceX, int sourceY, int width, int height) : this(texture, new Rectangle(sourceX, sourceY, width, height)) {
+        public Sprite(Texture2D texture, int textureCoordsX, int textureCoordsY, int width, int height) : this(texture, new Rectangle(textureCoordsX, textureCoordsY, width, height)) {
 
         }
 
