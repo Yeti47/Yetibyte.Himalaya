@@ -14,7 +14,6 @@ namespace Yetibyte.Himalaya.Collision {
 
         public List<Collider> Colliders { get; private set; } = new List<Collider>();
         public float GravityScale { get; set; }
-        public override bool AllowMultiple => false;
 
         // Constructor
 

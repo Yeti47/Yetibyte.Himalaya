@@ -11,7 +11,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         // Properties
 
-        public virtual bool AllowMultiple => true;
+        public virtual bool AllowMultiple => false;
         public GameEntity GameEntity { get; set; }
 
         // Constructor

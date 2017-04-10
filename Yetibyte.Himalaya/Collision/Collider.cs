@@ -11,15 +11,15 @@ namespace Yetibyte.Himalaya.Collision {
 
         // Fields
 
-        
+
 
         // Properties
 
-        
+        public override bool AllowMultiple => true;
 
         // Constructor
 
-        
+
         // Methods
 
     }

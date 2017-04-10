@@ -189,11 +189,27 @@ namespace Yetibyte.Himalaya.GameElements {
                 
         public void AddComponent(EntityComponent component) {
 
-            if (HasComponent(component))
+            if (component == null || HasComponent(component))
                 return;
 
+            Type componentType = component.GetType();
+
+            if (!component.AllowMultiple && HasComponentOfType(componentType))
+                return;
+
+            component.GameEntity?.RemoveComponent(component);
             component.GameEntity = this;
             _components.Add(component);
+
+        }
+
+        public void RemoveComponent(EntityComponent component) {
+
+            if (!HasComponent(component))
+                return;
+
+            _components.Remove(component);
+            component.GameEntity = null;
 
         }
 
