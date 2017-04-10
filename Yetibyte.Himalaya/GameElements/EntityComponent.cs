@@ -5,23 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Yetibyte.Himalaya.GameElements;
 
-namespace Yetibyte.Himalaya.Collision {
+namespace Yetibyte.Himalaya.GameElements {
 
-    public abstract class Collider : EntityComponent {
-
-        // Fields
-
-        
+    public abstract class EntityComponent {
 
         // Properties
 
-        
+        public virtual bool AllowMultiple => true;
+        public GameEntity GameEntity { get; set; }
 
         // Constructor
-
         
         // Methods
 
     }
-
 }

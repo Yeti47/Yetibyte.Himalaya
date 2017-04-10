@@ -84,6 +84,7 @@ namespace TestGame {
 
             player.Transform.LocalScale = new Vector2(4f, 4f);
 
+            /* CollisionController Testing
             EmptyTestEntity testEntityA = new EmptyTestEntity("child 1 of gun", Vector2.Zero);
             gun.AddChildEntity(testEntityA);
 
@@ -105,6 +106,7 @@ namespace TestGame {
                 Debug.WriteLine(collisionController.GameEntity.Name);
 
             }
+            */
 
             // vvvvv ParentChildHierarchy-Test vvvvvvv
 

@@ -8,25 +8,19 @@ using Yetibyte.Himalaya.GameElements;
 
 namespace Yetibyte.Himalaya.Collision {
 
-    public class CollisionController {
+    public class CollisionController : EntityComponent {
 
         // Properties
 
-        public string TestString { get; set; }
-        public GameEntity GameEntity { get; private set; }
         public List<Collider> Colliders { get; private set; } = new List<Collider>();
+        public float GravityScale { get; set; }
+        public override bool AllowMultiple => false;
 
         // Constructor
 
-        public CollisionController(GameEntity gameEntity) {
-
-            this.GameEntity = gameEntity;
-
-        }
+        
 
         // Methods
-
-        
         
         /// <summary>
         /// Checks whether or not this <see cref="CollisionController"/> is in control of the given <see cref="Collider"/>.

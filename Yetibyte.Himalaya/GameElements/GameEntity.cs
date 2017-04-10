@@ -14,6 +14,7 @@ namespace Yetibyte.Himalaya.GameElements {
         private bool _isActive = true;
 		private List<GameEntity> _childEntities = new List<GameEntity>();
         private GameEntity _parentEntity;
+        private List<EntityComponent> _components = new List<EntityComponent>();
 		
 		// Properties
 
@@ -27,8 +28,8 @@ namespace Yetibyte.Himalaya.GameElements {
 			set { _isActive = value;}
 
 		}
-		
-		public String Name { get; protected set; }
+
+        public String Name { get; protected set; } = "unnamed";
 
         /// <summary>
         /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
@@ -91,8 +92,6 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public Transform Transform { get; set; } = new Transform();
 
-        public CollisionController CollisionController { get; protected set; }
-
         public bool HasParent => _parentEntity != null;
 
         public int DrawOrder { get; set; }
@@ -103,7 +102,6 @@ namespace Yetibyte.Himalaya.GameElements {
 			
 			this.Name = name;
 			this.Transform.Position = position;
-            this.CollisionController = new CollisionController(this);
 
 		}
         
@@ -183,11 +181,41 @@ namespace Yetibyte.Himalaya.GameElements {
         }
 
         /// <summary>
-        /// Checks whether the given <see cref="GameEntity"/> is included in the list of child entities fo this <see cref="GameEntity"/>.
+        /// Checks whether the given <see cref="GameEntity"/> is included in the list of child entities of this <see cref="GameEntity"/>.
         /// </summary>
         /// <param name="childEntity">The child game entity.</param>
         /// <returns>True if the given entity is a child of this GameEntity.</returns>
         public bool IsParentOf(GameEntity childEntity) => ChildEntities.Contains(childEntity);
+                
+        public void AddComponent(EntityComponent component) {
+
+            if (HasComponent(component))
+                return;
+
+            component.GameEntity = this;
+            _components.Add(component);
+
+        }
+
+        public bool HasComponent(EntityComponent component) => _components.Contains(component);
+
+        /// <summary>
+        /// Checks whether this GameEntity has a <see cref="EntityComponent"/> of the given type. This will only look for the given type explicitly, not derived types.
+        /// </summary>
+        /// <param name="componentType"></param>
+        /// <returns></returns>
+        public bool HasComponentOfType(Type componentType) {
+
+            foreach (EntityComponent component in _components) {
+
+                if (component.GetType() == componentType)
+                    return true;
+
+            }
+
+            return false;
+
+        }
 
     }
 	
