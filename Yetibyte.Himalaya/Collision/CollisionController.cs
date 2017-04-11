@@ -28,6 +28,8 @@ namespace Yetibyte.Himalaya.Collision {
         /// <returns>True if the collider was found, false otherwise.</returns>
         public bool HasCollider(Collider collider) => Colliders.Contains(collider);
 
+        /*
+
         /// <summary>
         /// Recursively iterates through all children of the <see cref="Yetibyte.Himalaya.GameElements.GameEntity"/> attached to this 
         /// <see cref="CollisionController"/> and returns a collection of all the <see cref="CollisionController"/>s found.
@@ -56,7 +58,7 @@ namespace Yetibyte.Himalaya.Collision {
 
         }
 
-
+        */
 
     }
 

@@ -122,6 +122,11 @@ namespace TestGame {
             Debug.WriteLine(testParent.Children[0].Children[0].TestProperty);
             Debug.WriteLine(testSubChild.GetAncestor().TestProperty);
 
+            testChildB.AddChild(testSubChild);
+
+            Debug.WriteLine("After changing Sub Test Child's parent from Test Child A to Test Child B:");
+            Debug.WriteLine(testParent.Children[1].Children[0].TestProperty);
+
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ using Yetibyte.Himalaya.GameElements;
 
 namespace Yetibyte.Himalaya.Collision {
 
-    public class RectCollider : Collider {
+    public sealed class RectCollider : Collider {
 
         
 
