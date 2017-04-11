@@ -234,6 +234,8 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <returns></returns>
         public IEnumerable<T> GetComponents<T>() where T : EntityComponent => _components.OfType<T>();
 
+        public IEnumerable<T> GetActiveComponents<T>() where T : EntityComponent => _components.OfType<T>().Where(c => c.IsActive);
+
         /* TODO 
          * Maybe split this into two separate methods, where one method includes the root components and one doesn't, 
          * since "GetComponentsInChildren" does not intuitively imply that including the root components is an option.

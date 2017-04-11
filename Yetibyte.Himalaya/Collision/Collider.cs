@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yetibyte.Himalaya.GameElements;
+using Microsoft.Xna.Framework;
 
 namespace Yetibyte.Himalaya.Collision {
 
@@ -16,6 +17,7 @@ namespace Yetibyte.Himalaya.Collision {
         // Properties
 
         public override bool AllowMultiple => true;
+        public abstract Rectangle Bounds { get; set; }
 
         // Constructor
 

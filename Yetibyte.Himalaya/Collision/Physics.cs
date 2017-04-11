@@ -42,6 +42,8 @@ namespace Yetibyte.Himalaya.Collision {
         /// <returns>A collection of all Colliders that match the given Type and are attached to GameEntities that live in the current Scene.</returns>
         public IEnumerable<T> GetCollidersInActiveEntities<T>() where T : EntityComponent => _scene.LiveGameEntities.SelectMany(e => e.GetComponents<T>());
 
+        public IEnumerable<Collider> GetActiveColliders() => _scene.LiveGameEntities.SelectMany(e => e.GetActiveComponents<Collider>());
+
     }
 
 }

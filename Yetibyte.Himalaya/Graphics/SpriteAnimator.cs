@@ -33,7 +33,9 @@ namespace Yetibyte.Himalaya.Graphics {
         /// <param name="sprite">The sprite to animate.</param>
         /// <param name="animation">The animation to use.</param>
         public SpriteAnimator(Sprite sprite, SpriteAnimation animation) {
-                        
+
+            this.Sprite = sprite;
+
             if(animation.FrameCount > 0) {
 
                 UpdateSprite();

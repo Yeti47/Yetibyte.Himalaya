@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Yetibyte.Himalaya.Collision;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
@@ -27,12 +28,14 @@ namespace Yetibyte.Himalaya.GameElements {
 		
 		public Game Game { get; protected set; }
 
-        public List<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>().ToList();
+        public IEnumerable<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>();
+
+        public Physics Physics { get; protected set; }
 
         /// <summary>
         /// Returns a list of all GameEntities in this scene that are currently active and not destroyed.
         /// </summary>
-        public List<GameEntity> LiveGameEntities => GameEntities.Where(e => e.IsActive && !e.IsDestroyed).ToList();
+        public IEnumerable<GameEntity> LiveGameEntities => GameEntities.Where(e => e.IsActive && !e.IsDestroyed);
 
         // Constructor
 
