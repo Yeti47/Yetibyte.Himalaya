@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision\Collider.cs" />
+    <Compile Include="Collision\Physics.cs" />
+    <Compile Include="Collision\RectCollider.cs" />
     <Compile Include="Content\SpriteAnimationReader.cs" />
     <Compile Include="Controls\ControlSettings.cs" />
     <Compile Include="Controls\ControlListener.cs" />
@@ -53,6 +56,8 @@
     <Compile Include="Controls\GameControlEventArgs.cs" />
     <Compile Include="Extensions\GameTimeExtensions.cs" />
     <Compile Include="GameElements\Actor.cs" />
+    <Compile Include="Collision\CollisionController.cs" />
+    <Compile Include="GameElements\EntityComponent.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
     <Compile Include="GameElements\IGame.cs" />
     <Compile Include="GameElements\Scene.cs" />

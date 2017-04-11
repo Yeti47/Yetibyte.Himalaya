@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
+using Yetibyte.Himalaya.Collision;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
@@ -13,21 +14,36 @@ namespace Yetibyte.Himalaya.GameElements {
         private bool _isActive = true;
 		private List<GameEntity> _childEntities = new List<GameEntity>();
         private GameEntity _parentEntity;
+        private List<EntityComponent> _components = new List<EntityComponent>();
 		
 		// Properties
 
         /// <summary>
         /// A <see cref="GameEntity"/> that is inactive will be ignored by the <see cref="Yetibyte.Himalaya.GameElements.Scene"/> and will
-        /// therefore not be updated.
+        /// therefore not be updated. This also takes into account the active state of the parent GameEntity. If the parent is not active, this will return false 
+        /// regardless of this GameEntity's local active state.
         /// </summary>
+        /// <seealso cref="IsActiveSelf"/>
         public bool IsActive {
 
-            get { return _isActive; }
-			set { _isActive = value;}
+            get => this.IsActiveSelf && (!this.HasParent || _parentEntity.IsActive);
+			set => this.IsActiveSelf = value;
 
 		}
-		
-		public String Name { get; protected set; }
+
+        /// <summary>
+        /// The local active state of this <see cref="GameEntity"/>. This ignores the active state of the parent. Pleae note that, even if this is set to true, the GameEntity 
+        /// may still be considered inactive by the <see cref="Yetibyte.Himalaya.GameElements.Scene"/> because the parent is not active.
+        /// </summary>
+        /// <seealso cref="IsActive"/>
+        public bool IsActiveSelf {
+
+            get => _isActive;
+            set => _isActive = value;
+
+        }
+
+        public String Name { get; protected set; } = "unnamed";
 
         /// <summary>
         /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
@@ -179,11 +195,114 @@ namespace Yetibyte.Himalaya.GameElements {
         }
 
         /// <summary>
-        /// Checks whether the given <see cref="GameEntity"/> is included in the list of child entities fo this <see cref="GameEntity"/>.
+        /// Checks whether the given <see cref="GameEntity"/> is included in the list of child entities of this <see cref="GameEntity"/>.
         /// </summary>
         /// <param name="childEntity">The child game entity.</param>
         /// <returns>True if the given entity is a child of this GameEntity.</returns>
         public bool IsParentOf(GameEntity childEntity) => ChildEntities.Contains(childEntity);
+                
+        public void AddComponent(EntityComponent component) {
+
+            if (component == null || HasComponent(component))
+                return;
+
+            Type componentType = component.GetType();
+
+            if (!component.AllowMultiple && HasComponentOfType(componentType))
+                return;
+
+            component.GameEntity?.RemoveComponent(component);
+            _components.Add(component);
+            component.SetGameEntityDirectly(this);
+
+        }
+
+        public void RemoveComponent(EntityComponent component) {
+
+            if (!HasComponent(component))
+                return;
+
+            _components.Remove(component);
+            component.SetGameEntityDirectly(null);
+
+        }
+
+        /// <summary>
+        /// Returns a collection of all <see cref="EntityComponent"/>s attached to this <see cref="GameEntity"/> that are of or derive from the given Type.
+        /// </summary>
+        /// <typeparam name="T">The type to filter the components by.</typeparam>
+        /// <returns></returns>
+        public IEnumerable<T> GetComponents<T>() where T : EntityComponent => _components.OfType<T>();
+
+        /* TODO 
+         * Maybe split this into two separate methods, where one method includes the root components and one doesn't, 
+         * since "GetComponentsInChildren" does not intuitively imply that including the root components is an option.
+        */
+        /// <summary>
+        /// Returns a collection of all <see cref="EntityComponent"/>s attached to this <see cref="GameEntity"/>'s children that match the given Type or derive from it.
+        /// </summary>
+        /// <typeparam name="T">The Type to filter the components by.</typeparam>
+        /// <param name="includeSelf">Should the root <see cref="GameEntity"/>'s components be included in the collection?</param>
+        /// <param name="recurse">Should the components attached to grandchildren, great-grandchildren etc. also be included in the collection?</param>
+        /// <returns>A collection of all components that meet the specified conditions.</returns>
+        public IEnumerable<T> GetComponentsInChildren<T>(bool includeSelf, bool recurse) where T : EntityComponent {
+
+            IEnumerable<T> ownComponents = includeSelf ? GetComponents<T>() : new T[0];
+
+            if (_childEntities == null) // Just a safety precaution
+                return ownComponents.Concat(new T[0]);
+
+            if (!recurse)
+                return ownComponents.Concat(_childEntities.SelectMany(e => e.GetComponents<T>()));
+
+            return ownComponents.Concat(_childEntities.SelectMany(e => e.GetComponentsInChildren<T>(true, true)));
+
+        }
+
+        /// <summary>
+        /// Returns the first <see cref="EntityComponent"/> attached to this <see cref="GameEntity"/> that matches the given Type or derives from it.
+        /// </summary>
+        /// <typeparam name="T">The type of the component to look for.</typeparam>
+        /// <returns></returns>
+        public T GetComponent<T>() where T : EntityComponent => GetComponents<T>().FirstOrDefault();
+
+        public bool HasComponent(EntityComponent component) => _components.Contains(component);
+
+        /// <summary>
+        /// Checks whether this GameEntity has a <see cref="EntityComponent"/> of the given type. This will only look for the given type explicitly, not derived types.
+        /// </summary>
+        /// <param name="componentType">The type of component to look for.</param>
+        /// <returns>True if there is a component attached to this <see cref="GameEntity"/> that matches the given type.</returns>
+        public bool HasComponentOfType(Type componentType) {
+
+            foreach (EntityComponent component in _components) {
+
+                if (component.GetType() == componentType)
+                    return true;
+
+            }
+
+            return false;
+
+        }
+
+        /// <summary>
+        /// Checks whether this GameEntity has a <see cref="EntityComponent"/> of the given base type. 
+        /// </summary>
+        /// <param name="componentType">The type of component to look for.</param>
+        /// <returns>True if there is a component attached to this <see cref="GameEntity"/> that matches the given type.</returns>
+        public bool HasComponentOfDerivedType(Type componentType) {
+
+            foreach (EntityComponent component in _components) {
+
+                if (componentType.IsAssignableFrom(component.GetType()))
+                    return true;
+
+            }
+
+            return false;
+
+        }
 
     }
 	

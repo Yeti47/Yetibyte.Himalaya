@@ -6,6 +6,10 @@ using Yetibyte.Himalaya.GameElements;
 using Yetibyte.Himalaya.Graphics;
 using Yetibyte.Himalaya.Procedural;
 using Yetibyte.Himalaya.Controls;
+using Yetibyte.Himalaya.Collision;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace TestGame {
     /// <summary>
@@ -75,10 +79,36 @@ namespace TestGame {
 
             Gun gun = new Gun("playerGun", player.Transform.Position, gunSprite);
             gun.DrawOrder = 0;
-
+            
             player.AddChildEntity(gun);
 
             player.Transform.LocalScale = new Vector2(4f, 4f);
+
+            /* CollisionController Testing
+            EmptyTestEntity testEntityA = new EmptyTestEntity("child 1 of gun", Vector2.Zero);
+            gun.AddChildEntity(testEntityA);
+
+            EmptyTestEntity testEntityB = new EmptyTestEntity("child 2 of gun", Vector2.Zero);
+            gun.AddChildEntity(testEntityB);
+
+            EmptyTestEntity testEntityC = new EmptyTestEntity("another child of player", Vector2.Zero);
+            player.AddChildEntity(testEntityC);
+
+            EmptyTestEntity testEntityD = new EmptyTestEntity("testEntity D as a child of testEntityB", Vector2.Zero);
+            testEntityB.AddChildEntity(testEntityD);
+
+            List<CollisionController> childCollisionControllers = player.CollisionController.GetAllChildControllers(false);
+
+            Debug.WriteLine("I found child collision controllers in the following entities:");
+
+            foreach (var collisionController in childCollisionControllers) {
+
+                Debug.WriteLine(collisionController.GameEntity.Name);
+
+            }
+            */
+
+            // vvvvv ParentChildHierarchy-Test vvvvvvv
 
             PCTest testParent = new PCTest() { TestProperty = "I am the ancestor of everyone!" };
             PCTest testChildA = new PCTest();
@@ -89,8 +119,13 @@ namespace TestGame {
             testParent.AddChild(testChildB);
             testChildA.AddChild(testSubChild);
 
-            System.Diagnostics.Debug.WriteLine(testParent.Children[0].Children[0].TestProperty);
-            System.Diagnostics.Debug.WriteLine(testSubChild.GetAncestor().TestProperty);
+            Debug.WriteLine(testParent.Children[0].Children[0].TestProperty);
+            Debug.WriteLine(testSubChild.GetAncestor().TestProperty);
+
+            testChildB.AddChild(testSubChild);
+
+            Debug.WriteLine("After changing Sub Test Child's parent from Test Child A to Test Child B:");
+            Debug.WriteLine(testParent.Children[1].Children[0].TestProperty);
 
         }
 
