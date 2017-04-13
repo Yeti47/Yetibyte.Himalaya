@@ -14,7 +14,7 @@ namespace Yetibyte.Utilities {
 		    
         // Fields
            
-		private static Random _random = new Random();
+		private static readonly Random _random = new Random();
 
         // Properties
 
@@ -22,7 +22,7 @@ namespace Yetibyte.Utilities {
         /// Provides a static instance of the Random class for quick access to random number generation. The seed for this Random
         /// instance never changes.
         /// </summary>
-        public static Random Random { get { return _random; } }
+        public static Random Random => _random;
 
         // Methods
 
