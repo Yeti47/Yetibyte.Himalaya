@@ -90,12 +90,48 @@ namespace Yetibyte.Utilities {
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>True if the absolute value of the given number is smaller than EPSILON.</returns>
-        public static bool IsCloseToZero(double value) {
+        public static bool IsCloseToZero(double value) => Math.Abs(value) < EPSILON;
 
-            return Math.Abs(value) < EPSILON;
+        /// <summary>
+        /// Checks if the given number can be assumed to be equal to 0. 
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns>True if the absolute value of the given number is smaller than <see cref="EPSILON"/>.</returns>
+        public static bool IsCloseToZero(float value) => Math.Abs(value) < EPSILON;
 
-        }
-		
-	}
+        /// <summary>
+        /// Checks whether the given values are approximately equal.
+        /// </summary>
+        /// <returns>True if the difference between the given values is smaller than <see cref="EPSILON"/></returns>
+        public static bool RoughlyEquals(double a, double b) => Math.Abs(a - b) < EPSILON;
+
+        /// <summary>
+        /// Checks whether the given values are approximately equal.
+        /// </summary>
+        /// <returns>True if the difference between the given values is smaller than <see cref="EPSILON"/></returns>
+        public static bool RoughlyEquals(float a, float b) => Math.Abs(a - b) < EPSILON;
+
+        /// <summary>
+        /// Rounds and casts the given value to the nearest integer. Shorthand for <c>(int)System.Math.Round(value)</c>.
+        /// </summary>
+        /// <param name="value">The value to round and cast</param>
+        /// <returns>The integer nearest to <c>value</c></returns>
+        public static int RoundToInt(double value) => (int)Math.Round(value);
+
+        /// <summary>
+        /// Returns the smallest integer greater than or equal to the given value. Shorthand for <c>(int)System.Math.Ceiling(value)</c>.
+        /// </summary>
+        /// <param name="value">The value to cast.</param>
+        /// <returns>The smallest integer greater than or equal to<c>value</c></returns>
+        public static int CeilingToInt(double value) => (int)Math.Ceiling(value);
+
+        /// <summary>
+        /// Returns the largest integer that is less than or equal to the given value. Shorthand for <c>(int)System.Math.Floor(value)</c>.
+        /// </summary>
+        /// <param name="value">The value to cast.</param>
+        /// <returns>The smallest integer greater than or equal to<c>value</c></returns>
+        public static int FloorToInt(double value) => (int)Math.Floor(value);
+
+    }
 		
 }

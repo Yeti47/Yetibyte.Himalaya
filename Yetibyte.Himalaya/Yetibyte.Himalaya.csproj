@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collision\Collider.cs" />
+    <Compile Include="Collision\CollisionDetectionMethods.cs" />
     <Compile Include="Collision\Physics.cs" />
     <Compile Include="Collision\RectCollider.cs" />
     <Compile Include="Content\SpriteAnimationReader.cs" />
@@ -74,9 +76,16 @@
     <Compile Include="Procedural\DungeonRoom.cs" />
     <Compile Include="Procedural\TyleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RectangleF.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Yetibyte.Utilities\Yetibyte.Utilities.csproj">
+      <Project>{7b4063b8-c89e-41ef-a291-e2e7ac41fad2}</Project>
+      <Name>Yetibyte.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

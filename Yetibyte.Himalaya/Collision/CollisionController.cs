@@ -13,6 +13,8 @@ namespace Yetibyte.Himalaya.Collision {
         // Properties
 
         public float GravityScale { get; set; }
+        public bool IgnoreGravity { get; set; }
+        public CollisionDetectionMethods CollisionDetectionMethod { get; set; } = CollisionDetectionMethods.Lazy;
 
         // Constructor
 
