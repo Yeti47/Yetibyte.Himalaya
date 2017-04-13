@@ -481,9 +481,13 @@ namespace Yetibyte.Himalaya {
 
         }
 
+        /// <summary>
+        /// Creates a new <see cref="Rectangle"/> using the x, y, width and height components of this <see cref="RectangleF"/> rounded to the nearest integers.
+        /// </summary>
+        /// <returns>A new <see cref="Rectangle"/> created from the original <see cref="RectangleF"/>'s location and size components rounded to the nearest integers.</returns>
         public Rectangle ToRectangleRounded() {
 
-            return new Rectangle(0, 0, 0, 0);
+            return new Rectangle(MathUtil.RoundToInt(X), MathUtil.RoundToInt(Y), MathUtil.RoundToInt(Width), MathUtil.RoundToInt(Height));
 
         }
 
