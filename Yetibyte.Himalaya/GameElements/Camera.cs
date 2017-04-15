@@ -25,9 +25,10 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Methods
 
-        public Matrix GetMatrix() {
-
-            Matrix matrix = Matrix.CreateTranslation(new Vector3(Transform.Position, 0));
+        public Matrix GetViewMatrix() {
+            
+            Vector2 screenCenter = new Vector2((float)Game.GraphicsDevice.Viewport.Width / 2f, (float)Game.GraphicsDevice.Viewport.Height / 2f);
+            Matrix matrix = Matrix.CreateTranslation(new Vector3(screenCenter - Transform.Position, 0)) * Matrix.CreateTranslation(new Vector3(screenCenter, 0));
             return matrix;
 
         }
