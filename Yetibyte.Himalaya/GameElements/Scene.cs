@@ -47,6 +47,7 @@ namespace Yetibyte.Himalaya.GameElements {
             this.GameEntities = new List<GameEntity>();
             this.GameEntitiesToAdd = new Queue<GameEntity>();
             this.GameEntitiesToRemove = new Queue<GameEntity>();
+            this.Physics = new Physics(this);
 
         }
 
@@ -79,6 +80,8 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
         public virtual void Update(GameTime gameTime) {
+
+            Physics.BuildCollisionTree();
 
             while (GameEntitiesToRemove.Count > 0) {
 

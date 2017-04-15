@@ -166,6 +166,25 @@ namespace Yetibyte.Himalaya.DataStructures {
 
         }
 
+        /// <summary>
+        /// Recursively removes all objects from this node and all its sub-nodes. Also sets all sub-nodes to null.
+        /// </summary>
+        public void Clear() {
+
+            BoundingBoxObjects.Clear();
+
+            for (int i = 0; i < SubNodes.Length; i++) {
+
+                if(SubNodes[i] != null) {
+
+                    SubNodes[i].Clear();
+                    SubNodes[i] = null;
+                    
+                }
+
+            }
+
+        }
                 
         #endregion
 
