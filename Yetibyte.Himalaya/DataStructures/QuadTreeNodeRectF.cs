@@ -85,7 +85,7 @@ namespace Yetibyte.Himalaya.DataStructures {
         }
 
         /// <summary>
-        /// Splits this <see cref="QuadTreeNodeRectF"/> into four equally sized sub-nodes and stores them in <see cref=""/>
+        /// Splits this <see cref="QuadTreeNodeRectF"/> into four equally sized sub-nodes and stores them in <see cref="SubNodes"/>.
         /// </summary>
         private void Split() {
 

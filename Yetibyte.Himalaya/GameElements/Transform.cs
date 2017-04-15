@@ -12,20 +12,20 @@ namespace Yetibyte.Himalaya.GameElements {
     /// </summary>
     public class Transform {
 
-        // Fields
+        #region Fields
 
         private Transform _parent;
         private Vector2 _position = Vector2.Zero;
 
-        // Properties
+        #endregion
 
-        public Transform Parent
-        {
+        #region Properties
+
+        public Transform Parent {
 
             get { return _parent; }
 
-            set
-            {
+            set {
 
                 Transform futureParent = value;
 
@@ -42,7 +42,7 @@ namespace Yetibyte.Himalaya.GameElements {
             }
 
         }
-        
+
         public List<Transform> Children { get; private set; } = new List<Transform>();
 
         /// <summary>
@@ -50,14 +50,12 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         public Vector2 LocalPosition {
 
-            get
-            {
+            get {
                 Vector2 relation = Parent != null ? Parent.LocalPosition : Vector2.Zero;
                 return Position - relation;
             }
 
-            set
-            {
+            set {
                 Vector2 relation = Parent != null ? Parent.Position : Vector2.Zero;
                 Position = value + relation;
             }
@@ -67,11 +65,9 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <summary>
         /// The global scale of this Transform (read-only). Use <see cref="LocalScale"/> to manipulate the scaling value.
         /// </summary>
-        public Vector2 Scale
-        {
+        public Vector2 Scale {
 
-            get
-            {
+            get {
                 Vector2 relation = Parent != null ? Parent.Scale : Vector2.One;
                 return LocalScale * relation;
             }
@@ -81,27 +77,23 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <summary>
         /// The global rotation of this Transform in radians (read-only). Use <see cref="LocalRotation"/> to manipulate the rotation value.
         /// </summary>
-        public float Rotation
-        {
+        public float Rotation {
 
-            get
-            {
+            get {
                 float relation = Parent != null ? Parent.Rotation : 0f;
                 return relation + LocalRotation;
             }
 
         }
-        
+
         /// <summary>
         /// The global position. Setting this value will also manipulate the position of all child Transforms.
         /// </summary>
-        public Vector2 Position
-        {
+        public Vector2 Position {
 
             get { return _position; }
 
-            set
-            {
+            set {
 
                 Vector2 delta = value - _position;
 
@@ -114,6 +106,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        /// <summary>
+        /// The x-coordinate of this Transform's global position.
+        /// </summary>
         public float X {
 
             get => _position.X;
@@ -121,6 +116,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        /// <summary>
+        /// The y-coordinate of this Transform's global position.
+        /// </summary>
         public float Y {
 
             get => _position.Y;
@@ -134,7 +132,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool HasParent => _parent != null;
 
-        // Methods
+        #endregion
+
+        #region Methods
 
         public Vector2 Translate(Vector2 offset) {
 
@@ -157,7 +157,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
             Children.Add(childTransform);
             childTransform.Parent = this;
-       
+
         }
 
         public void RemoveChild(Transform childTransform) {
@@ -176,6 +176,8 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="childTransform">The child transform.</param>
         /// <returns>True if the given Transform is a child of this Transform.</returns>
         public bool IsParentOf(Transform childTransform) => Children.Contains(childTransform);
+
+        #endregion
 
     }
 

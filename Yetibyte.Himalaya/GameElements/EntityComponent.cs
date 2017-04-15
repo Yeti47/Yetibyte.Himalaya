@@ -9,12 +9,14 @@ namespace Yetibyte.Himalaya.GameElements {
 
     public abstract class EntityComponent {
 
-        // Fields
+        #region Fields
 
         protected bool _isActive = true;
         protected GameEntity _gameEntity;
 
-        // Properties
+        #endregion
+
+        #region Properties
 
         public virtual bool AllowMultiple => false;
 
@@ -38,8 +40,7 @@ namespace Yetibyte.Himalaya.GameElements {
         }
 
         public bool IsAttached => _gameEntity != null;
-
-
+        
         /// <summary>
         /// Determines whether or not this component is currently active. This also takes into account the active state of
         /// the <see cref="Yetibyte.Himalaya.GameElements.GameEntity"/> this component is attached to. If the GameEntity is not active, this will return false
@@ -61,9 +62,9 @@ namespace Yetibyte.Himalaya.GameElements {
         /// /// <seealso cref="IsActive"/>
         public bool IsActiveSelf { get => _isActive; set => _isActive = value; }
 
-        // Constructor
+        #endregion
 
-        // Methods
+        #region Methods
 
         /// <summary>
         /// Sets the <see cref="Yetibyte.Himalaya.GameElements.GameEntity"/> this component is attached to without
@@ -72,6 +73,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="gameEntity">The new GameEntity.</param>
         internal void SetGameEntityDirectly(GameEntity gameEntity) => _gameEntity = gameEntity;
 
+        #endregion
 
     }
 }

@@ -10,7 +10,7 @@ namespace Yetibyte.Himalaya.GameElements {
 	
 	public abstract class Scene : ITimeScale {
 
-        // Properties
+        #region Properties
 
         /// <summary>
         /// A global scaling value for time based operations to simulate the effect of slowing down or speeding up time. This value is passed
@@ -23,10 +23,10 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
 		public List<GameEntity> GameEntities { get; protected set; }
 
-		public Queue<GameEntity> GameEntitiesToAdd { get; protected set; }
-		public Queue<GameEntity> GameEntitiesToRemove { get; protected set;}
-		
-		public Game Game { get; protected set; }
+        public Queue<GameEntity> GameEntitiesToAdd { get; protected set; }
+        public Queue<GameEntity> GameEntitiesToRemove { get; protected set; }
+
+        public Game Game { get; protected set; }
 
         public IEnumerable<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>();
 
@@ -37,57 +37,61 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         public IEnumerable<GameEntity> LiveGameEntities => GameEntities.Where(e => e.IsActive && !e.IsDestroyed);
 
-        // Constructor
+        #endregion
+
+        #region Constructors
 
         protected Scene(Game game) {
-			
-			this.Game = game;
-			this.GameEntities = new List<GameEntity>();
-			this.GameEntitiesToAdd = new Queue<GameEntity>();
-			this.GameEntitiesToRemove = new Queue<GameEntity>();
-			
-		}
-		
-		// Methods
-		
+
+            this.Game = game;
+            this.GameEntities = new List<GameEntity>();
+            this.GameEntitiesToAdd = new Queue<GameEntity>();
+            this.GameEntitiesToRemove = new Queue<GameEntity>();
+
+        }
+
+        #endregion
+        
+        #region Methods
+
         /// <summary>
         /// Responsible for loading content that is used in this Scene.
         /// </summary>
-		public virtual void LoadContent() {
-						
-		}
-		
+        public virtual void LoadContent() {
+
+        }
+
         /// <summary>
         /// Calls the Initialize method of each GameEntity within this Scene.
         /// </summary>
-		public virtual void Initialize() {
-			
-			foreach(GameEntity gameEntity in GameEntities) {
-				
-				gameEntity.Initialize();
-				
-			}
-			
-		}
-		
+        public virtual void Initialize() {
+
+            foreach (GameEntity gameEntity in GameEntities) {
+
+                gameEntity.Initialize();
+
+            }
+
+        }
+
         /// <summary>
         /// Calls the Update method of each GameEntity within this Scene.
         /// </summary>
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
-		public virtual void Update(GameTime gameTime) {
-									
-			while(GameEntitiesToRemove.Count > 0) {
-				
-				GameEntities.Remove(GameEntitiesToRemove.Dequeue());
-				
-			}	
-			
-			foreach(GameEntity gameEntity in GameEntities) {
-				
-				if(gameEntity.IsActive && !gameEntity.IsDestroyed)
-					gameEntity.Update(gameTime, TimeScale);
-				
-			}
+        public virtual void Update(GameTime gameTime) {
+
+            while (GameEntitiesToRemove.Count > 0) {
+
+                GameEntities.Remove(GameEntitiesToRemove.Dequeue());
+
+            }
+
+            foreach (GameEntity gameEntity in GameEntities) {
+
+                if (gameEntity.IsActive && !gameEntity.IsDestroyed)
+                    gameEntity.Update(gameTime, TimeScale);
+
+            }
 
             while (GameEntitiesToAdd.Count > 0) {
 
@@ -108,45 +112,45 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="spriteBatch">The spritebatch to use for rendering.</param>
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-			
-			foreach(GameEntity gameEntity in GameEntities.OrderBy(e => e.DrawOrder)) {
-				
-				if(gameEntity.IsActive)
-					gameEntity.Draw(spriteBatch, gameTime);
-				
-			}				
-			
-		}
-		/// <summary>
+
+            foreach (GameEntity gameEntity in GameEntities.OrderBy(e => e.DrawOrder)) {
+
+                if (gameEntity.IsActive)
+                    gameEntity.Draw(spriteBatch, gameTime);
+
+            }
+
+        }
+        /// <summary>
         /// Adds the given GameEntity to this Scene. Processing of newly added Entity will start after all existing Entities have been processed.
         /// </summary>
         /// <param name="gameEntity">The GameEntity to add to the Scene.</param>
-		public void AddGameEntity(GameEntity gameEntity) {
+        public void AddGameEntity(GameEntity gameEntity) {
 
             // Cancel if the Game Entity was already added to the Scene.
             if (GameEntities.Contains(gameEntity) || GameEntitiesToAdd.Contains(gameEntity))
                 return;
 
             gameEntity.Scene = this;
-			GameEntitiesToAdd.Enqueue(gameEntity);
-			gameEntity.Initialize();
-			
-		}
-		
+            GameEntitiesToAdd.Enqueue(gameEntity);
+            gameEntity.Initialize();
+
+        }
+
         /// <summary>
         /// Removes the given GameEntity from this Scene. Please note that GameEntities will effectively be removed at the start of the next
         /// Update interval.
         /// </summary>
         /// <param name="gameEntity">The GameEntity to remove from this Scene.</param>
-		public void RemoveGameEntity(GameEntity gameEntity) {
+        public void RemoveGameEntity(GameEntity gameEntity) {
 
             // Cancel if the Game Entity is not in this Scene or was already enqueued to be removed.
             if (!GameEntities.Contains(gameEntity) || GameEntitiesToRemove.Contains(gameEntity))
                 return;
 
             GameEntitiesToRemove.Enqueue(gameEntity);
-			
-		}
+
+        }
 
         /// <summary>
         /// Returns a list of all <see cref="GameEntity"/> objects of the given Type that currently live in this scene.
@@ -174,7 +178,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// Null if no Entity was found.</returns>
         public T FindGameEntity<T>(string name) where T : GameEntity {
 
-            foreach(GameEntity gameEntity in GameEntities) {
+            foreach (GameEntity gameEntity in GameEntities) {
 
                 if (gameEntity.Name == name && !gameEntity.IsDestroyed && gameEntity is T)
                     return (T)gameEntity;
@@ -184,7 +188,9 @@ namespace Yetibyte.Himalaya.GameElements {
             return null;
 
         }
-		
-	}
+
+        #endregion
+
+    }
 	
 }

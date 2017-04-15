@@ -9,14 +9,16 @@ namespace Yetibyte.Himalaya.GameElements {
 	
 	public abstract class GameEntity : IUpdate, ITimeScale, IDraw {
 
-        // Fields
+        #region Fields
 
         private bool _isActive = true;
-		private List<GameEntity> _childEntities = new List<GameEntity>();
+        private List<GameEntity> _childEntities = new List<GameEntity>();
         private GameEntity _parentEntity;
         private List<EntityComponent> _components = new List<EntityComponent>();
-		
-		// Properties
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// A <see cref="GameEntity"/> that is inactive will be ignored by the <see cref="Yetibyte.Himalaya.GameElements.Scene"/> and will
@@ -27,9 +29,9 @@ namespace Yetibyte.Himalaya.GameElements {
         public bool IsActive {
 
             get => this.IsActiveSelf && (!this.HasParent || _parentEntity.IsActive);
-			set => this.IsActiveSelf = value;
+            set => this.IsActiveSelf = value;
 
-		}
+        }
 
         /// <summary>
         /// The local active state of this <see cref="GameEntity"/>. This ignores the active state of the parent. Pleae note that, even if this is set to true, the GameEntity 
@@ -48,20 +50,20 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <summary>
         /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
         /// </summary>
-	    public Scene Scene { get; set; } 
-		
-		public Game Game {
-			
-			get { 
-			
-				if(Scene == null)
-					return null;
-				
-				return Scene.Game;
-				
-			}
-			
-		}
+	    public Scene Scene { get; set; }
+
+        public Game Game {
+
+            get {
+
+                if (Scene == null)
+                    return null;
+
+                return Scene.Game;
+
+            }
+
+        }
 
         /// <summary>
         /// Sets the parent <see cref="GameEntity"/> of this <see cref="GameEntity"/>. Will automatically call AddChildEntity and RemoveChildEntity methods where needed.
@@ -76,7 +78,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
                 GameEntity futureParent = value;
 
-                if(this.HasParent) {
+                if (this.HasParent) {
 
                     _parentEntity.RemoveChildEntity(this);
 
@@ -94,11 +96,11 @@ namespace Yetibyte.Himalaya.GameElements {
         /// A list of Game Entities that are children of this <see cref="GameEntity"/>.
         /// </summary>
 		public List<GameEntity> ChildEntities {
-			
-			get { return _childEntities; }
-			protected set { _childEntities = value; }
-			
-		}
+
+            get { return _childEntities; }
+            protected set { _childEntities = value; }
+
+        }
 
         public float TimeScale { get; set; } = 1f;
 
@@ -110,47 +112,51 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public int DrawOrder { get; set; }
 
-        // Constructor
+        #endregion
+
+        #region Constructors
 
         protected GameEntity(string name, Vector2 position) {
-			
-			this.Name = name;
-			this.Transform.Position = position;
 
-		}
-        
-        // Methods
+            this.Name = name;
+            this.Transform.Position = position;
 
-		public virtual void Initialize() {
-						
-		}
-		
-		public virtual void Update(GameTime gameTime, float globalTimeScale) {
-			
-			
-					
-		}
-		
-		public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-									
-		}
-		
+        }
+
+        #endregion
+
+        #region Methods
+
+        public virtual void Initialize() {
+
+        }
+
+        public virtual void Update(GameTime gameTime, float globalTimeScale) {
+
+
+
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+
+        }
+
         /// <summary>
         /// Destroys this <see cref="GameEntity"/>. It will be removed from the <see cref="Yetibyte.Himalaya.GameElements.Scene"/> it lived in.
         /// </summary>
-		public void DestroyEntity() {
-			
-			foreach(GameEntity childEntity in ChildEntities)
-				childEntity.DestroyEntity();
+        public void DestroyEntity() {
 
-            if(!IsDestroyed) {
+            foreach (GameEntity childEntity in ChildEntities)
+                childEntity.DestroyEntity();
+
+            if (!IsDestroyed) {
 
                 IsDestroyed = true;
                 Scene.RemoveGameEntity(this);
 
             }
-            			
-		}
+
+        }
 
         /// <summary>
         /// Adds the given <see cref="GameEntity"/> to the list of child entities. Also sets the parent entity respectively. The child
@@ -166,11 +172,11 @@ namespace Yetibyte.Himalaya.GameElements {
                 Transform.AddChild(childEntity.Transform);
                 childEntity.ParentEntity = this;
 
-                if(doAddToScene)
+                if (doAddToScene)
                     Scene.AddGameEntity(childEntity);
 
             }
-            
+
         }
 
         /// <summary>
@@ -191,7 +197,7 @@ namespace Yetibyte.Himalaya.GameElements {
                     Scene.RemoveGameEntity(childEntity);
 
             }
-            
+
         }
 
         /// <summary>
@@ -200,7 +206,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="childEntity">The child game entity.</param>
         /// <returns>True if the given entity is a child of this GameEntity.</returns>
         public bool IsParentOf(GameEntity childEntity) => ChildEntities.Contains(childEntity);
-                
+
         public void AddComponent(EntityComponent component) {
 
             if (component == null || HasComponent(component))
@@ -305,6 +311,8 @@ namespace Yetibyte.Himalaya.GameElements {
             return false;
 
         }
+
+        #endregion
 
     }
 	
