@@ -8,16 +8,17 @@ using Microsoft.Xna.Framework;
 
 namespace Yetibyte.Himalaya.Collision {
 
-    public abstract class Collider : EntityComponent {
+    public abstract class Collider : EntityComponent, IBounds {
 
         // Fields
-
-
 
         // Properties
 
         public override bool AllowMultiple => true;
-        public abstract Rectangle Bounds { get; set; }
+
+        public abstract RectangleF Bounds { get; }
+        public Vector2 Offset { get; set; }
+        public Vector2 Position => (GameEntity != null ? GameEntity.Transform.Position : Vector2.Zero) + Offset;
 
         // Constructor
 

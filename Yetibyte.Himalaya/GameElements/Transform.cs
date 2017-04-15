@@ -113,6 +113,21 @@ namespace Yetibyte.Himalaya.GameElements {
             }
 
         }
+
+        public float X {
+
+            get => _position.X;
+            set => this.Position = new Vector2(value, _position.Y);
+
+        }
+
+        public float Y {
+
+            get => _position.Y;
+            set => this.Position = new Vector2(_position.X, value);
+
+        }
+
         public Vector2 Origin { get; set; }
         public Vector2 LocalScale { get; set; } = Vector2.One;
         public float LocalRotation { get; set; }

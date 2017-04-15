@@ -56,11 +56,13 @@
     <Compile Include="Controls\GameControlAxis.cs" />
     <Compile Include="Controls\GamePadAxes.cs" />
     <Compile Include="Controls\GameControlEventArgs.cs" />
+    <Compile Include="DataStructures\QuadTreeNodeRectF.cs" />
     <Compile Include="Extensions\GameTimeExtensions.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="Collision\CollisionController.cs" />
     <Compile Include="GameElements\EntityComponent.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
+    <Compile Include="GameElements\IBounds.cs" />
     <Compile Include="GameElements\IGame.cs" />
     <Compile Include="GameElements\Scene.cs" />
     <Compile Include="GameElements\Transform.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Procedural\DungeonRoom.cs" />
     <Compile Include="Procedural\TyleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataStructures\QuadTreeRectF.cs" />
     <Compile Include="RectangleF.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +90,7 @@
       <Name>Yetibyte.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

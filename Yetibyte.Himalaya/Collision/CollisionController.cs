@@ -10,17 +10,21 @@ namespace Yetibyte.Himalaya.Collision {
 
     public class CollisionController : EntityComponent {
 
-        // Properties
+        #region Constants
+
+        private const float CONTINUOUS_DETECTION_STEP_SIZE = 10f;
+
+        #endregion
+
+        #region Properties
 
         public float GravityScale { get; set; }
         public bool IgnoreGravity { get; set; }
         public CollisionDetectionMethods CollisionDetectionMethod { get; set; } = CollisionDetectionMethods.Lazy;
 
-        // Constructor
+        #endregion
 
-
-
-        // Methods
+        #region Methods
 
         public IEnumerable<Collider> GetAttachedColliders() => GameEntity.GetComponentsInChildren<Collider>(true, true);
 
@@ -32,10 +36,11 @@ namespace Yetibyte.Himalaya.Collision {
 
         public void Move(Vector2 offset) {
 
-            
+
 
         }
-        
+
+        #endregion
 
     }
 

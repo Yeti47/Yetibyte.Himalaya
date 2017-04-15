@@ -10,9 +10,28 @@ namespace Yetibyte.Himalaya.Collision {
 
     public sealed class RectCollider : Collider {
 
-        // Properties
-        public override Rectangle Bounds { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        
+        #region Properties
+
+        public float Width { get; set; }
+        public float Height { get; set; }
+
+        public Vector2 Size {
+
+            get => new Vector2(this.Width, this.Height);
+
+            set {
+
+                this.Width = value.X;
+                this.Height = value.Y;
+
+            }
+
+        }
+
+        public override RectangleF Bounds => new RectangleF(Position.X - Width / 2, Position.Y - Height / 2, Width, Height);
+
+        #endregion
+
     }
 
 }
