@@ -10,6 +10,12 @@ namespace Yetibyte.Himalaya.GameElements {
 	
 	public abstract class Scene : ITimeScale {
 
+        #region Fields
+
+        private SpriteBatch _spriteBatch;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -31,6 +37,7 @@ namespace Yetibyte.Himalaya.GameElements {
         public IEnumerable<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>();
 
         public Physics Physics { get; protected set; }
+        public Camera Camera { get; private set; }
 
         /// <summary>
         /// Returns a list of all GameEntities in this scene that are currently active and not destroyed.
@@ -48,6 +55,7 @@ namespace Yetibyte.Himalaya.GameElements {
             this.GameEntitiesToAdd = new Queue<GameEntity>();
             this.GameEntitiesToRemove = new Queue<GameEntity>();
             this.Physics = new Physics(this);
+            this.Camera = new Camera(new Vector2(game.GraphicsDevice.Viewport.Width/2, game.GraphicsDevice.Viewport.Height/2));
 
         }
 
@@ -59,6 +67,8 @@ namespace Yetibyte.Himalaya.GameElements {
         /// Responsible for loading content that is used in this Scene.
         /// </summary>
         public virtual void LoadContent() {
+
+            _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
 
         }
 
@@ -112,16 +122,19 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <summary>
         /// Calls the Draw method of each GameEntity within this Scene.
         /// </summary>
-        /// <param name="spriteBatch">The spritebatch to use for rendering.</param>
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
-        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+        public virtual void Draw(GameTime gameTime) {
+
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.GetMatrix());
 
             foreach (GameEntity gameEntity in GameEntities.OrderBy(e => e.DrawOrder)) {
 
                 if (gameEntity.IsActive)
-                    gameEntity.Draw(spriteBatch, gameTime);
+                    gameEntity.Draw(_spriteBatch, gameTime);
 
             }
+
+            _spriteBatch.End();
 
         }
         /// <summary>

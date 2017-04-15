@@ -122,16 +122,16 @@ namespace Yetibyte.Himalaya.Graphics {
                     Origin = Vector2.Zero;
                     break;
                 case OriginPoint.TopRight:
-                    Origin = new Vector2(Texture.Width, 0);
+                    Origin = new Vector2(Width, 0);
                     break;
                 case OriginPoint.Center:
-                    Origin = new Vector2((float)Texture.Width / 2f, (float)Texture.Height / 2f);
+                    Origin = new Vector2((float)Width / 2f, (float)Height / 2f);
                     break;
                 case OriginPoint.BottomLeft:
-                    Origin = new Vector2(0, Texture.Height);
+                    Origin = new Vector2(0, Height);
                     break;
                 case OriginPoint.BottomRight:
-                    Origin = new Vector2(Texture.Width, Texture.Height);
+                    Origin = new Vector2(Width, Height);
                     break;
                 default:
                     Origin = Vector2.Zero;

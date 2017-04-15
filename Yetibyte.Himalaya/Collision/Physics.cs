@@ -72,6 +72,9 @@ namespace Yetibyte.Himalaya.Collision {
 
             IEnumerable<Collider> activeColliders = GetActiveColliders();
 
+            if (activeColliders == null || activeColliders.Count() <= 0)
+                return;
+
             float minX = activeColliders.Min(c => c.Bounds.X);
             float minY = activeColliders.Min(c => c.Bounds.Y);
             float maxX = activeColliders.Max(c => c.Bounds.Right);

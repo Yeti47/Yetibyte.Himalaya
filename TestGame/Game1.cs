@@ -66,19 +66,24 @@ namespace TestGame {
 
             PlayerTexture = Content.Load<Texture2D>("axeGun1");
             Sprite playerSprite = new Sprite(PlayerTexture, 0, 0, 16, 16);
+            playerSprite.SetOrigin(Sprite.OriginPoint.Center);
 
             GunTexture = Content.Load<Texture2D>("gunHands1");
             Sprite gunSprite = new Sprite(GunTexture);
+            gunSprite.SetOrigin(Sprite.OriginPoint.Center);
 
             CurrentScene = new TestScene1(this);
+            CurrentScene.LoadContent();
             CurrentScene.Initialize();
 
-            Player player = new Player("player", new Vector2(50, 50), playerSprite);
+            Player player = new Player("player", new Vector2(0, 0), playerSprite);
             player.DrawOrder = -1;
             CurrentScene.AddGameEntity(player);
 
             Gun gun = new Gun("playerGun", player.Transform.Position, gunSprite);
             gun.DrawOrder = 0;
+            gun.Transform.X -= 7;
+            gun.Transform.Y += 10;
             
             player.AddChildEntity(gun);
 
@@ -167,10 +172,11 @@ namespace TestGame {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            CurrentScene.Draw(gameTime);
+
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-
-            CurrentScene.Draw(spriteBatch, gameTime);
-
+            
             spriteBatch.End();
 
             base.Draw(gameTime);
