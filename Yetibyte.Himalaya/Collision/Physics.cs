@@ -88,6 +88,9 @@ namespace Yetibyte.Himalaya.Collision {
             else
                 CollisionTree.Recreate(quadTreePosition, quadTreeSize);
 
+            foreach (Collider collider in activeColliders)
+                CollisionTree.Insert(collider);
+
         }
 
         #endregion

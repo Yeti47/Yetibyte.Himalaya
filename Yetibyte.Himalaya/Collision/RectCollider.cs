@@ -10,6 +10,8 @@ namespace Yetibyte.Himalaya.Collision {
 
     public sealed class RectCollider : Collider {
 
+        //TODO: Consider including Transform.Scale into calculation
+
         #region Properties
 
         public float Width { get; set; }
