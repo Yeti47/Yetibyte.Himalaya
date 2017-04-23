@@ -39,6 +39,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        /// <summary>
+        /// Whether or not this component has been attached to a <see cref="GameElements.GameEntity"/>.
+        /// </summary>
         public bool IsAttached => _gameEntity != null;
         
         /// <summary>
