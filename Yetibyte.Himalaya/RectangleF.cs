@@ -122,6 +122,16 @@ namespace Yetibyte.Himalaya {
         /// </summary>
         public Vector2 Center => new Vector2(this.X + (this.Width / 2), this.Y + (this.Height / 2));
 
+        /// <summary>
+        /// The surface area of this <see cref="RectangleF"/> (Width * Height).
+        /// </summary>
+        public float SurfaceArea => Width * Height;
+
+        /// <summary>
+        /// The length of this <see cref="RectangleF"/>'s diagonal.
+        /// </summary>
+        public float Diagonal => (float)Math.Sqrt(Width * Width + Height * Height);
+
         #endregion
 
         #region Internal Properties
@@ -490,6 +500,23 @@ namespace Yetibyte.Himalaya {
             return new Rectangle(MathUtil.RoundToInt(X), MathUtil.RoundToInt(Y), MathUtil.RoundToInt(Width), MathUtil.RoundToInt(Height));
 
         }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="RectangleF"/> where the width and height are the same size.
+        /// </summary>
+        /// <param name="x">The x coordinate of the top-left corner of the square.</param>
+        /// <param name="y">The y coordinate of the top-left corner of the square.</param>
+        /// <param name="size">The value used for both the widht and the height of the RectangleF.</param>
+        /// <returns>A new RectangleF with equally sized dimensions.</returns>
+        public static RectangleF CreateSquare(float x, float y, float size) => new RectangleF(x, y, size, size);
+
+        /// <summary>
+        /// Creates a new instance of <see cref="RectangleF"/> where the width and height are the same size.
+        /// </summary>
+        /// <param name="location">The coordinates of the top-left corner of the square.</param>
+        /// <param name="size">The value used for both the widht and the height of the RectangleF.</param>
+        /// <returns>A new RectangleF with equally sized dimensions.</returns>
+        public static RectangleF CreateSquare(Vector2 location, float size) => RectangleF.CreateSquare(location.X, location.Y, size);
 
         #endregion
     }
