@@ -54,6 +54,14 @@ namespace Yetibyte.Himalaya.Collision {
 
         }
 
+        /// <summary>
+        /// Checks whether this <see cref="Collider"/> will intersect with the given <see cref="RectCollider"/> if it moves
+        /// with the given velocity. 
+        /// </summary>
+        /// <param name="velocity">The velocity of this Collider.</param>
+        /// <param name="otherRectCollider">The other Collider to check intersection with.</param>
+        /// <returns>An instance of <see cref="CollisionInfo"/> which contains information on whether or not
+        /// an intersection occured and a penetration vector that can be used to push the colliders apart.</returns>
         public override CollisionInfo WillIntersect(Vector2 velocity, RectCollider otherRectCollider) {
 
             bool intersect = false;
@@ -70,17 +78,31 @@ namespace Yetibyte.Himalaya.Collision {
                 RectangleF velocityBounds = RectangleF.Union(Bounds, futureBounds);
                 RectangleF penetrationRect = RectangleF.Intersect(velocityBounds, otherRectCollider.Bounds);
 
-                if (penetrationRect.Width < penetrationRect.Height) {
+                if (Math.Abs(velocity.X) > Math.Abs(velocity.Y)) {
 
-                    penetration = new Vector2(penetrationRect.Width * MathUtil.Sign1(otherRectCollider.Bounds.Center.X - penetrationRect.Center.X), 0);
+                    RectangleF futureBoundsX = new RectangleF(Bounds.Location + new Vector2(velocity.X, 0), Bounds.Size);
+                    RectangleF velocityBoundsX = RectangleF.Union(Bounds, futureBoundsX);
+                    RectangleF penetrationRectX = RectangleF.Intersect(velocityBoundsX, otherRectCollider.Bounds);
+
+                    if(!penetrationRectX.IsEmpty)
+                        penetration = new Vector2(penetrationRectX.Width * MathUtil.Sign1(velocity.X), 0);
+                    else
+                        penetration = new Vector2(0, penetrationRect.Height * MathUtil.Sign1(velocity.Y));
 
                 }
                 else {
 
-                    penetration = new Vector2(0, penetrationRect.Height * MathUtil.Sign1(otherRectCollider.Bounds.Center.Y - penetrationRect.Center.Y));
+                    RectangleF futureBoundsY = new RectangleF(Bounds.Location + new Vector2(0, velocity.Y), Bounds.Size);
+                    RectangleF velocityBoundsY = RectangleF.Union(Bounds, futureBoundsY);
+                    RectangleF penetrationRectY = RectangleF.Intersect(velocityBoundsY, otherRectCollider.Bounds);
+
+                    if (!penetrationRectY.IsEmpty)
+                        penetration = new Vector2(0, penetrationRectY.Height * MathUtil.Sign1(velocity.Y));
+                    else
+                        penetration = new Vector2(penetrationRect.Width * MathUtil.Sign1(velocity.X), 0);
 
                 }
-                
+                                
             }
             
             return new CollisionInfo(intersect, otherCollider, penetration);
