@@ -57,7 +57,17 @@ namespace Yetibyte.Himalaya.Collision {
                 Vector2 moveDirection = offset;
                 moveDirection.Normalize();
 
-                Vector2 step = offset;
+                float remainingDistance = offset.Length();
+                bool hasCollided = false;
+
+                while (remainingDistance > 0 && !hasCollided) {
+
+                    Vector2 step = moveDirection * Math.Min(CONTINUOUS_DETECTION_MAX_STEP_SIZE, remainingDistance);
+                    hasCollided = DetectCollisions(physics, myActiveColliders, ref step);
+                    GameEntity.Transform.Position += step;
+                    remainingDistance -= step.Length();
+
+                }
 
             }
 
