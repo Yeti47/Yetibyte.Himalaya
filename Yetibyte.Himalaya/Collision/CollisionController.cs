@@ -108,7 +108,7 @@ namespace Yetibyte.Himalaya.Collision {
 
                     if(collisionInfo.Intersects) {
 
-                        hasCollided = collisionInfo.Intersects;
+                        hasCollided = true;
                         offset -= collisionInfo.Penetration;                        
 
                     }
