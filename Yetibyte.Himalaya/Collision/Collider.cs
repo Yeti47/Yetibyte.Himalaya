@@ -20,6 +20,8 @@ namespace Yetibyte.Himalaya.Collision {
         public Vector2 Offset { get; set; }
         public Vector2 Position => (this.IsAttached ? GameEntity.Transform.Position : Vector2.Zero) + Offset;
 
+        public Vector2 Scale => this.IsAttached ? GameEntity.Transform.Scale : Vector2.One;
+
         public bool IsTrigger { get; set; }
 
         public CollisionLayers Layers { get; set; } = CollisionLayers.All;

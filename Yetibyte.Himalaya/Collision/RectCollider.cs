@@ -11,8 +11,6 @@ namespace Yetibyte.Himalaya.Collision {
 
     public sealed class RectCollider : Collider {
 
-        //TODO: Consider including Transform.Scale into calculation
-
         #region Properties
 
         public float Width { get; set; }
@@ -31,9 +29,14 @@ namespace Yetibyte.Himalaya.Collision {
 
         }
 
-        public override RectangleF Bounds => new RectangleF(Position.X - Width / 2, Position.Y - Height / 2, Width, Height);
+        public float ScaledWidth => this.Width * this.Scale.X;
+        public float ScaledHeight => this.Height * this.Scale.Y;
 
+        public Vector2 ScaledSize => new Vector2(this.ScaledWidth, this.ScaledHeight);
 
+        // TODO: Should the scale be factored in or not?
+        public override RectangleF Bounds => new RectangleF(Position.X - ScaledWidth / 2, Position.Y - ScaledHeight / 2, ScaledWidth, ScaledHeight);
+        
         #endregion
 
         #region Methods
