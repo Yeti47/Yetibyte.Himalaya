@@ -54,8 +54,7 @@ namespace Yetibyte.Himalaya.Collision {
             }
             else {
 
-                Vector2 moveDirection = offset;
-                moveDirection.Normalize();
+                Vector2 moveDirection = Vector2.Normalize(offset);
 
                 float remainingDistance = offset.Length();
                 bool hasCollided = false;

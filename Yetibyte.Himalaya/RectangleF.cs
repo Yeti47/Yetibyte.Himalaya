@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Yetibyte.Utilities;
 using Yetibyte.Utilities.Extensions;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Yetibyte.Himalaya {
 
@@ -12,7 +13,7 @@ namespace Yetibyte.Himalaya {
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct RectangleF : IEquatable<RectangleF> {
+    public struct RectangleF : IEquatable<RectangleF>, IEdges {
 
         #region Private Fields
         
@@ -517,6 +518,26 @@ namespace Yetibyte.Himalaya {
         /// <param name="size">The value used for both the widht and the height of the RectangleF.</param>
         /// <returns>A new RectangleF with equally sized dimensions.</returns>
         public static RectangleF CreateSquare(Vector2 location, float size) => RectangleF.CreateSquare(location.X, location.Y, size);
+
+        /// <summary>
+        /// Enumerates all edges of this <see cref="RectangleF"/> as <see cref="LineSegment"/>s. 
+        /// </summary>
+        /// <returns>An enumeration of all edges of this <see cref="RectangleF"/> as <see cref="LineSegment"/>s.</returns>
+        public IEnumerable<LineSegment> GetEdges() { 
+
+            Vector2[] points = {
+
+                this.Location,
+                new Vector2(this.Right, this.Top),
+                new Vector2(this.Right, this.Bottom),
+                new Vector2(this.Left, this.Bottom)
+
+                };
+
+            for (int i = 0; i < points.Length; i++)
+                yield return new LineSegment(points[i], i < points.Length - 1 ? points[i + 1] : points[0]);
+
+        }
 
         #endregion
     }

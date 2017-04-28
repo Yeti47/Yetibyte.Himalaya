@@ -9,7 +9,7 @@ using Yetibyte.Utilities;
 
 namespace Yetibyte.Himalaya.Collision {
 
-    public sealed class RectCollider : Collider {
+    public sealed class RectCollider : Collider, IEdges {
 
         #region Properties
 
@@ -36,7 +36,7 @@ namespace Yetibyte.Himalaya.Collision {
 
         // TODO: Should the scale be factored in or not?
         public override RectangleF Bounds => new RectangleF(Position.X - ScaledWidth / 2, Position.Y - ScaledHeight / 2, ScaledWidth, ScaledHeight);
-        
+
         #endregion
 
         #region Methods
@@ -111,6 +111,8 @@ namespace Yetibyte.Himalaya.Collision {
             return new CollisionInfo(intersect, otherCollider, penetration);
 
         }
+
+        public IEnumerable<LineSegment> GetEdges() => Bounds.GetEdges();
 
         #endregion
 

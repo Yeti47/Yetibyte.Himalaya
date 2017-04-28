@@ -46,6 +46,12 @@ namespace Yetibyte.Himalaya.Debugging {
 
         }
 
+        public static void DrawLine(SpriteBatch spritebatch, LineSegment line, Color color, int thickness = 1) {
+
+            DrawLine(spritebatch, line.Start, line.End, color, thickness);
+
+        }
+
         public static void DrawRectangle(SpriteBatch spritebatch, Rectangle rectangle, Color color, int lineThickness = 1) {
 
             DrawRectangle(spritebatch, new RectangleF(rectangle), color, lineThickness);
@@ -54,17 +60,8 @@ namespace Yetibyte.Himalaya.Debugging {
 
         public static void DrawRectangle(SpriteBatch spritebatch, RectangleF rectangle, Color color, int lineThickness = 1) {
 
-            Vector2[] points = {
-
-                rectangle.Location,
-                new Vector2(rectangle.Right, rectangle.Top),
-                new Vector2(rectangle.Right, rectangle.Bottom),
-                new Vector2(rectangle.Left, rectangle.Bottom)
-
-            };
-
-            for (int i = 0; i < points.Length; i++)
-                DrawLine(spritebatch, points[i], (i < points.Length - 1 ? points[i + 1] : points[0]), color, lineThickness);
+            foreach (LineSegment line in rectangle.GetEdges())
+                DrawLine(spritebatch, line, color, lineThickness);
 
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yetibyte.Himalaya.GameElements {
+namespace Yetibyte.Himalaya {
 
     /// <summary>
     /// An interface for anything that has an axis-aligned bounding box.

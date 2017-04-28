@@ -66,7 +66,7 @@
     <Compile Include="GameElements\Camera.cs" />
     <Compile Include="GameElements\EntityComponent.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
-    <Compile Include="GameElements\IBounds.cs" />
+    <Compile Include="IBounds.cs" />
     <Compile Include="GameElements\IGame.cs" />
     <Compile Include="GameElements\Scene.cs" />
     <Compile Include="GameElements\Transform.cs" />
@@ -75,8 +75,10 @@
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\SpriteAnimationFrame.cs" />
     <Compile Include="IDraw.cs" />
+    <Compile Include="IEdges.cs" />
     <Compile Include="ITimeScale.cs" />
     <Compile Include="IUpdate.cs" />
+    <Compile Include="LineSegment.cs" />
     <Compile Include="Procedural\DungeonCell.cs" />
     <Compile Include="Procedural\DungeonGenerator.cs" />
     <Compile Include="Procedural\DungeonRoom.cs" />
