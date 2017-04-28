@@ -57,13 +57,20 @@ namespace Yetibyte.Himalaya.Collision {
         /// </summary>
         /// <typeparam name="T">The type to match the colliders with.</typeparam>
         /// <returns>A collection of all Colliders that match the given Type and are attached to GameEntities that live in the current Scene.</returns>
-        public IEnumerable<T> GetCollidersInActiveEntities<T>() where T : EntityComponent => _scene.LiveGameEntities.SelectMany(e => e.GetComponents<T>());
+        public IEnumerable<T> GetCollidersInActiveEntities<T>() where T : Collider => _scene.LiveGameEntities.SelectMany(e => e.GetComponents<T>());
 
         /// <summary>
-        /// Enumerates all active <see cref="Collider"/>s of the given Type that are currently in this <see cref="Scene"/>.
+        /// Enumerates all active <see cref="Collider"/>s that are currently in this <see cref="Scene"/>.
         /// </summary>
         /// <returns>A collection of all active Colliders of the given Type that live in the current Scene.</returns>
         public IEnumerable<Collider> GetActiveColliders() => _scene.LiveGameEntities.SelectMany(e => e.GetActiveComponents<Collider>());
+
+        /// <summary>
+        /// Enumerates all active <see cref="Collider"/>s of the given type that are currently in this <see cref="Scene"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to match the colliders with.</typeparam>
+        /// <returns>A collection of all active Colliders of the given Type that live in the current Scene.</returns>
+        public IEnumerable<Collider> GetActiveColliders<T>() where T : Collider => _scene.LiveGameEntities.SelectMany(e => e.GetActiveComponents<T>());
 
         /// <summary>
         /// (Re)creates the <see cref="QuadTreeRectF"/> used in order to reduce the number of pairings that need to be checked for collision detection.
@@ -90,6 +97,32 @@ namespace Yetibyte.Himalaya.Collision {
 
             foreach (Collider collider in activeColliders)
                 CollisionTree.Insert(collider);
+
+        }
+
+        public RaycastInfo Raycast(Vector2 origin, Vector2 direction, float length, CollisionLayers collisionLayers = CollisionLayers.All) {
+
+            RaycastInfo result = RaycastInfo.Default;
+
+            direction.Normalize();
+            LineSegment ray = new LineSegment(origin, direction * length);
+
+            foreach (IEdges colliderWithEdges in CollisionTree.GetObjectsAt(ray.Bounds).OfType<IEdges>()) {
+
+                Collider collider = colliderWithEdges as Collider;
+
+                if (collider == null || !collider.IsOnLayer(collisionLayers))
+                    continue;
+
+                foreach (LineSegment edge in colliderWithEdges.GetEdges()) {
+
+                    //TODO: finish raycast
+
+                }
+
+            }
+
+            return result;
 
         }
 

@@ -34,7 +34,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public Game Game { get; protected set; }
 
-        public IEnumerable<Actor> Actors => GameEntities.Where(e => e is Actor).Cast<Actor>();
+        public IEnumerable<Actor> Actors => GameEntities.OfType<Actor>();
 
         public Physics Physics { get; protected set; }
         public Camera Camera { get; private set; }

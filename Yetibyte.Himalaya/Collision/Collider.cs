@@ -43,6 +43,13 @@ namespace Yetibyte.Himalaya.Collision {
         /// are not assigned to any layer at all.</returns>
         public bool SharesLayerWith(Collider other) => (Layers & other.Layers) != 0;
 
+        /// <summary>
+        /// Checks whether this <see cref="Collider"/> is on the given collision layer(s).
+        /// </summary>
+        /// <param name="layers">The layer(s) to check against.</param>
+        /// <returns>True if at least one layer this collider is on matches with the given layers.</returns>
+        public bool IsOnLayer(CollisionLayers layers) => (this.Layers & layers) != 0;
+
     }
 
 }
