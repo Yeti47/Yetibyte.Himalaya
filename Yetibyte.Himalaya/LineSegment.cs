@@ -168,6 +168,12 @@ namespace Yetibyte.Himalaya {
 
         }
 
+        public bool Intersects(LineSegment other, out Vector2 intersectionPoint) {
+
+            return LineSegment.Intersect(this, other, out intersectionPoint);
+
+        }
+
         public IEnumerable<LineSegment> GetEdges() => new LineSegment[] { this };
 
         #endregion
