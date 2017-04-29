@@ -10,13 +10,13 @@ namespace Yetibyte.Himalaya.Collision {
 
     public struct RaycastInfo {
 
-        #region Fields
+        #region Readonly Fields
 
-        public bool Impact;
-        public Vector2 ImpactPoint;
-        public Collider Collider;
-        public float Distance;
-        public LineSegment LineSegment;
+        public readonly bool Impact;
+        public readonly Vector2 ImpactPoint;
+        public readonly Collider Collider;
+        public readonly float Distance;
+        public readonly LineSegment Ray;
 
         #endregion
 
@@ -31,15 +31,18 @@ namespace Yetibyte.Himalaya.Collision {
 
         #region Constructors
 
-        public RaycastInfo(bool impact, Vector2 impactPoint, Collider collider, float distance, LineSegment lineSegment) {
+        private RaycastInfo(bool impact, Vector2 impactPoint, Collider collider, float distance, LineSegment ray) {
 
             Impact = impact;
             ImpactPoint = impactPoint;
             Collider = collider;
             Distance = distance;
-            LineSegment = lineSegment;
+            Ray = ray;
 
         }
+
+        public RaycastInfo(bool impact, Vector2 impactPoint, Collider collider, Vector2 rayOrigin)
+            : this(impact, impactPoint, collider, Vector2.Distance(rayOrigin, impactPoint), new LineSegment(rayOrigin, impactPoint)) { }
 
         #endregion
 

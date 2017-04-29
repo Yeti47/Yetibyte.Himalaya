@@ -116,8 +116,15 @@ namespace Yetibyte.Himalaya.Collision {
 
                 foreach (LineSegment edge in colliderWithEdges.GetEdges()) {
 
-                    //TODO: finish raycast
+                    bool intersects = LineSegment.Intersect(ray, edge, out Vector2 intersectionPoint);
 
+                    if(intersects) {
+
+                        result = new RaycastInfo(true, intersectionPoint, collider, origin);
+                        ray = result.Ray;
+
+                    }
+                    
                 }
 
             }
