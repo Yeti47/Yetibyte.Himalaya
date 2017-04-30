@@ -19,10 +19,10 @@ namespace Yetibyte.Himalaya {
 
         #region Properties
 
-        public float Length => Vector2.Distance(this.Start, this.End);
+        public float Length => Vector2.Distance(Start, End);
 
-        public Vector2 Delta => this.End - this.Start;
-        public Vector2 Direction => Vector2.Normalize(this.Delta);
+        public Vector2 Delta => End - Start;
+        public Vector2 Direction => Vector2.Normalize(Delta);
 
         /// <summary>
         /// Gets the bounding box surrounding this <see cref="LineSegment"/>.
@@ -31,8 +31,8 @@ namespace Yetibyte.Himalaya {
 
             get {
 
-                Vector2 position = Vector2.Min(this.Start, this.End);
-                Vector2 size = Vector2.Max(this.Start, this.End);
+                Vector2 position = Vector2.Min(Start, End);
+                Vector2 size = Vector2.Max(Start, End);
 
                 return new RectangleF(position, size);
 
@@ -152,25 +152,25 @@ namespace Yetibyte.Himalaya {
 
         public static bool Intersect(LineSegment lineA, LineSegment lineB, out Vector2 intersectionPoint) {
 
-            return LineSegment.Intersect(lineA.Start, lineA.End, lineB.Start, lineB.End, out intersectionPoint);
+            return Intersect(lineA.Start, lineA.End, lineB.Start, lineB.End, out intersectionPoint);
 
         }
 
         public static bool Intersect(LineSegment lineA, LineSegment lineB) {
 
-            return LineSegment.Intersect(lineA.Start, lineA.End, lineB.Start, lineB.End, out Vector2 temp);
+            return Intersect(lineA.Start, lineA.End, lineB.Start, lineB.End, out Vector2 temp);
 
         }
 
         public bool Intersects(LineSegment other) {
 
-            return LineSegment.Intersect(this.Start, this.End, other.Start, other.End);
+            return Intersect(this.Start, this.End, other.Start, other.End);
 
         }
 
         public bool Intersects(LineSegment other, out Vector2 intersectionPoint) {
 
-            return LineSegment.Intersect(this, other, out intersectionPoint);
+            return Intersect(this, other, out intersectionPoint);
 
         }
 
