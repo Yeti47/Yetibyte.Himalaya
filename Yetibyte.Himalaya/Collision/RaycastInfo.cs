@@ -12,6 +12,8 @@ namespace Yetibyte.Himalaya.Collision {
 
         #region Readonly Fields
 
+        private static readonly RaycastInfo _default = new RaycastInfo(false, Vector2.Zero, null, float.PositiveInfinity, new LineSegment(Vector2.Zero, Vector2.Zero));
+
         public readonly bool Impact;
         public readonly Vector2 ImpactPoint;
         public readonly Collider Collider;
@@ -22,7 +24,7 @@ namespace Yetibyte.Himalaya.Collision {
 
         #region Properties
 
-        public static RaycastInfo Default => new RaycastInfo(false, Vector2.Zero, null, float.PositiveInfinity, new LineSegment(Vector2.Zero, Vector2.Zero));
+        public static RaycastInfo Default => _default;
 
         public GameEntity GameEntity => Collider?.GameEntity;
         public Transform Transform => GameEntity?.Transform;

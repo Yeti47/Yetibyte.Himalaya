@@ -10,6 +10,8 @@ namespace Yetibyte.Himalaya.Controls {
 
     public class GameControl : ICloneable {
 
+        public const float DEFAULT_REPEAT_INTERVAL = 2f;
+
         // Properties
 
         public Keys Key { get; set; }
@@ -27,7 +29,7 @@ namespace Yetibyte.Himalaya.Controls {
 
         // Constructor
 
-        public GameControl(bool doRepeat = false, float repeatInterval = 2f) {
+        public GameControl(bool doRepeat = false, float repeatInterval = DEFAULT_REPEAT_INTERVAL) {
 
             this.DoRepeat = doRepeat;
             this.RepeatInterval = repeatInterval;

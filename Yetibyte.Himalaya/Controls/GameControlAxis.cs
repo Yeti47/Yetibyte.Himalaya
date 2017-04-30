@@ -10,6 +10,8 @@ namespace Yetibyte.Himalaya.Controls {
 
     public class GameControlAxis : ICloneable {
 
+        public const float DEFAULT_DEADZONE = 0.15f;
+
         // Properties
 
         public AxisDirection Direction { get; set; } = AxisDirection.Horizontal;
@@ -27,7 +29,7 @@ namespace Yetibyte.Himalaya.Controls {
         public GamePadAxes GamePadAxis { get; set; } = GamePadAxes.None;
 
         public float Value { get; private set; }
-        public float Deadzone { get; set; } = 0.15f;
+        public float Deadzone { get; set; } = DEFAULT_DEADZONE;
 
         // Methods
 
