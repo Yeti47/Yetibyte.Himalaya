@@ -539,6 +539,35 @@ namespace Yetibyte.Himalaya {
 
         }
 
+        /// <summary>
+        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="RectangleF"/>. Unlike <see cref="Contains(float, float)"/>, this method
+        /// also considers coordinates that lie directly on the right or bottom edge to be within the bounds.
+        /// </summary>
+        /// <param name="x">The x coordinate of the point to check for containment.</param>
+        /// <param name="y">The y coordinate of the point to check for containment.</param>
+        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
+        public bool ContainsInclusive(float x, float y) {
+
+            return ((((this.X <= x) && (x <= (this.X + this.Width))) && (this.Y <= y)) && (y <= (this.Y + this.Height)));
+
+        }
+
+        /// <summary>
+        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="RectangleF"/>. Unlike <see cref="Contains(Vector2)"/>, this method
+        /// also considers coordinates that lie directly on the right or bottom edge to be within the bounds.
+        /// </summary>
+        /// <param name="value">The coordinates to check for containment.</param>
+        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
+        public bool ContainsInclusive(Vector2 value) => ContainsInclusive(value.X, value.Y);
+
+        /// <summary>
+        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="RectangleF"/>. Unlike <see cref="Contains(Point)"/>, this method
+        /// also considers coordinates that lie directly on the right or bottom edge to be within the bounds.
+        /// </summary>
+        /// <param name="value">The coordinates to check for containment.</param>
+        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
+        public bool ContainsInclusive(Point value) => ContainsInclusive(value.X, value.Y);
+
         #endregion
     }
 }

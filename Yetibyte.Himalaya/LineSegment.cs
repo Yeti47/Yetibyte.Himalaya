@@ -31,14 +31,20 @@ namespace Yetibyte.Himalaya {
 
             get {
 
-                Vector2 position = Vector2.Min(Start, End);
-                Vector2 size = Vector2.Max(Start, End);
+                Vector2 topLeft = Vector2.Min(Start, End);
+                Vector2 bottomRight = Vector2.Max(Start, End);
+                Vector2 size = new Vector2(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
 
-                return new RectangleF(position, size);
+                return new RectangleF(topLeft, size);
 
             }
 
         }
+
+        /// <summary>
+        /// The slope of this line segment. Returns infinity if the line segment is parallel to the y-axis.
+        /// </summary>
+        public float Slope => (End.Y - Start.Y) / (End.X - Start.X);
 
         #endregion
 
@@ -124,18 +130,19 @@ namespace Yetibyte.Himalaya {
             float det = a1 * b2 - a2 * b1;
 
             // Check if lines are parallel
-            if (Math.Abs(det) < MathUtil.EPSILON)
+            if (MathUtil.IsCloseToZero(det))
                 return false;
 
             float intersectX = (b2 * c1 - b1 * c2) / det;
             float intersectY = (a1 * c2 - a2 * c1) / det;
 
-            bool isIntersectXonLine1 = (Math.Min(pStart.X, pEnd.X) <= intersectX) && (intersectX <= Math.Max(pStart.X, pEnd.X));
-            bool isIntersectYOnLine1 = (Math.Min(pStart.Y, pEnd.Y) <= intersectY) && (intersectY <= Math.Max(pStart.Y, pEnd.Y));
-            bool isIntersectXOnLine2 = (Math.Min(qStart.X, qEnd.X) <= intersectX) && (intersectX <= Math.Max(qStart.X, qEnd.X));
-            bool isIntersectYOnLine2 = (Math.Min(qStart.Y, qEnd.Y) <= intersectY) && (intersectY <= Math.Max(qStart.Y, qEnd.Y));
+            LineSegment lineP = new LineSegment(pStart, pEnd);
+            LineSegment lineQ = new LineSegment(qStart, qEnd);
 
-            bool intersects = isIntersectXonLine1 && isIntersectYOnLine1 && isIntersectXOnLine2 && isIntersectYOnLine2;
+            bool isIntersectOnLineP = lineP.Bounds.ContainsInclusive(intersectX, intersectY);
+            bool isIntersectOnLineQ = lineQ.Bounds.ContainsInclusive(intersectX, intersectY);
+
+            bool intersects = isIntersectOnLineP && isIntersectOnLineQ;
 
             if (intersects)
                 intersectionPoint = new Vector2(intersectX, intersectY);
@@ -175,6 +182,25 @@ namespace Yetibyte.Himalaya {
         }
 
         public IEnumerable<LineSegment> GetEdges() => new LineSegment[] { this };
+
+        public static bool IsPointOnLineSegment(Vector2 point, LineSegment lineSegment) {
+
+            // Check if line segment is parallel to y-axis
+            if (MathUtil.RoughlyEquals(lineSegment.Start.X, lineSegment.End.X)) {
+
+                return MathUtil.RoughlyEquals(point.X, lineSegment.Start.X)
+                    && point.Y >= Math.Min(lineSegment.Start.Y, lineSegment.End.Y)
+                    && point.Y <= Math.Max(lineSegment.Start.Y, lineSegment.End.Y);
+
+            }
+                
+
+            float m = lineSegment.Slope;
+            float b = lineSegment.Start.Y - m * lineSegment.Start.X;
+
+            return MathUtil.IsCloseToZero(point.Y - (m * point.X + b)) && lineSegment.Bounds.ContainsInclusive(point);
+
+        }
 
         #endregion
 

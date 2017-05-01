@@ -132,6 +132,15 @@ namespace TestGame {
             Debug.WriteLine("After changing Sub Test Child's parent from Test Child A to Test Child B:");
             Debug.WriteLine(testParent.Children[1].Children[0].TestProperty);
 
+            // vvvvv LineSegment-Test vvvvvvv
+
+            LineSegment lineSeg = new LineSegment(-5, 2, 5, 2);
+            Vector2 point = new Vector2(3, 2);
+
+            Debug.WriteLine("These are the line segment's bounds: " + lineSeg.Bounds);
+            Debug.WriteLine("The line segment's slope is: " + lineSeg.Slope);
+            Debug.WriteLine("The point is on the line segment: " + LineSegment.IsPointOnLineSegment(point, lineSeg));
+
         }
 
         /// <summary>

@@ -70,7 +70,7 @@ namespace Yetibyte.Himalaya.Collision {
         /// </summary>
         /// <typeparam name="T">The type to match the colliders with.</typeparam>
         /// <returns>A collection of all active Colliders of the given Type that live in the current Scene.</returns>
-        public IEnumerable<Collider> GetActiveColliders<T>() where T : Collider => _scene.LiveGameEntities.SelectMany(e => e.GetActiveComponents<T>());
+        public IEnumerable<T> GetActiveColliders<T>() where T : Collider => _scene.LiveGameEntities.SelectMany(e => e.GetActiveComponents<T>());
 
         /// <summary>
         /// (Re)creates the <see cref="QuadTreeRectF"/> used in order to reduce the number of pairings that need to be checked for collision detection.
@@ -100,6 +100,15 @@ namespace Yetibyte.Himalaya.Collision {
 
         }
 
+        /// <summary>
+        /// Casts a ray that is defined by 'origin', 'direction' and 'length' against active <see cref="Collider"/>s in the <see cref="Scene"/>. This can be used to
+        /// detect colliders that intersect with the ray's path and determine the closest intersection point. A bitmask can be used to only detect Colliders on certain layers.
+        /// </summary>
+        /// <param name="origin">The start point of the ray.</param>
+        /// <param name="direction">The direction the ray should be cast in.</param>
+        /// <param name="length">The length of the ray.</param>
+        /// <param name="collisionLayers">A bitmask used to only detect colliders on certain layers.</param>
+        /// <returns>An instance of <see cref="RaycastInfo"/> that describes the result of this raycast.</returns>
         public RaycastInfo Raycast(Vector2 origin, Vector2 direction, float length, CollisionLayers collisionLayers = CollisionLayers.All) {
 
             RaycastInfo result = RaycastInfo.Default;
@@ -130,6 +139,19 @@ namespace Yetibyte.Himalaya.Collision {
             }
 
             return result;
+
+        }
+
+        /// <summary>
+        /// Casts a ray that is defined by the given line segment against active <see cref="Collider"/>s in the <see cref="Scene"/>. This can be used to
+        /// detect colliders that intersect with the ray's path and determine the closest intersection point. A bitmask can be used to only detect Colliders on certain layers.
+        /// </summary>
+        /// <param name="ray">The line segment that represents the ray.</param>
+        /// <param name="collisionLayers">A bitmask used to only detect colliders on certain layers.</param>
+        /// <returns>An instance of <see cref="RaycastInfo"/> that describes the result of this raycast.</returns>
+        public RaycastInfo Raycast(LineSegment ray, CollisionLayers collisionLayers = CollisionLayers.All) {
+
+            return Raycast(ray.Start, ray.Direction, ray.Length, collisionLayers);
 
         }
 

@@ -62,6 +62,7 @@
     <Compile Include="DataStructures\QuadTreeNodeRectF.cs" />
     <Compile Include="Debugging\DebugUtility.cs" />
     <Compile Include="Extensions\GameTimeExtensions.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="Collision\CollisionController.cs" />
     <Compile Include="GameElements\Camera.cs" />

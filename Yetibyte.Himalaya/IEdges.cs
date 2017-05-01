@@ -11,6 +11,10 @@ namespace Yetibyte.Himalaya {
     /// </summary>
     public interface IEdges {
 
+        /// <summary>
+        /// Enumerates the edges of this object.
+        /// </summary>
+        /// <returns>An enumeration of all edges of this object.</returns>
         IEnumerable<LineSegment> GetEdges();
 
     }

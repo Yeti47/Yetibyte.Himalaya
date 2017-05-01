@@ -7,10 +7,16 @@ using Microsoft.Xna.Framework;
 
 namespace Yetibyte.Himalaya.Collision {
 
+    /// <summary>
+    /// Hold information on collision between two <see cref="Collider"/>s.
+    /// </summary>
     public struct CollisionInfo {
 
         private static CollisionInfo _default = new CollisionInfo(false, null, Vector2.Zero);
 
+        /// <summary>
+        /// A static instance of CollisionInfo with all of its properties set to the default value.
+        /// </summary>
         public static CollisionInfo Default => _default;
 
         public bool Intersects { get; }
