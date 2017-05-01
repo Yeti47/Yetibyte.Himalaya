@@ -114,7 +114,7 @@ namespace Yetibyte.Himalaya.Collision {
             RaycastInfo result = RaycastInfo.Default;
 
             direction.Normalize();
-            LineSegment ray = new LineSegment(origin, direction * length);
+            LineSegment ray = new LineSegment(origin, origin + direction * length);
 
             foreach (IEdges colliderWithEdges in CollisionTree.GetObjectsAt(ray.Bounds).OfType<IEdges>()) {
 
