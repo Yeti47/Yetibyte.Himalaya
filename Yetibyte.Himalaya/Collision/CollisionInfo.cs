@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace Yetibyte.Himalaya.Collision {
 
     /// <summary>
-    /// Hold information on collision between two <see cref="Collider"/>s.
+    /// Holds information on collision between two <see cref="Collider"/>s.
     /// </summary>
     public struct CollisionInfo {
 
