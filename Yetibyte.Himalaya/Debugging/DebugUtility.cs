@@ -42,7 +42,7 @@ namespace Yetibyte.Himalaya.Debugging {
         /// <param name="thickness">The thickness of the line to draw.</param>
         public static void DrawLine(SpriteBatch spritebatch, Vector2 start, Vector2 end, Color color, int thickness = 1) {
 
-            float angle = (float)Math.Atan2(start.Y - end.Y, start.X - end.X);
+            float angle = (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
             float length = Vector2.Distance(start, end);
 
             DrawLine(spritebatch, start, angle, length, color, thickness);
@@ -172,6 +172,18 @@ namespace Yetibyte.Himalaya.Debugging {
                 }
 
             }
+
+        }
+
+        /// <summary>
+        /// Draws the outlines of the given <see cref="RectCollider"/> on the screen.
+        /// </summary>
+        /// <param name="spritebatch">The spritebatch to use for rendering.</param>
+        /// <param name="collider">The RectCollider to visualize.</param>
+        /// <param name="color">The color to draw the outlines.</param>
+        public static void VisualizeRectCollider(SpriteBatch spritebatch, RectCollider collider, Color color) {
+
+            DrawRectangle(spritebatch, collider.Bounds, color, 1);
 
         }
 

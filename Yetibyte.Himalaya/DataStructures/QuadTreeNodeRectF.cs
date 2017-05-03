@@ -22,7 +22,7 @@ namespace Yetibyte.Himalaya.DataStructures {
         #region Properties
 
         public RectangleF NodeBounds { get; }
-        public List<IBounds> BoundingBoxObjects { get; set; }
+        public List<IBounds> BoundingBoxObjects { get; set; } = new List<IBounds>();
         public QuadTreeNodeRectF[] SubNodes { get; private set; } = new QuadTreeNodeRectF[4];
 
         /// <summary>

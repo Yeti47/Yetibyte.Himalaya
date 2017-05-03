@@ -8,6 +8,9 @@ using Yetibyte.Utilities;
 
 namespace Yetibyte.Himalaya {
 
+    /// <summary>
+    /// Describes a line segment in 2D space defined by a start and an end point.
+    /// </summary>
     public struct LineSegment : IEquatable<LineSegment>, IEdges, IBounds {
 
         #region Fields

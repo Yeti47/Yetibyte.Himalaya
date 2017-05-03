@@ -77,6 +77,9 @@ namespace Yetibyte.Himalaya.Collision {
         /// </summary>
         public void BuildCollisionTree() {
 
+            if (CollisionTree == null)
+                CollisionTree = new QuadTreeRectF(QUAD_TREE_MAX_OBJECTS_PER_NODE, QUAD_TREE_MIN_NODE_SIZE, Vector2.Zero, QUAD_TREE_MIN_NODE_SIZE + QUAD_TREE_SIZE_TOLERANCE);
+
             IEnumerable<Collider> activeColliders = GetActiveColliders();
 
             if (activeColliders == null || activeColliders.Count() <= 0)
@@ -90,10 +93,7 @@ namespace Yetibyte.Himalaya.Collision {
             float quadTreeSize = Math.Max(maxX - minX, maxY - minY) + QUAD_TREE_SIZE_TOLERANCE;
             Vector2 quadTreePosition = new Vector2(minX - QUAD_TREE_SIZE_TOLERANCE / 2, minY - QUAD_TREE_SIZE_TOLERANCE / 2);
 
-            if (CollisionTree == null)
-                CollisionTree = new QuadTreeRectF(QUAD_TREE_MAX_OBJECTS_PER_NODE, QUAD_TREE_MIN_NODE_SIZE, quadTreePosition, quadTreeSize);
-            else
-                CollisionTree.Recreate(quadTreePosition, quadTreeSize);
+            CollisionTree.Recreate(quadTreePosition, quadTreeSize);
 
             foreach (Collider collider in activeColliders)
                 CollisionTree.Insert(collider);

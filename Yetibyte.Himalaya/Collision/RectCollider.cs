@@ -88,9 +88,9 @@ namespace Yetibyte.Himalaya.Collision {
                     RectangleF penetrationRectX = RectangleF.Intersect(velocityBoundsX, otherRectCollider.Bounds);
 
                     if(!penetrationRectX.IsEmpty)
-                        penetration = new Vector2(penetrationRectX.Width * MathUtil.Sign1(velocity.X), 0);
+                        penetration = new Vector2((penetrationRectX.Width + MathUtil.EPSILON) * MathUtil.Sign1(velocity.X), 0);
                     else
-                        penetration = new Vector2(0, penetrationRect.Height * MathUtil.Sign1(velocity.Y));
+                        penetration = new Vector2(0, (penetrationRect.Height + MathUtil.EPSILON) * MathUtil.Sign1(velocity.Y));
 
                 }
                 else {
@@ -100,9 +100,9 @@ namespace Yetibyte.Himalaya.Collision {
                     RectangleF penetrationRectY = RectangleF.Intersect(velocityBoundsY, otherRectCollider.Bounds);
 
                     if (!penetrationRectY.IsEmpty)
-                        penetration = new Vector2(0, penetrationRectY.Height * MathUtil.Sign1(velocity.Y));
+                        penetration = new Vector2(0, (penetrationRectY.Height + MathUtil.EPSILON) * MathUtil.Sign1(velocity.Y));
                     else
-                        penetration = new Vector2(penetrationRect.Width * MathUtil.Sign1(velocity.X), 0);
+                        penetration = new Vector2((penetrationRect.Width + MathUtil.EPSILON) * MathUtil.Sign1(velocity.X), 0);
 
                 }
                                 

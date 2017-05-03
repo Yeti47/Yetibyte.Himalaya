@@ -12,11 +12,16 @@ using Yetibyte.Himalaya.Extensions;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using Yetibyte.Himalaya.Debugging;
+using Yetibyte.Himalaya.Collision;
 
 namespace TestGame {
 
     public class Player : Actor {
-        
+
+        private ControlListener _controlListener;
+        private CollisionController _collisionController;
+
         public float Speed { get; set; } = 150f;
 
         // Constructor
@@ -37,14 +42,20 @@ namespace TestGame {
 
             float deltaTime = gameTime.DeltaTime();
 
-            ControlListener controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
+            _controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
+            _collisionController = GetComponent<CollisionController>();
 
-            Transform.Position += new Vector2(controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f);
+            //Transform.Position += new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f);
+            _collisionController.Move(new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f));
+
+
 
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
             base.Draw(spriteBatch, gameTime);
+
+            DebugUtility.VisualizeColliders(spriteBatch, Scene, Color.Red);
             
         }
 

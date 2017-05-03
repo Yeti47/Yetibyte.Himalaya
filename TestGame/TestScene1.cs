@@ -31,7 +31,7 @@ namespace TestGame {
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
 
-            Camera.Transform.X += 10f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //Camera.Transform.X += 10f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         }
 

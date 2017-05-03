@@ -51,5 +51,19 @@ namespace Yetibyte.Himalaya.Extensions {
         /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
         public static bool ContainsInclusive(this Rectangle rectangle, Vector2 value) => ContainsInclusive(rectangle, value.X, value.Y);
 
+        /// <summary>
+        /// Enumerates all edges of this <see cref="Rectangle"/> as <see cref="LineSegment"/>s. 
+        /// </summary>
+        /// <returns>An enumeration of all edges of this <see cref="Rectangle"/> as <see cref="LineSegment"/>s.</returns>
+        public static IEnumerable<LineSegment> GetEdges(this Rectangle rectangle) {
+
+            RectangleF rectangleF = (RectangleF)rectangle;
+
+            foreach (LineSegment line in rectangleF.GetEdges()) {
+                yield return line;
+            }
+
+        }
+
     }
 }

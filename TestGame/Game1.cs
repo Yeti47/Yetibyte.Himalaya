@@ -10,6 +10,7 @@ using Yetibyte.Himalaya.Collision;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Yetibyte.Himalaya.Debugging;
 
 namespace TestGame {
     /// <summary>
@@ -89,48 +90,15 @@ namespace TestGame {
 
             player.Transform.LocalScale = new Vector2(4f, 4f);
 
-            /* CollisionController Testing
-            EmptyTestEntity testEntityA = new EmptyTestEntity("child 1 of gun", Vector2.Zero);
-            gun.AddChildEntity(testEntityA);
+            // vvvvv Collider-Test vvvvvvv
 
-            EmptyTestEntity testEntityB = new EmptyTestEntity("child 2 of gun", Vector2.Zero);
-            gun.AddChildEntity(testEntityB);
+            player.AddComponent(new RectCollider() { Width = 16, Height = 16 });
+            player.AddComponent(new CollisionController());
 
-            EmptyTestEntity testEntityC = new EmptyTestEntity("another child of player", Vector2.Zero);
-            player.AddChildEntity(testEntityC);
-
-            EmptyTestEntity testEntityD = new EmptyTestEntity("testEntity D as a child of testEntityB", Vector2.Zero);
-            testEntityB.AddChildEntity(testEntityD);
-
-            List<CollisionController> childCollisionControllers = player.CollisionController.GetAllChildControllers(false);
-
-            Debug.WriteLine("I found child collision controllers in the following entities:");
-
-            foreach (var collisionController in childCollisionControllers) {
-
-                Debug.WriteLine(collisionController.GameEntity.Name);
-
-            }
-            */
-
-            // vvvvv ParentChildHierarchy-Test vvvvvvv
-
-            PCTest testParent = new PCTest() { TestProperty = "I am the ancestor of everyone!" };
-            PCTest testChildA = new PCTest();
-            PCTest testChildB = new PCTest();
-            PCTest testSubChild = new PCTest { TestProperty = "I am Test Sub Child" };
-
-            testParent.AddChild(testChildA);
-            testParent.AddChild(testChildB);
-            testChildA.AddChild(testSubChild);
-
-            Debug.WriteLine(testParent.Children[0].Children[0].TestProperty);
-            Debug.WriteLine(testSubChild.GetAncestor().TestProperty);
-
-            testChildB.AddChild(testSubChild);
-
-            Debug.WriteLine("After changing Sub Test Child's parent from Test Child A to Test Child B:");
-            Debug.WriteLine(testParent.Children[1].Children[0].TestProperty);
+            EmptyTestEntity testEntity = new EmptyTestEntity("testEntity", new Vector2(-80, 0));
+            CurrentScene.AddGameEntity(testEntity);
+            testEntity.AddComponent(new RectCollider() { Width = 20, Height = 20 });
+            testEntity.Transform.LocalScale = new Vector2(4, 4);
 
             // vvvvv LineSegment-Test vvvvvvv
 
@@ -140,7 +108,7 @@ namespace TestGame {
             Debug.WriteLine("These are the line segment's bounds: " + lineSeg.Bounds);
             Debug.WriteLine("The line segment's slope is: " + lineSeg.Slope);
             Debug.WriteLine("The point is on the line segment: " + LineSegment.IsPointOnLineSegment(point, lineSeg));
-
+            
         }
 
         /// <summary>
@@ -185,7 +153,11 @@ namespace TestGame {
             CurrentScene.Draw(gameTime);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            
+
+            //DebugUtility.DrawLine(spriteBatch, new LineSegment(5, 5, 30, 20), Color.Red, 2);
+            //DebugUtility.DrawRectangle(spriteBatch, new RectangleF(20, 20, 100, 80), Color.Green);
+            //DebugUtility.DrawFilledRectangle(spriteBatch, new RectangleF(40, 130, 60, 100), Color.Cyan);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
