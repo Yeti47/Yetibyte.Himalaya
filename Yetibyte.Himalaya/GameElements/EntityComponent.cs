@@ -65,6 +65,12 @@ namespace Yetibyte.Himalaya.GameElements {
         /// /// <seealso cref="IsActive"/>
         public bool IsActiveSelf { get => _isActive; set => _isActive = value; }
 
+        /// <summary>
+        /// Determines the order in which <see cref="EntityComponent"/>s are processed. The processing order goes from
+        /// high priority to low priority components.
+        /// </summary>
+        public int Priority { get; set; }
+
         #endregion
 
         #region Methods

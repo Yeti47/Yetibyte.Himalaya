@@ -11,6 +11,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Fields
 
+        private bool _isAwake;
         private bool _isActive = true;
         private List<GameEntity> _childEntities = new List<GameEntity>();
         private GameEntity _parentEntity;
@@ -112,6 +113,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public int DrawOrder { get; set; }
 
+        internal bool IsAwake => _isAwake;
+
         #endregion
 
         #region Constructors
@@ -131,9 +134,18 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        public virtual void Awake() {
+            
+        }
+
         public virtual void Update(GameTime gameTime, float globalTimeScale) {
 
+            if(!_isAwake) {
 
+                _isAwake = true;
+                Awake();
+
+            }
 
         }
 

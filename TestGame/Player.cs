@@ -37,16 +37,21 @@ namespace TestGame {
 
         }
 
+        public override void Awake() {
+            base.Awake();
+
+            _controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
+            _collisionController = GetComponent<CollisionController>();
+
+        }
+
         public override void Update(GameTime gameTime, float globalTimeScale) {
             base.Update(gameTime, globalTimeScale);
 
             float deltaTime = gameTime.DeltaTime();
 
-            _controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
-            _collisionController = GetComponent<CollisionController>();
-
             //Transform.Position += new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f);
-            _collisionController.Move(new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f));
+            _collisionController.Move(new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, _controlListener.GetAxisValue("Vertical") * Speed * deltaTime));
 
 
 
@@ -56,6 +61,16 @@ namespace TestGame {
             base.Draw(spriteBatch, gameTime);
 
             DebugUtility.VisualizeColliders(spriteBatch, Scene, Color.Red);
+
+            //LineSegment lineA = new LineSegment(new Vector2(30, -200), new Vector2(30, -100));
+            //LineSegment lineB = new LineSegment(new Vector2(10, -140), new Vector2(80, -140));
+
+            //DebugUtility.DrawLine(spriteBatch, lineA, Color.Green);
+            //DebugUtility.DrawLine(spriteBatch, lineB, Color.Orange);
+
+            //bool intersect = LineSegment.Intersect(lineA, lineB, out Vector2 intersection);
+
+            //Debug.WriteLine("LineA and LineB intersect: " + intersect + ". Intersection point: " + intersection);
             
         }
 

@@ -47,9 +47,9 @@ namespace TestGame {
             // TODO: Add your initialization logic here
 
             ControlSettings controlSettings = new ControlSettings();
-            controlSettings.ControlAxesMap.Add("Horizontal", new GameControlAxis { PositiveKey = Keys.Right, AlternativePositiveKey = Keys.D, NegativeKey = Keys.Left, AlternativeNegativeKey = Keys.A, GamePadAxis = GamePadAxes.LeftThumbstick});
-            controlSettings.ControlMap.Add("Up", new GameControl { Key = Keys.Up, AlternativeKey = Keys.W });
-            controlSettings.ControlMap.Add("Down", new GameControl { Key = Keys.Down, AlternativeKey = Keys.S });
+            controlSettings.RegisterControlAxis("Horizontal", AxisDirection.Horizontal, Keys.Right, Keys.Left, 0, 0, Keys.D, Keys.A, 0, 0, GamePadAxes.LeftThumbstick);
+            controlSettings.RegisterControlAxis("Vertical", AxisDirection.Vertical, Keys.Down, Keys.Up, 0, 0, Keys.S, Keys.W, 0, 0, GamePadAxes.LeftThumbstick);
+            
 
             ControlListenerPlayer1 = new ControlListener(PlayerIndex.One, controlSettings);
             base.Initialize();
@@ -99,6 +99,11 @@ namespace TestGame {
             CurrentScene.AddGameEntity(testEntity);
             testEntity.AddComponent(new RectCollider() { Width = 20, Height = 20 });
             testEntity.Transform.LocalScale = new Vector2(4, 4);
+
+            EmptyTestEntity testEntityB = new EmptyTestEntity("testEntity", new Vector2(250, 60));
+            CurrentScene.AddGameEntity(testEntityB);
+            testEntityB.AddComponent(new RectCollider() { Width = 25, Height = 60 });
+            testEntityB.Transform.LocalScale = new Vector2(4, 4);
 
             // vvvvv LineSegment-Test vvvvvvv
 

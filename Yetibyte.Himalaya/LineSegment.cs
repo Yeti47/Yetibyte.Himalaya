@@ -201,7 +201,10 @@ namespace Yetibyte.Himalaya {
             float m = lineSegment.Slope;
             float b = lineSegment.Start.Y - m * lineSegment.Start.X;
 
-            return MathUtil.IsCloseToZero(point.Y - (m * point.X + b)) && lineSegment.Bounds.ContainsInclusive(point);
+            RectangleF lineBounds = lineSegment.Bounds;
+            lineBounds.Inflate(MathUtil.EPSILON, MathUtil.EPSILON);
+
+            return MathUtil.IsCloseToZero(point.Y - (m * point.X + b)) && lineBounds.ContainsInclusive(point);
 
         }
 
