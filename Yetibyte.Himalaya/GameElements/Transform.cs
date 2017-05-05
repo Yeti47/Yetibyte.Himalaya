@@ -20,20 +20,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Properties
 
+        public override bool IsRemovable => false;
+
         public Transform Parent => GameEntity?.ParentEntity?.Transform;
 
-        public IEnumerable<Transform> Children {
-
-            get {
-
-                if (!IsAttached)
-                    return new Transform[0];
-
-                return GameEntity.GetComponentsInChildren<Transform>(false, true);
-
-            }
-
-        }
+        public IEnumerable<Transform> Children => IsAttached ? GameEntity.GetComponentsInChildren<Transform>(false, true) : new Transform[0];
 
         /// <summary>
         /// The position relative to the parent Transform.

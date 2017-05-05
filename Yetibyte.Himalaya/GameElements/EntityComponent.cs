@@ -19,6 +19,7 @@ namespace Yetibyte.Himalaya.GameElements {
         #region Properties
 
         public virtual bool AllowMultiple => false;
+        public virtual bool IsRemovable => true;
 
         public GameEntity GameEntity {
 

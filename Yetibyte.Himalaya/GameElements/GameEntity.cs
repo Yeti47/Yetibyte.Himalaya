@@ -107,7 +107,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool IsDestroyed { get; protected set; }
 
-        public Transform Transform { get; set; };
+        public Transform Transform { get; set; }
 
         public bool HasParent => _parentEntity != null;
 
@@ -238,7 +238,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public void RemoveComponent(EntityComponent component) {
 
-            if (!HasComponent(component))
+            if (component == null || !HasComponent(component) || !component.IsRemovable)
                 return;
 
             _components.Remove(component);
