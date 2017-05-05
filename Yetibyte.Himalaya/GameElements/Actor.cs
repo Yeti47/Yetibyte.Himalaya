@@ -6,27 +6,20 @@ using Microsoft.Xna.Framework.Graphics;
 using Yetibyte.Himalaya.Graphics;
 
 namespace Yetibyte.Himalaya.GameElements {
-	
-	public abstract class Actor : GameEntity {
+
+    [Obsolete("The newly introduced component system makes this class obsolete. It can no longer be used and will most likely be removed shortly.")]
+    public abstract class Actor : GameEntity {
 		
 		// Fields
 		
 		// Properties
-		
-		public Sprite Sprite { get; set; }
-        public SpriteAnimator Animator { get; set; }
-
-        /// <summary>
-        /// If set to true, the Update method of <see cref="Animator"/> will not be called automatically.
-        /// </summary>
-        public bool IgnoreAnimator { get; set; } = false;
 
         // Constructor
 
-        protected Actor(string name, Vector2 position, Sprite sprite, float renderLayerDepth = 0, SpriteAnimator animator = null) : base(name, position) {
+        protected Actor(string name, Vector2 position, Sprite sprite, SpriteAnimator animator = null) : base(name, position) {
 
-            this.Sprite = sprite;
-            this.Animator = animator;
+            //this.Sprite = sprite;
+            //this.Animator = animator;
             
         }
         
@@ -36,14 +29,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
             base.Update(gameTime, globalTimeScale);
 
-            if(!IgnoreAnimator)
-                Animator?.Update(gameTime, globalTimeScale);
-
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
 
-            Sprite?.Draw(spriteBatch, gameTime);
+            base.Draw(spriteBatch, gameTime);
 
         }
 

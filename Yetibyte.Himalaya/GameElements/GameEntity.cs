@@ -157,9 +157,21 @@ namespace Yetibyte.Himalaya.GameElements {
 
             }
 
+            foreach (IUpdate updateableComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<IUpdate>()) {
+
+                updateableComponent.Update(gameTime, globalTimeScale);
+
+            }
+
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+
+            foreach (IDraw drawableComponent in _components.Where(c => c.IsActive).OfType<IDraw>().OrderBy(d => d.DrawOrder)) {
+
+                drawableComponent.Draw(spriteBatch, gameTime);
+
+            }
 
         }
 

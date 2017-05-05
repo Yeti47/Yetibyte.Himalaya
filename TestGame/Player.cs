@@ -17,7 +17,7 @@ using Yetibyte.Himalaya.Collision;
 
 namespace TestGame {
 
-    public class Player : Actor {
+    public class Player : GameEntity {
 
         private ControlListener _controlListener;
         private CollisionController _collisionController;
@@ -26,8 +26,7 @@ namespace TestGame {
 
         // Constructor
 
-        public Player(string name, Vector2 position, Sprite sprite, int renderLayer = 1, SpriteAnimator animator = null) : base(name, position, sprite, renderLayer, animator) {
-            
+        public Player(string name, Vector2 position) : base(name, position) {
         }
 
         // Methods

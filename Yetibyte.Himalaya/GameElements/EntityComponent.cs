@@ -68,7 +68,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         /// <summary>
         /// Determines the order in which <see cref="EntityComponent"/>s are processed. The processing order goes from
-        /// high priority to low priority components.
+        /// high priority to low priority components. Note: This does not affect the draw order for drawable components.
         /// </summary>
         public int Priority { get; set; }
 

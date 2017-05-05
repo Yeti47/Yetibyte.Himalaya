@@ -77,14 +77,16 @@ namespace TestGame {
             CurrentScene.LoadContent();
             CurrentScene.Initialize();
 
-            Player player = new Player("player", new Vector2(0, 0), playerSprite);
+            Player player = new Player("player", new Vector2(0, 0));
             player.DrawOrder = -1;
+            player.AddComponent(playerSprite);
             CurrentScene.AddGameEntity(player);
 
-            Gun gun = new Gun("playerGun", player.Transform.Position, gunSprite);
+            Gun gun = new Gun("playerGun", player.Transform.Position);
             gun.DrawOrder = 0;
             gun.Transform.X -= 7;
             gun.Transform.Y += 10;
+            gun.AddComponent(gunSprite);
             
             player.AddChildEntity(gun);
 
