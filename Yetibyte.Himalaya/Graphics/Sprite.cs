@@ -58,11 +58,8 @@ namespace Yetibyte.Himalaya.Graphics {
 
             set {
 
-                if (value.X < 0)
-                    value.X = 0;
-
-                if (value.Y < 0)
-                    value.Y = 0;
+                value.X = Math.Max(0, value.X);
+                value.Y = Math.Max(0, value.Y);
 
                 _sourceRect.Location = new Point(value.X * Width, value.Y * Height);
 

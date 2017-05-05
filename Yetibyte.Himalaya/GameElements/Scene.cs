@@ -173,11 +173,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// Returns a list of all <see cref="GameEntity"/> objects of the given Type that currently live in this scene.
         /// </summary>
         /// <typeparam name="T">The type of the GameEntities to filter out.</typeparam>
-        public List<T> GetGameEntitiesOfType<T>() where T : GameEntity {
-
-            return GameEntities.Where(e => e is T).Cast<T>().ToList();
-
-        }
+        public IEnumerable<T> GetGameEntitiesOfType<T>() where T : GameEntity => GameEntities.OfType<T>();
 
         /// <summary>
         /// Returns the <see cref="Microsoft.Xna.Framework.Game"/> this Scene belongs to cast to
