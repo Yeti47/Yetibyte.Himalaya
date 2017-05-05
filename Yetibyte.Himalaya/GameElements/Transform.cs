@@ -8,7 +8,8 @@ using Microsoft.Xna.Framework;
 namespace Yetibyte.Himalaya.GameElements {
 
     /// <summary>
-    /// A class that can be used as a component for any object that can be positioned, scaled and rotated.
+    /// A component that is used by every <see cref="GameEntity"/>. Enables entities to be positioned, scaled and rotated in 2D space. This
+    /// component cannot be removed from an entity.
     /// </summary>
     public class Transform : EntityComponent {
 
@@ -119,13 +120,6 @@ namespace Yetibyte.Himalaya.GameElements {
 
             Position += offset;
             return Position;
-
-        }
-
-        public Vector2 TranslateLocally(Vector2 offset) {
-
-            LocalPosition += offset;
-            return LocalPosition;
 
         }
 
