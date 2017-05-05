@@ -9,7 +9,7 @@ using Yetibyte.Himalaya.GameElements;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public class SpriteAnimator : IUpdate, ITimeScale {
+    public class SpriteAnimator : EntityComponent, IUpdate, ITimeScale {
 
         // Nested Enum
 
@@ -28,13 +28,10 @@ namespace Yetibyte.Himalaya.Graphics {
         // Constructors
 
         /// <summary>
-        /// Creates a new <see cref="SpriteAnimator"/> for the given <see cref="Yetibyte.Himalaya.Graphics.Sprite"/>.
+        /// Creates a new <see cref="SpriteAnimator"/> component.
         /// </summary>
-        /// <param name="sprite">The sprite to animate.</param>
         /// <param name="animation">The animation to use.</param>
-        public SpriteAnimator(Sprite sprite, SpriteAnimation animation) {
-
-            this.Sprite = sprite;
+        public SpriteAnimator(SpriteAnimation animation) {
 
             if(animation.FrameCount > 0) {
 
@@ -55,10 +52,16 @@ namespace Yetibyte.Himalaya.Graphics {
         /// <param name="globalTimeScale">Scaling value for elapsed time.</param>
         public void Update(GameTime gameTime, float globalTimeScale) {
 
-            if (Animation.FrameCount <= 0)
+            if(Sprite == null) {
+
+                Sprite = IsAttached ? GameEntity.GetComponent<Sprite>() : null;
+
+            }
+
+            if (Animation.FrameCount <= 0 || Sprite == null)
                 return;
 
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * globalTimeScale;
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * globalTimeScale * TimeScale;
             
             if (State == PlayingState.Playing) {
 

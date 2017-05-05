@@ -107,7 +107,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool IsDestroyed { get; protected set; }
 
-        public Transform Transform { get; set; }
+        public Transform Transform { get; private set; }
 
         public bool HasParent => _parentEntity != null;
 

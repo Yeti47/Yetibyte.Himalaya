@@ -9,7 +9,7 @@ using Yetibyte.Himalaya.GameElements;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public class Sprite {
+    public class Sprite : EntityComponent, IDraw {
 
         // Nested Enum
 
@@ -68,8 +68,12 @@ namespace Yetibyte.Himalaya.Graphics {
         }
 
         public Color TintColor { get; set; } = Color.White;
+        public Vector2 Offset { get; set; }
         public Vector2 Origin { get; set; }
         public SpriteEffects SpriteEffect { get; set; } = SpriteEffects.None;
+
+        public int DrawOrder { get; set; }
+        public float RenderLayerDepth { get; set; }
 
         // Constructors
 
@@ -88,25 +92,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
-        // Methods
-
-        public virtual void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation, Vector2 scale, float layerDepth) {
-
-            spriteBatch.Draw(Texture, position, null, SourceRect, Origin, rotation, scale, TintColor, SpriteEffect, layerDepth);
-
-        }
-
-        public virtual void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 scale, float layerDepth) {
-
-            Draw(spriteBatch, position, 0f, scale, layerDepth);
-
-        }
-
-        public virtual void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation , float layerDepth) {
-
-            Draw(spriteBatch, position, rotation, Vector2.One, layerDepth);
-
-        }
+        #region Methods
 
         /// <summary>
         /// Convenience method that uses an enumerator to set the origin of this sprite to one of the sprite's corners or the sprite's center.
@@ -137,6 +123,18 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+
+            if (!IsAttached)
+                return;
+
+            Transform transform = GameEntity.Transform;
+
+            spriteBatch.Draw(Texture, transform.Position + Offset, null, SourceRect, Origin, transform.Rotation, transform.Scale, TintColor, SpriteEffect, RenderLayerDepth);
+
+        } 
+
+        #endregion
     }
 
 }
