@@ -19,6 +19,13 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #endregion
 
+        #region Events
+
+        public event EventHandler<ComponentEventArgs> ComponentAdded;
+        public event EventHandler<ComponentEventArgs> ComponentRemoved;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -234,6 +241,9 @@ namespace Yetibyte.Himalaya.GameElements {
             _components.Add(component);
             component.SetGameEntityDirectly(this);
 
+            component.OnAdded();
+            OnRaiseComponentAdded(new ComponentEventArgs(component));
+
         }
 
         public void RemoveComponent(EntityComponent component) {
@@ -243,6 +253,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
             _components.Remove(component);
             component.SetGameEntityDirectly(null);
+
+            component.OnRemoved(this);
+            OnRaiseComponentRemoved(new ComponentEventArgs(component));
 
         }
 
@@ -322,6 +335,28 @@ namespace Yetibyte.Himalaya.GameElements {
             }
 
             return false;
+
+        }
+
+        /// <summary>
+        /// Invokes the ComponentAdded event handler.
+        /// </summary>
+        /// <param name="e">The EventArgs to send.</param>
+        private void OnRaiseComponentAdded(ComponentEventArgs e) {
+
+            EventHandler<ComponentEventArgs> componentAddedHandler = ComponentAdded;
+            componentAddedHandler?.Invoke(this, e);
+
+        }
+
+        /// <summary>
+        /// Invokes the ComponentRemoved event handler.
+        /// </summary>
+        /// <param name="e">The EventArgs to send.</param>
+        private void OnRaiseComponentRemoved(ComponentEventArgs e) {
+
+            EventHandler<ComponentEventArgs> componentRemovedHandler = ComponentRemoved;
+            componentRemovedHandler?.Invoke(this, e);
 
         }
 

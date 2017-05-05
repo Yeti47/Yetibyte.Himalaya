@@ -33,12 +33,7 @@ namespace Yetibyte.Himalaya.Graphics {
         /// <param name="animation">The animation to use.</param>
         public SpriteAnimator(SpriteAnimation animation) {
 
-            if(animation.FrameCount > 0) {
-
-                UpdateSprite();
-
-            }
-            
+            this.Animation = animation;
             this.State = PlayingState.Stopped;
 
         }
@@ -52,13 +47,12 @@ namespace Yetibyte.Himalaya.Graphics {
         /// <param name="globalTimeScale">Scaling value for elapsed time.</param>
         public void Update(GameTime gameTime, float globalTimeScale) {
 
-            if(Sprite == null) {
+            if (Animation == null || Animation.FrameCount <= 0)
+                return;
 
-                Sprite = IsAttached ? GameEntity.GetComponent<Sprite>() : null;
+            Sprite = FindSprite();
 
-            }
-
-            if (Animation.FrameCount <= 0 || Sprite == null)
+            if (Sprite == null)
                 return;
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * globalTimeScale * TimeScale;
@@ -89,6 +83,35 @@ namespace Yetibyte.Himalaya.Graphics {
 
             }
             
+        }
+
+        /// <summary>
+        /// Makes sure this <see cref="SpriteAnimator"/> uses the correct instance of <see cref="Graphics.Sprite"/>. 
+        /// 
+        /// <para>If the Sprite of this animator is null or was attached to a different <see cref="GameEntity"/>, this method 
+        /// looks for the first Sprite component in the <see cref="GameEntity"/> this animator is attached to and returns it. 
+        /// Otherwise the currently used Sprite is returned.
+        /// </para>
+        /// </summary>
+        /// <returns>The <see cref="Graphics.Sprite"/> this animator should animate.</returns>
+        private Sprite FindSprite() {
+
+            if (!IsAttached)
+                return null;
+
+            if(Sprite == null || Sprite.GameEntity != GameEntity) {
+
+                Sprite resultSprite = GameEntity.GetComponent<Sprite>();
+
+                if(resultSprite != null)
+                    UpdateSprite();
+
+                return resultSprite;
+
+            }
+
+            return Sprite;
+
         }
 
         /// <summary>

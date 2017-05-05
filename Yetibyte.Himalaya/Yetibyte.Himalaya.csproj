@@ -66,6 +66,7 @@
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="Collision\CollisionController.cs" />
     <Compile Include="GameElements\Camera.cs" />
+    <Compile Include="GameElements\ComponentEventArgs.cs" />
     <Compile Include="GameElements\EntityComponent.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
     <Compile Include="IBounds.cs" />
