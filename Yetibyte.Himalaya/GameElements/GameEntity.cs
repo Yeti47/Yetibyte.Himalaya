@@ -107,7 +107,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool IsDestroyed { get; protected set; }
 
-        public Transform Transform { get; set; } = new Transform();
+        public Transform Transform { get; set; };
 
         public bool HasParent => _parentEntity != null;
 
@@ -122,6 +122,9 @@ namespace Yetibyte.Himalaya.GameElements {
         protected GameEntity(string name, Vector2 position) {
 
             this.Name = name;
+            
+            this.Transform = new Transform();
+            this.AddComponent(Transform);
             this.Transform.Position = position;
 
         }
@@ -181,7 +184,6 @@ namespace Yetibyte.Himalaya.GameElements {
             if (!IsParentOf(childEntity)) {
 
                 ChildEntities.Add(childEntity);
-                Transform.AddChild(childEntity.Transform);
                 childEntity.ParentEntity = this;
 
                 if (doAddToScene)
@@ -202,7 +204,6 @@ namespace Yetibyte.Himalaya.GameElements {
             if (IsParentOf(childEntity)) {
 
                 ChildEntities.Remove(childEntity);
-                Transform.RemoveChild(childEntity.Transform);
                 childEntity.ParentEntity = null;
 
                 if (doRemoveFromScene)
