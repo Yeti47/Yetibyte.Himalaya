@@ -93,7 +93,7 @@ namespace Yetibyte.Himalaya.Graphics {
         /// Otherwise the currently used Sprite is returned.
         /// </para>
         /// </summary>
-        /// <returns>The <see cref="Graphics.Sprite"/> this animator should animate.</returns>
+        /// <returns>The <see cref="Graphics.Sprite"/> this animator should animate. Null if no Sprite could be found.</returns>
         private Sprite FindSprite() {
 
             if (!IsAttached)

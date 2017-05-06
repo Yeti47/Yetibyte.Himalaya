@@ -39,7 +39,7 @@ namespace TestGame {
         public override void Awake() {
             base.Awake();
 
-            _controlListener = Scene.GetGame<Game1>().ControlListenerPlayer1;
+            _controlListener = GetComponent<ControlListener>();
             _collisionController = GetComponent<CollisionController>();
 
         }
