@@ -9,7 +9,7 @@ using Yetibyte.Utilities;
 
 namespace Yetibyte.Himalaya.Collision {
 
-    public class CollisionController : EntityComponent {
+    public class CollisionController : EntityComponent, IUpdate {
 
         #region Constants
 
@@ -24,6 +24,18 @@ namespace Yetibyte.Himalaya.Collision {
 
         private Physics _physics;
         private IEnumerable<Collider> _myActiveColliders;
+
+        #endregion
+
+        #region Events
+
+        public delegate void TriggerEnterHandler(Collider ownCollider, Collider otherCollider);
+        public delegate void TriggerHandler(Collider ownCollider, Collider otherCollider);
+        public delegate void TriggerLeaveHandler(Collider ownCollider, Collider otherCollider);
+
+        public event TriggerEnterHandler RaiseTriggerEnter;
+        public event TriggerHandler RaiseTrigger;
+        public event TriggerLeaveHandler RaiseTriggerLeave;
 
         #endregion
 
@@ -121,7 +133,6 @@ namespace Yetibyte.Himalaya.Collision {
                         case RectCollider r:
 
                             collisionInfo = myCollider.WillIntersect(offset, r);
-
                             break;
 
                         default:
@@ -131,7 +142,9 @@ namespace Yetibyte.Himalaya.Collision {
                     if(collisionInfo.Intersects) {
 
                         hasCollided = true;
-                        offset -= collisionInfo.Penetration;                        
+                        offset -= collisionInfo.Penetration;
+                        
+                        // raise OnCollision Event
 
                     }
                         
@@ -149,7 +162,96 @@ namespace Yetibyte.Himalaya.Collision {
         /// <returns>The <see cref="Physics"/> instance of the <see cref="Scene"/> this Collision Controller lives in.</returns>
         private Physics GetPhysics() => GameEntity?.Scene?.Physics;
 
+        public void Update(GameTime gameTime, float globalTimeScale) {
+            
+
+
+        }
+
+        public void UpdateTriggers() {
+
+            IEnumerable<Collider> triggers = GetAttachedColliders().Where(c => c.IsTrigger && c.IsActive);
+
+            foreach(Collider trigger in triggers) {
+
+                trigger.IntersectingColliders.Clear();
+
+                foreach (IBounds potentialTarget in _physics.CollisionTree.GetObjectsAt(trigger.Bounds)) {
+
+                    Collider potentialTargetCollider = potentialTarget as Collider;
+
+                    // skip detection for colliders that belong to this controller
+                    if (potentialTargetCollider == null || triggers.Contains(potentialTargetCollider))
+                        continue;
+
+                    bool intersects = false;
+
+                    switch (potentialTargetCollider) {
+
+                        case RectCollider r:
+                            intersects = trigger.Intersects(r);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if(intersects) {
+
+                        trigger.IntersectingColliders.Add(potentialTargetCollider);
+
+                        // Were the two colliders intersecting in the previous frame as well?
+                        if(trigger.PreviouslyIntersectingColliders.Contains(potentialTargetCollider)) {
+
+                            // raise OnTrigger Event
+                            OnTrigger(trigger, potentialTargetCollider);
+
+                        }
+                        else {
+
+                            // raise OnTriggerEnter Event
+                            OnTriggerEnter(trigger, potentialTargetCollider);
+
+                        }
+
+                    }
+
+                }
+
+                foreach (Collider collider in trigger.PreviouslyIntersectingColliders.Except(trigger.IntersectingColliders)) {
+
+                    // raise OnTriggerLeave event
+                    OnTriggerLeave(trigger, collider);
+
+                }
+
+                trigger.PreviouslyIntersectingColliders.Clear();
+                trigger.PreviouslyIntersectingColliders = new List<Collider>(trigger.IntersectingColliders);
+
+            }
+
+        }
+
+        protected virtual void OnTriggerEnter(Collider ownCollider, Collider otherCollider) {
+
+            RaiseTriggerEnter?.Invoke(ownCollider, otherCollider);
+
+        }
+
+        protected virtual void OnTrigger(Collider ownCollider, Collider otherCollider) {
+
+            RaiseTrigger?.Invoke(ownCollider, otherCollider);
+
+        }
+
+        protected virtual void OnTriggerLeave(Collider ownCollider, Collider otherCollider) {
+
+            RaiseTriggerLeave?.Invoke(ownCollider, otherCollider);
+
+        }
+
         #endregion
+
+
 
     }
 
