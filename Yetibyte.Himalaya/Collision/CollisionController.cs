@@ -23,7 +23,7 @@ namespace Yetibyte.Himalaya.Collision {
         #region Fields
 
         private Physics _physics;
-        private IEnumerable<Collider> _myActiveColliders;
+        private IEnumerable<Collider> myActiveNonTriggerColliders;
 
         #endregion
 
@@ -44,10 +44,38 @@ namespace Yetibyte.Himalaya.Collision {
         public float GravityScale { get; set; }
         public bool IgnoreGravity { get; set; }
 
+        public Vector2 Velocity { get; set; } = Vector2.Zero;
+
+        public float VelocityX {
+
+            get => Velocity.X;
+            set => Velocity = new Vector2(value, Velocity.Y);
+
+        }
+
+        public float VelocityY {
+
+            get => Velocity.Y;
+            set => Velocity = new Vector2(Velocity.X, value);
+
+        }
+
         /// <summary>
         /// The collision detection method to use.
         /// </summary>
         public CollisionDetectionMethods CollisionDetectionMethod { get; set; } = CollisionDetectionMethods.Lazy;
+
+        /// <summary>
+        /// Determines which <see cref="GameEntity"/> should be notified when a collision event occurs. It can be either
+        /// the entity this Controller is attached to, the respective entity of the collider that caused the event, or both.
+        /// </summary>
+        public TriggerReceivers TriggerReceiver { get; set; } = TriggerReceivers.Both;
+
+        /// <summary>
+        /// If set to 'true', the <see cref="GameEntity"/> attached to this CollisionController will never be moved, regardless
+        /// of the <see cref="Velocity"/>.
+        /// </summary>
+        public bool IsStatic { get; set; }
 
         #endregion
 
@@ -63,12 +91,6 @@ namespace Yetibyte.Himalaya.Collision {
 
         }
 
-        public void ApplyGravity() {
-
-            throw new NotImplementedException("Gravity has not been fully implemented yet.");
-
-        }
-
         /// <summary>
         /// Moves the <see cref="GameEntity"/> this CollisionController is attached to by the given offset while responding
         /// to potential collisions.
@@ -80,7 +102,7 @@ namespace Yetibyte.Himalaya.Collision {
                 return;
 
             _physics = GetPhysics();
-            _myActiveColliders = GetAttachedColliders().Where(c => c.IsActive && !c.IsTrigger);
+            myActiveNonTriggerColliders = GetAttachedColliders().Where(c => c.IsActive && !c.IsTrigger);
 
             if (CollisionDetectionMethod == CollisionDetectionMethods.Lazy) {
 
@@ -112,7 +134,7 @@ namespace Yetibyte.Himalaya.Collision {
             bool hasCollided = false;
 
             // Check collision for all colliders attached to this Collision Controller
-            foreach (Collider myCollider in _myActiveColliders) {
+            foreach (Collider myCollider in myActiveNonTriggerColliders) {
 
                 RectangleF futureBounds = new RectangleF(myCollider.Bounds.Location + offset, myCollider.Bounds.Size);
                 RectangleF velocityBounds = RectangleF.Union(myCollider.Bounds, futureBounds);
@@ -123,7 +145,7 @@ namespace Yetibyte.Himalaya.Collision {
                     Collider potentialTargetCollider = potentialTarget as Collider;
 
                     // skip detection for triggers and colliders that belong to this controller
-                    if (potentialTargetCollider == null || potentialTargetCollider.IsTrigger || _myActiveColliders.Contains(potentialTargetCollider)) 
+                    if (potentialTargetCollider == null || potentialTargetCollider.IsTrigger || myActiveNonTriggerColliders.Contains(potentialTargetCollider)) 
                         continue;
 
                     CollisionInfo collisionInfo = CollisionInfo.Default;
@@ -144,7 +166,7 @@ namespace Yetibyte.Himalaya.Collision {
                         hasCollided = true;
                         offset -= collisionInfo.Penetration;
                         
-                        // raise OnCollision Event
+                        // raise OnCollision Event???
 
                     }
                         
@@ -160,19 +182,40 @@ namespace Yetibyte.Himalaya.Collision {
         /// Gets the <see cref="Physics"/> instance of the <see cref="Scene"/> this Collision Controller lives in.
         /// </summary>
         /// <returns>The <see cref="Physics"/> instance of the <see cref="Scene"/> this Collision Controller lives in.</returns>
-        private Physics GetPhysics() => GameEntity?.Scene?.Physics;
+        public Physics GetPhysics() => GameEntity?.Scene?.Physics;
 
+        /// <summary>
+        /// Updates this <see cref="CollisionController"/>. It will be moved by its <see cref="Velocity"/> and check for collisions.
+        /// 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="globalTimeScale"></param>
         public void Update(GameTime gameTime, float globalTimeScale) {
-            
 
+            if (!IsAttached)
+                return;
+
+            if(!IsStatic && !MathUtil.IsCloseToZero(Velocity.X) && !MathUtil.IsCloseToZero(Velocity.Y)) {
+
+                Move(Velocity);
+
+            }
+
+            CheckTriggerIntersections();
 
         }
 
-        public void UpdateTriggers() {
+        /// <summary>
+        /// Checks whether the triggers this <see cref="CollisionController"/> is in control of intersect with any colliders in the <see cref="Scene"/>.
+        /// Also fires the appropriate trigger events.
+        /// </summary>
+        private void CheckTriggerIntersections() {
 
-            IEnumerable<Collider> triggers = GetAttachedColliders().Where(c => c.IsTrigger && c.IsActive);
+            _physics = GetPhysics();
+            IEnumerable<Collider> myActiveColliders = GetAttachedColliders().Where(c => c.IsActive);
+            IEnumerable<Collider> myActiveTriggers = myActiveColliders.Where(c => c.IsTrigger);
 
-            foreach(Collider trigger in triggers) {
+            foreach (Collider trigger in myActiveTriggers) {
 
                 trigger.IntersectingColliders.Clear();
 
@@ -181,7 +224,7 @@ namespace Yetibyte.Himalaya.Collision {
                     Collider potentialTargetCollider = potentialTarget as Collider;
 
                     // skip detection for colliders that belong to this controller
-                    if (potentialTargetCollider == null || triggers.Contains(potentialTargetCollider))
+                    if (potentialTargetCollider == null || myActiveColliders.Contains(potentialTargetCollider))
                         continue;
 
                     bool intersects = false;
@@ -235,17 +278,68 @@ namespace Yetibyte.Himalaya.Collision {
 
             RaiseTriggerEnter?.Invoke(ownCollider, otherCollider);
 
+            if ((TriggerReceiver & TriggerReceivers.ControllerEntity) != 0) {
+
+                GameEntity?.OnTriggerEnter(ownCollider, otherCollider);
+
+                // If the collider is attached to the GameEntity with the CollisionController directly, we are done now 
+                // even if TriggerReceiver is set to 'both'
+                if (ownCollider.GameEntity == GameEntity)
+                    return;
+
+            }
+
+            if((TriggerReceiver & TriggerReceivers.AttachedEntity) != 0) {
+
+                ownCollider.GameEntity?.OnTriggerEnter(ownCollider, otherCollider);
+
+            }
+
         }
 
         protected virtual void OnTrigger(Collider ownCollider, Collider otherCollider) {
 
             RaiseTrigger?.Invoke(ownCollider, otherCollider);
 
+            if ((TriggerReceiver & TriggerReceivers.ControllerEntity) != 0) {
+
+                GameEntity?.OnTrigger(ownCollider, otherCollider);
+
+                // If the collider is attached to the GameEntity with the CollisionController directly, we are done now 
+                // even if TriggerReceiver is set to 'both'
+                if (ownCollider.GameEntity == GameEntity)
+                    return;
+
+            }
+
+            if ((TriggerReceiver & TriggerReceivers.AttachedEntity) != 0) {
+
+                ownCollider.GameEntity?.OnTrigger(ownCollider, otherCollider);
+
+            }
+
         }
 
         protected virtual void OnTriggerLeave(Collider ownCollider, Collider otherCollider) {
 
             RaiseTriggerLeave?.Invoke(ownCollider, otherCollider);
+
+            if ((TriggerReceiver & TriggerReceivers.ControllerEntity) != 0) {
+
+                GameEntity?.OnTriggerLeave(ownCollider, otherCollider);
+
+                // If the collider is attached to the GameEntity with the CollisionController directly, we are done now 
+                // even if TriggerReceiver is set to 'both'
+                if (ownCollider.GameEntity == GameEntity)
+                    return;
+
+            }
+
+            if ((TriggerReceiver & TriggerReceivers.AttachedEntity) != 0) {
+
+                ownCollider.GameEntity?.OnTriggerLeave(ownCollider, otherCollider);
+
+            }
 
         }
 

@@ -36,7 +36,7 @@ namespace TestGame {
 
         }
 
-        public override void Awake() {
+        protected override void Awake() {
             base.Awake();
 
             _controlListener = GetComponent<ControlListener>();

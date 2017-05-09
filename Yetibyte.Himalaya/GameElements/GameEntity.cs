@@ -144,7 +144,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
-        public virtual void Awake() {
+        protected virtual void Awake() {
             
         }
 
@@ -157,7 +157,20 @@ namespace Yetibyte.Himalaya.GameElements {
 
             }
 
+            foreach (Behavior behavior in GetComponents<Behavior>().Where(b => b.IsActive && !b.IsAwake).OrderByDescending(b => b.Priority)) {
+
+                if (IsDestroyed)
+                    break;
+
+                behavior.Awake();
+                behavior.IsAwake = true;
+
+            }
+
             foreach (IUpdate updateableComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<IUpdate>()) {
+
+                if (IsDestroyed)
+                    break;
 
                 updateableComponent.Update(gameTime, globalTimeScale);
 
@@ -369,6 +382,51 @@ namespace Yetibyte.Himalaya.GameElements {
 
             EventHandler<ComponentEventArgs> componentRemovedHandler = ComponentRemoved;
             componentRemovedHandler?.Invoke(this, e);
+
+        }
+
+        /// <summary>
+        /// Gets the <see cref="GameEntity"/> that is on top of the entity hierarchy.
+        /// </summary>
+        /// <returns>The GameEntity that is on top of the entity hierarchy.</returns>
+        public GameEntity GetAncestor() => !HasParent ? this : GetAncestor();
+
+        internal void OnTrigger(Collider ownCollider, Collider otherCollider) {
+
+            foreach (ICollisionResponse collisionResponsiveComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<ICollisionResponse>()) {
+
+                if (IsDestroyed)
+                    return;
+
+                collisionResponsiveComponent.OnTrigger(ownCollider, otherCollider);
+
+            }
+
+        }
+
+        internal void OnTriggerEnter(Collider ownCollider, Collider otherCollider) {
+
+            foreach (ICollisionResponse collisionResponsiveComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<ICollisionResponse>()) {
+
+                if (IsDestroyed)
+                    return;
+
+                collisionResponsiveComponent.OnTriggerEnter(ownCollider, otherCollider);
+
+            }
+            
+        }
+
+        internal void OnTriggerLeave(Collider ownCollider, Collider otherCollider) {
+
+            foreach (ICollisionResponse collisionResponsiveComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<ICollisionResponse>()) {
+
+                if (IsDestroyed)
+                    return;
+
+                collisionResponsiveComponent.OnTriggerLeave(ownCollider, otherCollider);
+
+            }
 
         }
 
