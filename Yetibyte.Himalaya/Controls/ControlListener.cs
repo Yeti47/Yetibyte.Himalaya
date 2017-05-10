@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Yetibyte.Himalaya.GameElements;
 
 namespace Yetibyte.Himalaya.Controls {
 
-    public class ControlListener {
+    public class ControlListener : EntityComponent, IUpdate {
 
         // Fields
         
@@ -28,8 +29,10 @@ namespace Yetibyte.Himalaya.Controls {
         public KeyboardState CurrentKeyboardState { get; private set; }
         public GamePadState CurrentGamePadState { get; private set; }
 
-        public KeyboardState PreviousKeyboardState { get { return _previousKeyboardState; } }
-        public GamePadState PreviousGamePadState { get { return _previousGamePadState; } }
+        public KeyboardState PreviousKeyboardState => _previousKeyboardState;
+        public GamePadState PreviousGamePadState => _previousGamePadState;
+
+        public override bool AllowMultiple => true;
 
         // Constructor
 
@@ -42,7 +45,7 @@ namespace Yetibyte.Himalaya.Controls {
 
         // Methods
 
-        public void Update(GameTime gameTime) {
+        public void Update(GameTime gameTime, float globalTimeScale) {
 
             CurrentKeyboardState = Keyboard.GetState();
             CurrentGamePadState = GamePad.GetState(PlayerIndex);

@@ -30,8 +30,6 @@ namespace TestGame {
         public Texture2D PlayerTexture { get; set; }
         public Texture2D GunTexture { get; set; }
 
-        public ControlListener ControlListenerPlayer1 { get; private set; }
-
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -46,12 +44,7 @@ namespace TestGame {
         protected override void Initialize() {
             // TODO: Add your initialization logic here
 
-            ControlSettings controlSettings = new ControlSettings();
-            controlSettings.RegisterControlAxis("Horizontal", AxisDirection.Horizontal, Keys.Right, Keys.Left, 0, 0, Keys.D, Keys.A, 0, 0, GamePadAxes.LeftThumbstick);
-            controlSettings.RegisterControlAxis("Vertical", AxisDirection.Vertical, Keys.Down, Keys.Up, 0, 0, Keys.S, Keys.W, 0, 0, GamePadAxes.LeftThumbstick);
             
-
-            ControlListenerPlayer1 = new ControlListener(PlayerIndex.One, controlSettings);
             base.Initialize();
         }
 
@@ -77,14 +70,21 @@ namespace TestGame {
             CurrentScene.LoadContent();
             CurrentScene.Initialize();
 
-            Player player = new Player("player", new Vector2(0, 0), playerSprite);
+            ControlSettings controlSettings = new ControlSettings();
+            controlSettings.RegisterControlAxis("Horizontal", AxisDirection.Horizontal, Keys.Right, Keys.Left, 0, 0, Keys.D, Keys.A, 0, 0, GamePadAxes.LeftThumbstick);
+            controlSettings.RegisterControlAxis("Vertical", AxisDirection.Vertical, Keys.Down, Keys.Up, 0, 0, Keys.S, Keys.W, 0, 0, GamePadAxes.LeftThumbstick);
+
+            Player player = new Player("player", new Vector2(0, 0));
             player.DrawOrder = -1;
+            player.AddComponent(playerSprite);
+            player.AddComponent(new ControlListener(PlayerIndex.One, controlSettings));
             CurrentScene.AddGameEntity(player);
 
-            Gun gun = new Gun("playerGun", player.Transform.Position, gunSprite);
+            Gun gun = new Gun("playerGun", player.Transform.Position);
             gun.DrawOrder = 0;
             gun.Transform.X -= 7;
             gun.Transform.Y += 10;
+            gun.AddComponent(gunSprite);
             
             player.AddChildEntity(gun);
 
@@ -137,7 +137,6 @@ namespace TestGame {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            ControlListenerPlayer1.Update(gameTime);
             CurrentScene.Update(gameTime);
 
             previousKeyboardState = currentKeyboardState;

@@ -31,6 +31,9 @@ namespace Yetibyte.Himalaya.Graphics {
         public SpriteAnimation(string name, float frameDuration, bool isLooping) {
 
             this.SpriteIndices = new List<Point>();
+            this.Name = name;
+            this.FrameDuration = frameDuration;
+            this.IsLooping = isLooping;
 
         }
 

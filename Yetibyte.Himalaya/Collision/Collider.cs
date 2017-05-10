@@ -50,6 +50,9 @@ namespace Yetibyte.Himalaya.Collision {
         /// </summary>
         public CollisionLayers Layers { get; set; } = CollisionLayers.All;
 
+        internal List<Collider> IntersectingColliders { get; set; } = new List<Collider>();
+        internal List<Collider> PreviouslyIntersectingColliders { get; set; } = new List<Collider>();
+
         #endregion
 
         #region Methods

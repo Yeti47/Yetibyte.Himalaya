@@ -19,6 +19,7 @@ namespace Yetibyte.Himalaya.GameElements {
         #region Properties
 
         public virtual bool AllowMultiple => false;
+        public virtual bool IsRemovable => true;
 
         public GameEntity GameEntity {
 
@@ -67,7 +68,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         /// <summary>
         /// Determines the order in which <see cref="EntityComponent"/>s are processed. The processing order goes from
-        /// high priority to low priority components.
+        /// high priority to low priority components. Note: This does not affect the draw order for drawable components.
         /// </summary>
         public int Priority { get; set; }
 
@@ -81,6 +82,21 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="gameEntity">The new GameEntity.</param>
         internal void SetGameEntityDirectly(GameEntity gameEntity) => _gameEntity = gameEntity;
+
+        /// <summary>
+        /// Called when this <see cref="EntityComponent"/> is attached to a <see cref="GameElements.GameEntity"/>.
+        /// </summary>
+        public virtual void OnAdded() {
+            
+        }
+
+        /// <summary>
+        /// Called when this <see cref="EntityComponent"/> is removed from a <see cref="GameElements.GameEntity"/>.
+        /// </summary>
+        /// <param name="gameEntity">The GameEntity this component was removed from.</param>
+        public virtual void OnRemoved(GameEntity gameEntity) {
+
+        }
 
         #endregion
 

@@ -19,6 +19,13 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #endregion
 
+        #region Events
+
+        public event EventHandler<ComponentEventArgs> ComponentAdded;
+        public event EventHandler<ComponentEventArgs> ComponentRemoved;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -107,7 +114,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool IsDestroyed { get; protected set; }
 
-        public Transform Transform { get; set; } = new Transform();
+        public Transform Transform { get; private set; }
 
         public bool HasParent => _parentEntity != null;
 
@@ -122,6 +129,9 @@ namespace Yetibyte.Himalaya.GameElements {
         protected GameEntity(string name, Vector2 position) {
 
             this.Name = name;
+            
+            this.Transform = new Transform();
+            this.AddComponent(Transform);
             this.Transform.Position = position;
 
         }
@@ -134,7 +144,7 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
-        public virtual void Awake() {
+        protected virtual void Awake() {
             
         }
 
@@ -147,9 +157,34 @@ namespace Yetibyte.Himalaya.GameElements {
 
             }
 
+            foreach (Behavior behavior in GetComponents<Behavior>().Where(b => b.IsActive && !b.IsAwake).OrderByDescending(b => b.Priority)) {
+
+                if (IsDestroyed)
+                    break;
+
+                behavior.Awake();
+                behavior.IsAwake = true;
+
+            }
+
+            foreach (IUpdate updateableComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<IUpdate>()) {
+
+                if (IsDestroyed)
+                    break;
+
+                updateableComponent.Update(gameTime, globalTimeScale);
+
+            }
+
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+
+            foreach (IDraw drawableComponent in _components.Where(c => c.IsActive).OfType<IDraw>().OrderBy(d => d.DrawOrder)) {
+
+                drawableComponent.Draw(spriteBatch, gameTime);
+
+            }
 
         }
 
@@ -181,7 +216,6 @@ namespace Yetibyte.Himalaya.GameElements {
             if (!IsParentOf(childEntity)) {
 
                 ChildEntities.Add(childEntity);
-                Transform.AddChild(childEntity.Transform);
                 childEntity.ParentEntity = this;
 
                 if (doAddToScene)
@@ -202,7 +236,6 @@ namespace Yetibyte.Himalaya.GameElements {
             if (IsParentOf(childEntity)) {
 
                 ChildEntities.Remove(childEntity);
-                Transform.RemoveChild(childEntity.Transform);
                 childEntity.ParentEntity = null;
 
                 if (doRemoveFromScene)
@@ -233,15 +266,21 @@ namespace Yetibyte.Himalaya.GameElements {
             _components.Add(component);
             component.SetGameEntityDirectly(this);
 
+            component.OnAdded();
+            OnRaiseComponentAdded(new ComponentEventArgs(component));
+
         }
 
         public void RemoveComponent(EntityComponent component) {
 
-            if (!HasComponent(component))
+            if (component == null || !HasComponent(component) || !component.IsRemovable)
                 return;
 
             _components.Remove(component);
             component.SetGameEntityDirectly(null);
+
+            component.OnRemoved(this);
+            OnRaiseComponentRemoved(new ComponentEventArgs(component));
 
         }
 
@@ -321,6 +360,73 @@ namespace Yetibyte.Himalaya.GameElements {
             }
 
             return false;
+
+        }
+
+        /// <summary>
+        /// Invokes the ComponentAdded event handler.
+        /// </summary>
+        /// <param name="e">The EventArgs to send.</param>
+        private void OnRaiseComponentAdded(ComponentEventArgs e) {
+
+            EventHandler<ComponentEventArgs> componentAddedHandler = ComponentAdded;
+            componentAddedHandler?.Invoke(this, e);
+
+        }
+
+        /// <summary>
+        /// Invokes the ComponentRemoved event handler.
+        /// </summary>
+        /// <param name="e">The EventArgs to send.</param>
+        private void OnRaiseComponentRemoved(ComponentEventArgs e) {
+
+            EventHandler<ComponentEventArgs> componentRemovedHandler = ComponentRemoved;
+            componentRemovedHandler?.Invoke(this, e);
+
+        }
+
+        /// <summary>
+        /// Gets the <see cref="GameEntity"/> that is on top of the entity hierarchy.
+        /// </summary>
+        /// <returns>The GameEntity that is on top of the entity hierarchy.</returns>
+        public GameEntity GetAncestor() => !HasParent ? this : GetAncestor();
+
+        internal void OnTrigger(Collider ownCollider, Collider otherCollider) {
+
+            foreach (ICollisionResponse collisionResponsiveComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<ICollisionResponse>()) {
+
+                if (IsDestroyed)
+                    return;
+
+                collisionResponsiveComponent.OnTrigger(ownCollider, otherCollider);
+
+            }
+
+        }
+
+        internal void OnTriggerEnter(Collider ownCollider, Collider otherCollider) {
+
+            foreach (ICollisionResponse collisionResponsiveComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<ICollisionResponse>()) {
+
+                if (IsDestroyed)
+                    return;
+
+                collisionResponsiveComponent.OnTriggerEnter(ownCollider, otherCollider);
+
+            }
+            
+        }
+
+        internal void OnTriggerLeave(Collider ownCollider, Collider otherCollider) {
+
+            foreach (ICollisionResponse collisionResponsiveComponent in _components.Where(c => c.IsActive).OrderByDescending(c => c.Priority).OfType<ICollisionResponse>()) {
+
+                if (IsDestroyed)
+                    return;
+
+                collisionResponsiveComponent.OnTriggerLeave(ownCollider, otherCollider);
+
+            }
 
         }
 

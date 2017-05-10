@@ -8,42 +8,24 @@ using Microsoft.Xna.Framework;
 namespace Yetibyte.Himalaya.GameElements {
 
     /// <summary>
-    /// A class that can be used as a component for any object that can be positioned, scaled and rotated.
+    /// A component that is used by every <see cref="GameEntity"/>. Enables entities to be positioned, scaled and rotated in 2D space. This
+    /// component cannot be removed from an entity.
     /// </summary>
-    public class Transform {
+    public class Transform : EntityComponent {
 
         #region Fields
 
-        private Transform _parent;
         private Vector2 _position = Vector2.Zero;
 
         #endregion
 
         #region Properties
 
-        public Transform Parent {
+        public override bool IsRemovable => false;
 
-            get { return _parent; }
+        public Transform Parent => GameEntity?.ParentEntity?.Transform;
 
-            set {
-
-                Transform futureParent = value;
-
-                if (this.HasParent) {
-
-                    _parent.RemoveChild(this);
-
-                }
-
-                futureParent?.AddChild(this);
-
-                _parent = futureParent;
-
-            }
-
-        }
-
-        public List<Transform> Children { get; private set; } = new List<Transform>();
+        public IEnumerable<Transform> Children => IsAttached ? GameEntity.GetComponentsInChildren<Transform>(false, true) : new Transform[0];
 
         /// <summary>
         /// The position relative to the parent Transform.
@@ -130,8 +112,6 @@ namespace Yetibyte.Himalaya.GameElements {
         public Vector2 LocalScale { get; set; } = Vector2.One;
         public float LocalRotation { get; set; }
 
-        public bool HasParent => _parent != null;
-
         #endregion
 
         #region Methods
@@ -142,40 +122,6 @@ namespace Yetibyte.Himalaya.GameElements {
             return Position;
 
         }
-
-        public Vector2 TranslateLocally(Vector2 offset) {
-
-            LocalPosition += offset;
-            return LocalPosition;
-
-        }
-
-        public void AddChild(Transform childTransform) {
-
-            if (IsParentOf(childTransform))
-                return;
-
-            Children.Add(childTransform);
-            childTransform.Parent = this;
-
-        }
-
-        public void RemoveChild(Transform childTransform) {
-
-            if (!IsParentOf(childTransform))
-                return;
-
-            Children.Remove(childTransform);
-            childTransform.Parent = null;
-
-        }
-
-        /// <summary>
-        /// Checks whether the given <see cref="Transform"/> is included in the list of child entities of this <see cref="Transform"/>.
-        /// </summary>
-        /// <param name="childTransform">The child transform.</param>
-        /// <returns>True if the given Transform is a child of this Transform.</returns>
-        public bool IsParentOf(Transform childTransform) => Children.Contains(childTransform);
 
         #endregion
 

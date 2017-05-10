@@ -104,11 +104,12 @@ namespace Yetibyte.Utilities {
         /// </summary>
         /// <param name="value">The value of which the sign is to be determined.</param>
         /// <returns>1 for a positive value or -1 for a negative value.</returns>
-		public static float Sign1(float value) {
-			
-			float sign = (float)Math.Sign(value);
-				
-			return Math.Abs(sign) < EPSILON ? 1f : sign;
+		public static int Sign1(float value) {
+
+            if (value < 0)
+                return -1;
+
+            return 1;
 						
 		}
 		

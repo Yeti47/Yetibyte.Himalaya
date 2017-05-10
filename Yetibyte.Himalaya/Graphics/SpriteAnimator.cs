@@ -9,7 +9,7 @@ using Yetibyte.Himalaya.GameElements;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public class SpriteAnimator : IUpdate, ITimeScale {
+    public class SpriteAnimator : EntityComponent, IUpdate, ITimeScale {
 
         // Nested Enum
 
@@ -28,20 +28,12 @@ namespace Yetibyte.Himalaya.Graphics {
         // Constructors
 
         /// <summary>
-        /// Creates a new <see cref="SpriteAnimator"/> for the given <see cref="Yetibyte.Himalaya.Graphics.Sprite"/>.
+        /// Creates a new <see cref="SpriteAnimator"/> component.
         /// </summary>
-        /// <param name="sprite">The sprite to animate.</param>
         /// <param name="animation">The animation to use.</param>
-        public SpriteAnimator(Sprite sprite, SpriteAnimation animation) {
+        public SpriteAnimator(SpriteAnimation animation) {
 
-            this.Sprite = sprite;
-
-            if(animation.FrameCount > 0) {
-
-                UpdateSprite();
-
-            }
-            
+            this.Animation = animation;
             this.State = PlayingState.Stopped;
 
         }
@@ -55,10 +47,15 @@ namespace Yetibyte.Himalaya.Graphics {
         /// <param name="globalTimeScale">Scaling value for elapsed time.</param>
         public void Update(GameTime gameTime, float globalTimeScale) {
 
-            if (Animation.FrameCount <= 0)
+            if (Animation == null || Animation.FrameCount <= 0)
                 return;
 
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * globalTimeScale;
+            Sprite = FindSprite();
+
+            if (Sprite == null)
+                return;
+
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * globalTimeScale * TimeScale;
             
             if (State == PlayingState.Playing) {
 
@@ -86,6 +83,35 @@ namespace Yetibyte.Himalaya.Graphics {
 
             }
             
+        }
+
+        /// <summary>
+        /// Makes sure this <see cref="SpriteAnimator"/> uses the correct instance of <see cref="Graphics.Sprite"/>. 
+        /// 
+        /// <para>If the Sprite of this animator is null or was attached to a different <see cref="GameEntity"/>, this method 
+        /// looks for the first Sprite component in the <see cref="GameEntity"/> this animator is attached to and returns it. 
+        /// Otherwise the currently used Sprite is returned.
+        /// </para>
+        /// </summary>
+        /// <returns>The <see cref="Graphics.Sprite"/> this animator should animate. Null if no Sprite could be found.</returns>
+        private Sprite FindSprite() {
+
+            if (!IsAttached)
+                return null;
+
+            if(Sprite == null || Sprite.GameEntity != GameEntity) {
+
+                Sprite resultSprite = GameEntity.GetComponent<Sprite>();
+
+                if(resultSprite != null)
+                    UpdateSprite();
+
+                return resultSprite;
+
+            }
+
+            return Sprite;
+
         }
 
         /// <summary>

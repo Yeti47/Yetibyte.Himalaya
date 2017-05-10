@@ -49,9 +49,11 @@
     <Compile Include="Collision\CollisionDetectionMethods.cs" />
     <Compile Include="Collision\CollisionInfo.cs" />
     <Compile Include="Collision\CollisionLayers.cs" />
+    <Compile Include="Collision\ICollisionResponse.cs" />
     <Compile Include="Collision\Physics.cs" />
     <Compile Include="Collision\RaycastInfo.cs" />
     <Compile Include="Collision\RectCollider.cs" />
+    <Compile Include="Collision\TriggerReceivers.cs" />
     <Compile Include="Content\SpriteAnimationReader.cs" />
     <Compile Include="Controls\ControlSettings.cs" />
     <Compile Include="Controls\ControlListener.cs" />
@@ -65,7 +67,9 @@
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="Collision\CollisionController.cs" />
+    <Compile Include="GameElements\Behavior.cs" />
     <Compile Include="GameElements\Camera.cs" />
+    <Compile Include="GameElements\ComponentEventArgs.cs" />
     <Compile Include="GameElements\EntityComponent.cs" />
     <Compile Include="GameElements\GameEntity.cs" />
     <Compile Include="IBounds.cs" />

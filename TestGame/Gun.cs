@@ -13,14 +13,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TestGame {
 
-    public class Gun : Actor {
+    public class Gun : GameEntity {
 
         // Constructor
 
-        public Gun(string name, Vector2 position, Sprite sprite, int renderLayer = 1, SpriteAnimator animator = null) : base(name, position, sprite, renderLayer, animator) {
+        public Gun(string name, Vector2 position) : base(name, position) {
 
         }
-        
     }
 
 }
