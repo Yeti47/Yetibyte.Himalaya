@@ -24,10 +24,14 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public abstract void Awake();
         public abstract void Update(GameTime gameTime, float globalTimeScale);
-        public abstract void OnTrigger(Collider ownCollider, Collider otherCollider);
-        public abstract void OnTriggerEnter(Collider ownCollider, Collider otherCollider);
-        public abstract void OnTriggerLeave(Collider ownCollider, Collider otherCollider);
-        
+        protected abstract void OnTrigger(Collider ownCollider, Collider otherCollider);
+        protected abstract void OnTriggerEnter(Collider ownCollider, Collider otherCollider);
+        protected abstract void OnTriggerLeave(Collider ownCollider, Collider otherCollider);
+
+        void ICollisionResponse.OnTrigger(Collider ownCollider, Collider otherCollider) => this.OnTrigger(ownCollider, otherCollider);
+        void ICollisionResponse.OnTriggerEnter(Collider ownCollider, Collider otherCollider) => this.OnTriggerEnter(ownCollider, otherCollider);
+        void ICollisionResponse.OnTriggerLeave(Collider ownCollider, Collider otherCollider) => this.OnTriggerLeave(ownCollider, otherCollider);
+
         #endregion
 
     }
