@@ -69,7 +69,7 @@ namespace Yetibyte.Himalaya.Collision {
         /// Determines which <see cref="GameEntity"/> should be notified when a collision event occurs. It can be either
         /// the entity this Controller is attached to, the respective entity of the collider that caused the event, or both.
         /// </summary>
-        public TriggerReceivers TriggerReceiver { get; set; } = TriggerReceivers.Both;
+        public CollisionListeners CollisionListener { get; set; } = CollisionListeners.Both;
 
         /// <summary>
         /// If set to 'true', the <see cref="GameEntity"/> attached to this CollisionController will never be moved, regardless
@@ -278,7 +278,7 @@ namespace Yetibyte.Himalaya.Collision {
 
             RaiseTriggerEnter?.Invoke(ownCollider, otherCollider);
 
-            if ((TriggerReceiver & TriggerReceivers.ControllerEntity) != 0) {
+            if ((CollisionListener & CollisionListeners.ControllerEntity) != 0) {
 
                 GameEntity?.OnTriggerEnter(ownCollider, otherCollider);
 
@@ -289,7 +289,7 @@ namespace Yetibyte.Himalaya.Collision {
 
             }
 
-            if((TriggerReceiver & TriggerReceivers.AttachedEntity) != 0) {
+            if((CollisionListener & CollisionListeners.AttachedEntity) != 0) {
 
                 ownCollider.GameEntity?.OnTriggerEnter(ownCollider, otherCollider);
 
@@ -301,7 +301,7 @@ namespace Yetibyte.Himalaya.Collision {
 
             RaiseTrigger?.Invoke(ownCollider, otherCollider);
 
-            if ((TriggerReceiver & TriggerReceivers.ControllerEntity) != 0) {
+            if ((CollisionListener & CollisionListeners.ControllerEntity) != 0) {
 
                 GameEntity?.OnTrigger(ownCollider, otherCollider);
 
@@ -312,7 +312,7 @@ namespace Yetibyte.Himalaya.Collision {
 
             }
 
-            if ((TriggerReceiver & TriggerReceivers.AttachedEntity) != 0) {
+            if ((CollisionListener & CollisionListeners.AttachedEntity) != 0) {
 
                 ownCollider.GameEntity?.OnTrigger(ownCollider, otherCollider);
 
@@ -324,7 +324,7 @@ namespace Yetibyte.Himalaya.Collision {
 
             RaiseTriggerLeave?.Invoke(ownCollider, otherCollider);
 
-            if ((TriggerReceiver & TriggerReceivers.ControllerEntity) != 0) {
+            if ((CollisionListener & CollisionListeners.ControllerEntity) != 0) {
 
                 GameEntity?.OnTriggerLeave(ownCollider, otherCollider);
 
@@ -335,7 +335,7 @@ namespace Yetibyte.Himalaya.Collision {
 
             }
 
-            if ((TriggerReceiver & TriggerReceivers.AttachedEntity) != 0) {
+            if ((CollisionListener & CollisionListeners.AttachedEntity) != 0) {
 
                 ownCollider.GameEntity?.OnTriggerLeave(ownCollider, otherCollider);
 

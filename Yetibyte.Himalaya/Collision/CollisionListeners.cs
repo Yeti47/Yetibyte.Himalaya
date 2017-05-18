@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Yetibyte.Himalaya.Collision {
 
     [Flags]
-    public enum TriggerReceivers {
+    public enum CollisionListeners {
 
         None = 0,
         ControllerEntity = 1 << 0,

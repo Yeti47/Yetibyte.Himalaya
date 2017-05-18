@@ -53,7 +53,7 @@
     <Compile Include="Collision\Physics.cs" />
     <Compile Include="Collision\RaycastInfo.cs" />
     <Compile Include="Collision\RectCollider.cs" />
-    <Compile Include="Collision\TriggerReceivers.cs" />
+    <Compile Include="Collision\CollisionListeners.cs" />
     <Compile Include="Content\SpriteAnimationReader.cs" />
     <Compile Include="Controls\ControlSettings.cs" />
     <Compile Include="Controls\ControlListener.cs" />

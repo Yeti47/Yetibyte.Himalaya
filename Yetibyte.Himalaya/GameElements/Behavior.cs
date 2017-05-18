@@ -13,6 +13,10 @@ namespace Yetibyte.Himalaya.GameElements {
         #region Properties
 
         public bool IsAwake { get; internal set; }
+        
+        #endregion
+
+        #region Constructors
 
         #endregion
 
