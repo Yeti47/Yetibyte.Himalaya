@@ -65,6 +65,7 @@
     <Compile Include="Debugging\DebugUtility.cs" />
     <Compile Include="Extensions\GameTimeExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
+    <Compile Include="Vector2Helper.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="Collision\CollisionController.cs" />
     <Compile Include="GameElements\Behavior.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="ITimeScale.cs" />
     <Compile Include="IUpdate.cs" />
     <Compile Include="LineSegment.cs" />
+    <Compile Include="Polygon.cs" />
     <Compile Include="Procedural\DungeonCell.cs" />
     <Compile Include="Procedural\DungeonGenerator.cs" />
     <Compile Include="Procedural\DungeonRoom.cs" />
