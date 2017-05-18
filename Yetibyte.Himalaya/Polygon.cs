@@ -16,6 +16,9 @@ namespace Yetibyte.Himalaya {
 
         #region Constants
 
+        /// <summary>
+        /// The minimum amount of points a <see cref="Polygon"/> must have.
+        /// </summary>
         public const int MIN_NUMBER_POINTS = 3;
 
         #endregion
@@ -29,7 +32,7 @@ namespace Yetibyte.Himalaya {
         #region Properties
 
         /// <summary>
-        /// En enumeration of all of the polygon's points (vertices).
+        /// En enumeration of all the polygon's points (vertices).
         /// </summary>
         public IEnumerable<Vector2> Points => _points;
 
@@ -68,6 +71,10 @@ namespace Yetibyte.Himalaya {
         /// </summary>
         public bool IsClockwise => SignedArea < 0;
 
+        /// <summary>
+        /// The surface area of this <see cref="Polygon"/> that is positive for polygons with points in counter-clockwise order
+        /// and negative for polygons with points in clockwise order.
+        /// </summary>
         public float SignedArea {
 
             get {
@@ -83,6 +90,10 @@ namespace Yetibyte.Himalaya {
 
         }
 
+        /// <summary>
+        /// The surface area of this <see cref="Polygon"/>. This always returns a positive value, regardless of whether the points are 
+        /// ordered clockwise or counter-clockwise.
+        /// </summary>
         public float Area => Math.Abs(SignedArea);
 
         /// <summary>
@@ -281,6 +292,14 @@ namespace Yetibyte.Himalaya {
             }
 
         }
+
+        public override bool Equals(object obj) {
+
+            return (obj is Polygon) && (Polygon)obj == this;
+
+        }
+
+        public bool Equals(Polygon other) => other == this;
 
         #endregion
 
