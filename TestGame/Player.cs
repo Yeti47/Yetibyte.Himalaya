@@ -87,6 +87,7 @@ namespace TestGame {
 
             RectangleF rect = new RectangleF(-380, -80, 30, 30);
             Polygon polygonE = new Polygon(rect);
+            Polygon polygonF = new Polygon(rect);
             
             DebugUtility.DrawEdges(spriteBatch, polygonA, Color.Lavender);
             DebugUtility.DrawEdges(spriteBatch, polygonB, Color.Indigo);
@@ -107,6 +108,9 @@ namespace TestGame {
 
             Debug.WriteLine("polygonD is rectangular: " + polygonD.IsRectangle);
             Debug.WriteLine("polygonE is rectangular: " + polygonE.IsRectangle);
+
+            Debug.WriteLine("PolygonE and PolygonF are equal: " + (polygonE == polygonF));
+            Debug.WriteLine("PolygonA and PolygonB are equal: " + (polygonA == polygonB));
 
         }
 

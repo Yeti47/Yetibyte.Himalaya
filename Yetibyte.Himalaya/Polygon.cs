@@ -10,13 +10,19 @@ using Yetibyte.Utilities;
 namespace Yetibyte.Himalaya {
 
     /// <summary>
-    /// Describes a two-dimensional polygon. Note: This struct is immutable.
+    /// Describes a simple two-dimensional polygon. Complex polygons are not (yet) supported. Note: This struct is immutable.
     /// </summary>
     public struct Polygon : IEdges {
 
+        #region Constants
+
+        public const int MIN_NUMBER_POINTS = 3;
+
+        #endregion
+
         #region Fields
 
-        private List<Vector2> _points;
+        private readonly List<Vector2> _points;
 
         #endregion
 
@@ -120,6 +126,9 @@ namespace Yetibyte.Himalaya {
 
         public Polygon(IEnumerable<Vector2> points) {
 
+            if (points.Count() < MIN_NUMBER_POINTS)
+                throw new Exception("A polygon needs to have at least " + MIN_NUMBER_POINTS + " points.");
+
             _points = new List<Vector2>();
 
             foreach (Vector2 point in points) 
@@ -128,6 +137,9 @@ namespace Yetibyte.Himalaya {
         }
 
         public Polygon(IEnumerable<Point> points) {
+
+            if (points.Count() < MIN_NUMBER_POINTS)
+                throw new Exception("A polygon needs to have at least " + MIN_NUMBER_POINTS + " points.");
 
             _points = new List<Vector2>();
 
@@ -158,6 +170,38 @@ namespace Yetibyte.Himalaya {
         }
 
         public Polygon(Rectangle rectangle, bool clockwise = false) : this((RectangleF)rectangle, clockwise) { }
+
+        #endregion
+
+        #region Operators
+
+        /// <summary>
+        /// Checks if the two <see cref="Polygon"/>s are equal.
+        /// </summary>
+        /// <param name="polygonA">The first polygon.</param>
+        /// <param name="polygonB">The second polygon.</param>
+        /// <returns>True if the two polygons are equal, false otherwise.</returns>
+        public static bool operator == (Polygon polygonA, Polygon polygonB) {
+
+            if (polygonA.Points.Count() != polygonB.Points.Count())
+                return false;
+
+            IEnumerable<Vector2> equalPoints = polygonA.Points.Union(polygonB.Points);
+
+            if (equalPoints.Count() != polygonA.Points.Count())
+                return false;
+
+            return true;
+                        
+        }
+
+        /// <summary>
+        /// Checks if the two <see cref="Polygon"/>s are not equal.
+        /// </summary>
+        /// <param name="polygonA">The first polygon.</param>
+        /// <param name="polygonB">The second polygon.</param>
+        /// <returns>True if the two polygons are not equal, false if they are equal.</returns>
+        public static bool operator != (Polygon polygonA, Polygon polygonB) => !(polygonA == polygonB);
 
         #endregion
 
@@ -215,6 +259,28 @@ namespace Yetibyte.Himalaya {
         /// </summary>
         /// <returns>A new polygon with the points of the original polygon in reverse order.</returns>
         public Polygon Reverse() => Reverse(this);
+
+        /// <summary>
+        /// Calculates and returns the hashcode of this <see cref="Polygon"/>.
+        /// </summary>
+        /// <returns>The hashcode of this polygon.</returns>
+        public override int GetHashCode() {
+
+            unchecked {
+
+                int hash = (int)QuickPrimes.P17;
+                int prime = (int)QuickPrimes.P23;
+
+                foreach (Vector2 point in _points) {
+
+                    hash = hash * prime * point.GetHashCode();
+
+                }
+
+                return hash;
+            }
+
+        }
 
         #endregion
 
