@@ -28,7 +28,21 @@ namespace Yetibyte.Himalaya {
         /// <param name="vectorB">The second vector.</param>
         /// <returns>The angle betwwen the two given vectors in radians clamped between π and -π.</returns>
         public static float AngleBetweenWrapped(Vector2 vectorA, Vector2 vectorB) => MathHelper.WrapAngle(AngleBetween(vectorA, vectorB));
-                
+
+        /// <summary>
+        /// Gets the <see cref="Vector2"/> perpendicular to the given <see cref="Vector2"/> in counter-clockwise direction.
+        /// </summary>
+        /// <param name="v">The vector.</param>
+        /// <returns>The <see cref="Vector2"/> perpendicular to this one in counter-clockwise direction.</returns>
+        public static Vector2 Perpendicular(Vector2 v) => new Vector2(-v.Y, v.X);
+
+        /// <summary>
+        /// Gets the <see cref="Vector2"/> perpendicular to the given <see cref="Vector2"/> in clockwise direction.
+        /// </summary>
+        /// <param name="v">The vector.</param>
+        /// <returns>The <see cref="Vector2"/> perpendicular to this one in clockwise direction.</returns>
+        public static Vector2 PerpendicularClockwise(Vector2 v) => new Vector2(v.Y, -v.X);
+
     }
 
 }

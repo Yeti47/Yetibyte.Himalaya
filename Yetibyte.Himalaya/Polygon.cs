@@ -12,7 +12,7 @@ namespace Yetibyte.Himalaya {
     /// <summary>
     /// Describes a simple two-dimensional polygon. Complex polygons are not (yet) supported. Note: This struct is immutable.
     /// </summary>
-    public struct Polygon : IEdges {
+    public struct Polygon : IEquatable<Polygon>, IEdges, IBounds {
 
         #region Constants
 
@@ -40,6 +40,11 @@ namespace Yetibyte.Himalaya {
         /// The number of points (vertices) in this <see cref="Polygon"/>.
         /// </summary>
         public int NumberPoints => _points.Count;
+
+        /// <summary>
+        /// The perimeter of the polygon, which is the sum of the lengths of all edges.
+        /// </summary>
+        public float Perimeter => GetEdges().Sum(e => e.Length);
 
         /// <summary>
         /// Whether or not this <see cref="Polygon"/> is convex. If this returns false, the polygon is concave.
@@ -136,6 +141,32 @@ namespace Yetibyte.Himalaya {
 
         }
 
+        /// <summary>
+        /// Whether or not this <see cref="Polygon"/> is of triangular shape.>
+        /// </summary>
+        public bool IsTriangle => _points.Count == 3;
+
+        /// <summary>
+        /// The axis-aligned bounding box surrounding this <see cref="Polygon"/>.
+        /// </summary>
+        public RectangleF Bounds {
+
+            get {
+
+                float topLeftX = _points.Min(p => p.X);
+                float topLeftY = _points.Min(p => p.Y);
+                float bottomRightX = _points.Max(p => p.X);
+                float bottomRightY = _points.Max(p => p.Y);
+
+                float width = bottomRightX - topLeftX;
+                float height = bottomRightY - topLeftY;
+
+                return new RectangleF(topLeftX, topLeftY, width, height);
+
+            }
+
+        }
+
         #endregion
 
         #region Constructors
@@ -218,6 +249,19 @@ namespace Yetibyte.Himalaya {
         /// <param name="polygonB">The second polygon.</param>
         /// <returns>True if the two polygons are not equal, false if they are equal.</returns>
         public static bool operator != (Polygon polygonA, Polygon polygonB) => !(polygonA == polygonB);
+
+        /// <summary>
+        /// Converts the given<see cref="RectangleF"/> to a counter-clockwise <see cref="Polygon"/>.
+        /// </summary>
+        /// <param name="rectangleF"></param>
+        public static explicit operator Polygon(RectangleF rectangleF) => new Polygon(rectangleF);
+
+        /// <summary>
+        /// Converts the given <see cref="Rectangle"/> to a counter-clockwise <see cref="Polygon"/>.
+        /// </summary>
+        /// <param name="rectangle"></param>
+        public static explicit operator Polygon(Rectangle rectangle) => new Polygon(rectangle);
+
 
         #endregion
 
