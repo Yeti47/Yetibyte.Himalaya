@@ -112,6 +112,8 @@ namespace TestGame {
             Debug.WriteLine("PolygonE and PolygonF are equal: " + (polygonE == polygonF));
             Debug.WriteLine("PolygonA and PolygonB are equal: " + (polygonA == polygonB));
 
+            Debug.WriteLine("PolygonA as string: " + polygonA);
+
         }
 
     }

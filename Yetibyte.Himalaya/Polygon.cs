@@ -32,9 +32,14 @@ namespace Yetibyte.Himalaya {
         #region Properties
 
         /// <summary>
-        /// En enumeration of all the polygon's points (vertices).
+        /// An array of all the polygon's points (vertices).
         /// </summary>
-        public IEnumerable<Vector2> Points => _points;
+        public Vector2[] Points => _points.ToArray();
+
+        /// <summary>
+        /// The number of points (vertices) in this <see cref="Polygon"/>.
+        /// </summary>
+        public int NumberPoints => _points.Count;
 
         /// <summary>
         /// Whether or not this <see cref="Polygon"/> is convex. If this returns false, the polygon is concave.
@@ -194,12 +199,12 @@ namespace Yetibyte.Himalaya {
         /// <returns>True if the two polygons are equal, false otherwise.</returns>
         public static bool operator == (Polygon polygonA, Polygon polygonB) {
 
-            if (polygonA.Points.Count() != polygonB.Points.Count())
+            if (polygonA.Points.Length != polygonB.Points.Length)
                 return false;
 
             IEnumerable<Vector2> equalPoints = polygonA.Points.Union(polygonB.Points);
 
-            if (equalPoints.Count() != polygonA.Points.Count())
+            if (equalPoints.Count() != polygonA.Points.Length)
                 return false;
 
             return true;
@@ -237,7 +242,7 @@ namespace Yetibyte.Himalaya {
         /// <returns>A new <see cref="Polygon"/> that equals the original polygon with the given translation applied to it.</returns>
         public static Polygon Translate(Polygon polygon, Vector2 offset) {
 
-            Vector2[] points = new Vector2[polygon.Points.Count()];
+            Vector2[] points = new Vector2[polygon.Points.Length];
             int i = 0;
 
             foreach (Vector2 point in polygon.Points) {
@@ -300,6 +305,26 @@ namespace Yetibyte.Himalaya {
         }
 
         public bool Equals(Polygon other) => other == this;
+
+        /// <summary>
+        /// Creates a string that represents this <see cref="Polygon"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString() {
+
+            string result = "(";
+
+            Vector2[] points = Points;
+
+            for (int i = 0; i < points.Length; i++) {
+
+                result += string.Format("Point[{0}]: {1}{2}", i, points[i], (i < points.Length - 1 ? " | " : string.Empty));
+
+            }
+
+            return result + ")";
+            
+        }
 
         #endregion
 
