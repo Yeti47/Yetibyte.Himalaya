@@ -195,7 +195,7 @@ namespace Yetibyte.Himalaya.Collision {
             if (!IsAttached)
                 return;
 
-            if(!IsStatic && !MathUtil.IsCloseToZero(Velocity.X) && !MathUtil.IsCloseToZero(Velocity.Y)) {
+            if(!IsStatic && !(MathUtil.IsCloseToZero(Velocity.X) && MathUtil.IsCloseToZero(Velocity.Y))) {
 
                 Move(Velocity);
 

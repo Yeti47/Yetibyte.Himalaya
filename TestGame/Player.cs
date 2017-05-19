@@ -50,8 +50,8 @@ namespace TestGame {
             float deltaTime = gameTime.DeltaTime();
 
             //Transform.Position += new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f);
-            _collisionController.Move(new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, _controlListener.GetAxisValue("Vertical") * Speed * deltaTime));
-
+            //_collisionController.Move(new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, _controlListener.GetAxisValue("Vertical") * Speed * deltaTime));
+            _collisionController.Velocity = new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, _controlListener.GetAxisValue("Vertical") * Speed * deltaTime);
 
 
         }
@@ -94,7 +94,7 @@ namespace TestGame {
             DebugUtility.DrawEdges(spriteBatch, polygonC, Color.Indigo);
             DebugUtility.DrawEdges(spriteBatch, polygonD, Color.Indigo);
             DebugUtility.DrawEdges(spriteBatch, polygonE, Color.DarkOrchid);
-
+            /*
             Debug.WriteLine("polygonA in convex: " + polygonA.IsConvex);
             Debug.WriteLine("polygonB in convex: " + polygonB.IsConvex);
             Debug.WriteLine("polygonC in convex: " + polygonC.IsConvex);
@@ -113,7 +113,7 @@ namespace TestGame {
             Debug.WriteLine("PolygonA and PolygonB are equal: " + (polygonA == polygonB));
 
             Debug.WriteLine("PolygonA as string: " + polygonA);
-
+            */
         }
 
     }
