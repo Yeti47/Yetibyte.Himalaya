@@ -12,6 +12,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Properties
 
+        /// <summary>
+        /// Whether or not the Awake method was already called.
+        /// </summary>
         public bool IsAwake { get; internal set; }
         
         #endregion
@@ -22,8 +25,18 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Methods
 
+        /// <summary>
+        /// This method is called once at the start of the very first update iteration. Use this for initialization.
+        /// </summary>
         public abstract void Awake();
+
+        /// <summary>
+        /// This method is called every frame. Use this for updating your logic.
+        /// </summary>
+        /// <param name="gameTime">A snapshot of current timing values.</param>
+        /// <param name="globalTimeScale">The time scale of the <see cref="Scene"/>.</param>
         public abstract void Update(GameTime gameTime, float globalTimeScale);
+
         protected abstract void OnTrigger(Collider ownCollider, Collider otherCollider);
         protected abstract void OnTriggerEnter(Collider ownCollider, Collider otherCollider);
         protected abstract void OnTriggerLeave(Collider ownCollider, Collider otherCollider);
