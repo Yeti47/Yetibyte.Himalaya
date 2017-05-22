@@ -11,6 +11,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Yetibyte.Himalaya.Debugging;
+using Yetibyte.Utilities;
+using Yetibyte.Utilities.Extensions;
 
 namespace TestGame {
     /// <summary>
@@ -113,7 +115,27 @@ namespace TestGame {
             Debug.WriteLine("These are the line segment's bounds: " + lineSeg.Bounds);
             Debug.WriteLine("The line segment's slope is: " + lineSeg.Slope);
             Debug.WriteLine("The point is on the line segment: " + LineSegment.IsPointOnLineSegment(point, lineSeg));
-            
+
+            int[] randomNumbers = CollectionUtil.GenerateUniqueIntegers(6, 1, 49, true);
+
+            Debug.WriteLine("The random numbers are: ");
+
+            for (int i = 0; i < randomNumbers.Length; i++) {
+
+                Debug.Write(randomNumbers[i] + " ");
+
+            }
+
+            randomNumbers.Shuffle();
+
+            Debug.WriteLine("\nAfter shuffling the random numbers are: ");
+
+            for (int i = 0; i < randomNumbers.Length; i++) {
+
+                Debug.Write(randomNumbers[i] + " ");
+
+            }
+
         }
 
         /// <summary>

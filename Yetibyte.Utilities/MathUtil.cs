@@ -158,6 +158,12 @@ namespace Yetibyte.Utilities {
     		return (float)_random.NextDouble() * (maximum - minimum) + minimum;
 
 		}
+
+        public static int RandomInt(int minimum, int maximum, bool includeMaximum = false) {
+
+            return _random.Next(minimum, maximum + (includeMaximum ? 1 : 0));
+
+        }
 		
         /// <summary>
         /// Returns the sign of the given value. It will either be 1 or -1, but never 0.
@@ -219,6 +225,32 @@ namespace Yetibyte.Utilities {
         /// <param name="value">The value to cast.</param>
         /// <returns>The smallest integer greater than or equal to<c>value</c></returns>
         public static int FloorToInt(double value) => (int)Math.Floor(value);
+
+        /// <summary>
+        /// Swaps the given values.
+        /// </summary>
+        /// <param name="valueA">The first value.</param>
+        /// <param name="valueB">The second value.</param>
+        public static void Swap(ref float valueA, ref float valueB) {
+
+            float temp = valueA;
+            valueA = valueB;
+            valueB = temp;
+
+        }
+
+        /// <summary>
+        /// Swaps the given values.
+        /// </summary>
+        /// <param name="valueA">The first value.</param>
+        /// <param name="valueB">The second value.</param>
+        public static void Swap(ref int valueA, ref int valueB) {
+
+            int temp = valueA;
+            valueA = valueB;
+            valueB = temp;
+
+        }
 
     }
 		
