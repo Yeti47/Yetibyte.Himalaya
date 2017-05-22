@@ -75,13 +75,73 @@ namespace Yetibyte.Utilities {
 			return value;
 						
 		}
-		
-		/// <summary>
-		/// Converts an angle in radians to an angle in degrees.
-		/// </summary>
-		/// <param name="radians">The angle in radians.</param>
-		/// <returns>The given angle converted to degrees.</returns>
-		public static float RadiansToDegree(float radians) {
+
+        /// <summary>
+        /// Clamps the given value between the minimun and maximum value. I. e. the returned value will never be smaller than min
+        /// or greater than max.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <param name="value">The value to clamp.</param>
+        /// <returns>The value clamped between min and max.</returns>
+        public static float Clamp (float min, float max, float value) {
+
+            if (value < min)
+                return min;
+
+            if (value > max)
+                return max;
+
+            return value;
+
+        }
+
+        /// <summary>
+        /// Clamps the given value between the minimun and maximum value. I. e. the returned value will never be smaller than min
+        /// or greater than max.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <param name="value">The value to clamp.</param>
+        /// <returns>The value clamped between min and max.</returns>
+        public static double Clamp (double min, double max, double value) {
+
+            if (value < min)
+                return min;
+
+            if (value > max)
+                return max;
+
+            return value;
+
+        }
+
+        /// <summary>
+        /// Clamps the given value between the minimun and maximum value. I. e. the returned value will never be smaller than min
+        /// or greater than max.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <param name="value">The value to clamp.</param>
+        /// <returns>The value clamped between min and max.</returns>
+        public static int Clamp(int min, int max, int value) {
+
+            if (value < min)
+                return min;
+
+            if (value > max)
+                return max;
+
+            return value;
+
+        }
+
+        /// <summary>
+        /// Converts an angle in radians to an angle in degrees.
+        /// </summary>
+        /// <param name="radians">The angle in radians.</param>
+        /// <returns>The given angle converted to degrees.</returns>
+        public static float RadiansToDegree(float radians) {
 			
 			return radians * (180f / (float)Math.PI);
 			

@@ -333,7 +333,7 @@ namespace Yetibyte.Himalaya {
 
                 foreach (Vector2 point in _points) {
 
-                    hash = hash * prime * point.GetHashCode();
+                    hash = hash * prime + point.GetHashCode();
 
                 }
 
