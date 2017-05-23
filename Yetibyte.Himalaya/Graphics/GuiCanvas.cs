@@ -20,7 +20,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         #region Properties
 
-        public string Name { get; set; }
+        public string Name { get; set; } = "unnamed";
 
         public int DrawOrder { get; set; }
 
@@ -28,13 +28,16 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public SpriteSortMode SpriteSortMode { get; set; } = SpriteSortMode.Deferred;
 
+        public bool IsVisible { get; set; } = true;
+
         #endregion
 
         #region Constructors
 
-        public GuiCanvas(GraphicsDevice graphicsDevice) {
+        public GuiCanvas(GraphicsDevice graphicsDevice, string name) {
 
             _spriteBatch = new SpriteBatch(graphicsDevice);
+            this.Name = name;
 
         }
 
@@ -46,7 +49,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
             _spriteBatch.Begin(SpriteSortMode);
 
-            foreach (GuiWindow window in _windows.OrderBy(w => w.DrawOrder)) {
+            foreach (GuiWindow window in _windows.Where(w => w.IsVisible).OrderBy(w => w.DrawOrder)) {
 
                 window.Draw(_spriteBatch, gameTime);
 

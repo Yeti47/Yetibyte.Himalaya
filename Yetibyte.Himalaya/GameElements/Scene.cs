@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Yetibyte.Himalaya.Collision;
+using Yetibyte.Himalaya.Graphics;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
@@ -13,6 +14,8 @@ namespace Yetibyte.Himalaya.GameElements {
         #region Fields
 
         private SpriteBatch _spriteBatch;
+
+        private List<GuiCanvas> _guiCanvases = new List<GuiCanvas>();
 
         #endregion
 
@@ -126,6 +129,12 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
         public virtual void Draw(GameTime gameTime) {
 
+            foreach (GuiCanvas guiCanvas in _guiCanvases.Where(c => c.IsVisible).OrderBy(c => c.DrawOrder)) {
+
+                guiCanvas.Draw(gameTime);
+
+            }
+
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.GetViewMatrix());
 
             foreach (GameEntity gameEntity in GameEntities.OrderBy(e => e.DrawOrder)) {
@@ -199,6 +208,20 @@ namespace Yetibyte.Himalaya.GameElements {
             }
 
             return null;
+
+        }
+
+        /// <summary>
+        /// Adds the given <see cref="GuiCanvas"/> to this Scene.
+        /// </summary>
+        /// <param name="guiCanvas">The GuiCanvas to add to this Scene.</param>
+        public void AddGuiCanvas(GuiCanvas guiCanvas) {
+
+            // Cancel if the GUI Canvas was already added to the Scene.
+            if (_guiCanvases.Contains(guiCanvas))
+                return;
+
+            _guiCanvases.Add(guiCanvas);
 
         }
 

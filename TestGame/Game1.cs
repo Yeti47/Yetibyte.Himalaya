@@ -80,6 +80,7 @@ namespace TestGame {
             player.DrawOrder = -1;
             player.AddComponent(playerSprite);
             player.AddComponent(new ControlListener(PlayerIndex.One, controlSettings));
+            player.AddComponent(new PlayerTestBehavior() { Priority = 99999 });
             CurrentScene.AddGameEntity(player);
 
             Gun gun = new Gun("playerGun", player.Transform.Position);
@@ -135,6 +136,8 @@ namespace TestGame {
                 Debug.Write(randomNumbers[i] + " ");
 
             }
+
+            Debug.WriteLine("");
 
         }
 

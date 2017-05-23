@@ -19,11 +19,6 @@ namespace TestGame {
 
     public class Player : GameEntity {
 
-        private ControlListener _controlListener;
-        private CollisionController _collisionController;
-
-        public float Speed { get; set; } = 150f;
-
         // Constructor
 
         public Player(string name, Vector2 position) : base(name, position) {
@@ -39,26 +34,16 @@ namespace TestGame {
         protected override void Awake() {
             base.Awake();
 
-            _controlListener = GetComponent<ControlListener>();
-            _collisionController = GetComponent<CollisionController>();
-
         }
 
         public override void Update(GameTime gameTime, float globalTimeScale) {
             base.Update(gameTime, globalTimeScale);
 
-            float deltaTime = gameTime.DeltaTime();
-
-            //Transform.Position += new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, 0f);
-            //_collisionController.Move(new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, _controlListener.GetAxisValue("Vertical") * Speed * deltaTime));
-            _collisionController.Velocity = new Vector2(_controlListener.GetAxisValue("Horizontal") * Speed * deltaTime, _controlListener.GetAxisValue("Vertical") * Speed * deltaTime);
-
-
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
             base.Draw(spriteBatch, gameTime);
-
+            
             DebugUtility.VisualizeColliders(spriteBatch, Scene, Color.Red);
 
             LineSegment lineA = new LineSegment(new Vector2(30, -200), new Vector2(30, -100));
