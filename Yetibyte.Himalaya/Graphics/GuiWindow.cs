@@ -12,13 +12,15 @@ namespace Yetibyte.Himalaya.Graphics {
 
     public enum GuiAnchorPoint { TopLeft, Top, TopRight, Right, BottomRight, Bottom, BottomLeft, Left, Center }
 
-    public class GuiWindow {
+    public class GuiWindow : IDraw {
 
         #region Fields
 
         #endregion
 
         #region Properties
+
+        public string Name { get; set; }
 
         public GuiCanvas Canvas { get; private set; }
 
@@ -43,6 +45,26 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        public Vector2 Position { get; set; }
+
+        public float X {
+
+            get => Position.X;
+            set => Position = new Vector2(value, Position.Y);
+
+        }
+
+        public float Y {
+
+            get => Position.Y;
+            set => Position = new Vector2(Position.X, value);
+
+        }
+
+        public Vector2 Origin { get; set; }
+
+        public int DrawOrder { get; set; }
+
         #endregion
 
         #region Constructors
@@ -65,6 +87,10 @@ namespace Yetibyte.Himalaya.Graphics {
         #endregion
 
         #region Methods
+
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+            
+        }
 
         #endregion
 

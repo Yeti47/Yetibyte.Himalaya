@@ -14,6 +14,8 @@ namespace Yetibyte.Himalaya.Graphics {
 
         private SpriteBatch _spriteBatch;
 
+        private List<GuiWindow> _windows = new List<GuiWindow>();
+
         #endregion
 
         #region Properties
@@ -23,6 +25,8 @@ namespace Yetibyte.Himalaya.Graphics {
         public int DrawOrder { get; set; }
 
         public GraphicsDevice GraphicsDevice => _spriteBatch.GraphicsDevice;
+
+        public SpriteSortMode SpriteSortMode { get; set; } = SpriteSortMode.Deferred;
 
         #endregion
 
@@ -39,6 +43,27 @@ namespace Yetibyte.Himalaya.Graphics {
         #region Methods
 
         public void Draw(GameTime gameTime) {
+
+            _spriteBatch.Begin(SpriteSortMode);
+
+            foreach (GuiWindow window in _windows.OrderBy(w => w.DrawOrder)) {
+
+                window.Draw(_spriteBatch, gameTime);
+
+            }
+
+            _spriteBatch.End();
+
+        }
+
+        /// <summary>
+        /// Returns the first <see cref="GuiWindow"/> on this <see cref="GuiCanvas"/> with the given name.
+        /// </summary>
+        /// <param name="name">The name of the GuiWindow to look for.</param>
+        /// <returns>The first <see cref="GuiWindow"/> on this <see cref="GuiCanvas"/> with the given name.</returns>
+        public GuiWindow FindWindow(string name) {
+
+            return _windows.Where(w => w.Name == name).FirstOrDefault();
 
         }
 
