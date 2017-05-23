@@ -225,6 +225,20 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        /// <summary>
+        /// Removes the given <see cref="GuiCanvas"/> from this Scene.
+        /// </summary>
+        /// <param name="guiCanvas">The GuiCanvas to remove.</param>
+        public void RemoveGuiCanvas(GuiCanvas guiCanvas) {
+
+            // If the GUI Canvas is not included in the list of canvases, cancel
+            if (!_guiCanvases.Contains(guiCanvas))
+                return;
+
+            _guiCanvases.Remove(guiCanvas);
+
+        }
+
         #endregion
 
     }
