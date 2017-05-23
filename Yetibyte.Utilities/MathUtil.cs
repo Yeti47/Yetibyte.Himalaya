@@ -11,10 +11,20 @@ namespace Yetibyte.Utilities {
         /// Any number smaller than EPSILON can be assumed to be equal to 0.
         /// </summary>
         public const float EPSILON = 0.000005f;
-		    
+
+        /// <summary>
+        /// The factor for converting meters to feet.
+        /// </summary>
+        private const float CONVERSION_METERS_TO_FEET = 3.28084f;
+
+        /// <summary>
+        /// The factor for converting feet to meters.
+        /// </summary>
+        private const float CONVERSION_FEET_TO_METERS = 0.3048f;
+
         // Fields
-           
-		private static readonly Random _random = new Random();
+
+        private static readonly Random _random = new Random();
 
         /// <summary>
         /// Provides a static collection of prime numbers.
@@ -251,6 +261,22 @@ namespace Yetibyte.Utilities {
             valueB = temp;
 
         }
+
+        /// <summary>
+        /// Converts meters to feet.
+        /// </summary>
+        /// <param name="meters">The distance in meters to convert.</param>
+        /// <returns>The distance converted to feet.</returns>
+        public static float MetersToFeet(float meters) => meters * CONVERSION_METERS_TO_FEET;
+
+        /// <summary>
+        /// Converts feet to meters.
+        /// </summary>
+        /// <param name="feet">The distance in feet to convert.</param>
+        /// <returns>The distance converted to meters.</returns>
+        public static float FeetToMeters(float feet) => feet * CONVERSION_FEET_TO_METERS;
+
+
 
     }
 		
