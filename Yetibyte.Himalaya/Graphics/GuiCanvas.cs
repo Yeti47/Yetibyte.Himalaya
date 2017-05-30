@@ -30,6 +30,8 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public bool IsVisible { get; set; } = true;
 
+        public Vector2 ScreenSize => new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+
         #endregion
 
         #region Constructors
