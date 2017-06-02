@@ -389,7 +389,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// Gets the <see cref="GameEntity"/> that is on top of the entity hierarchy.
         /// </summary>
         /// <returns>The GameEntity that is on top of the entity hierarchy.</returns>
-        public GameEntity GetAncestor() => !HasParent ? this : GetAncestor();
+        public GameEntity GetAncestor() => !HasParent ? this : ParentEntity.GetAncestor();
 
         internal void OnTrigger(Collider ownCollider, Collider otherCollider) {
 

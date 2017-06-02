@@ -5,20 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Yetibyte.Utilities;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public enum GuiScalingUnit { Pixels, Percent }
-
-    public enum GuiAnchorPoint { TopLeft, Top, TopRight, Right, BottomRight, Bottom, BottomLeft, Left, Center }
-
-    public enum GuiTextureScalingMode { ScaleToFit, Tile }
-
-    public class GuiElement : IDraw {
+    public abstract class GuiElement : ParentChildHierarchy<GuiElement>, IDraw, IUpdate {
 
         #region Fields
 
         private bool _isVisible = true;
+        private bool _isActive = true;
 
         #endregion
 
@@ -30,50 +26,36 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public GuiScalingUnit ScalingUnit { get; set; } = GuiScalingUnit.Pixels;
         public GuiAnchorPoint AnchorPoint { get; set; } = GuiAnchorPoint.TopLeft;
-        public GuiTextureScalingMode TextureScalingMode { get; set; } = GuiTextureScalingMode.ScaleToFit;
-
-        public Texture2D Texture { get; private set; }
-
-        public float Width { get; set; }
-        public float Height { get; set; }
-
-        public Vector2 Size {
-
-            get => new Vector2(Width, Height);
-
-            set {
-
-                Width = value.X;
-                Height = value.Y;
-
-            }
-
-        }
 
         public Vector2 Position { get; set; }
 
-        public float X {
-
-            get => Position.X;
-            set => Position = new Vector2(value, Position.Y);
-
-        }
-
-        public float Y {
-
-            get => Position.Y;
-            set => Position = new Vector2(Position.X, value);
-
-        }
-
         public Vector2 Origin { get; set; }
-
-        public Color TintColor { get; set; } = Color.White;
 
         public bool IsVisible {
 
-            get => HasCanvas ? (Canvas.IsVisible && _isVisible) : false;
+            get => IsVisibleSelf && (!HasParent || Parent.IsVisible);
+            set => IsVisibleSelf = value;
+
+        }
+
+        public bool IsActive {
+
+            get => IsActiveSelf && (!HasParent || Parent.IsActive);
+            set => IsActiveSelf = value;
+
+        }
+
+        public bool IsVisibleSelf {
+
+            get => _isVisible;
             set => _isVisible = value;
+
+        }
+
+        public bool IsActiveSelf {
+
+            get => _isActive;
+            set => _isActive = value;
 
         }
 
@@ -85,20 +67,9 @@ namespace Yetibyte.Himalaya.Graphics {
 
         #region Constructors
 
-        public GuiElement(GuiCanvas canvas, Texture2D texture, string name) {
+        public GuiElement(GuiCanvas canvas, string name) {
 
             this.Canvas = canvas;
-            this.Texture = texture;
-            this.Name = name;
-
-        }
-
-        public GuiElement(GuiCanvas canvas, Color color, string name) {
-
-            this.Canvas = canvas;
-            this.Texture = new Texture2D(canvas.GraphicsDevice, 1, 1);
-            this.Texture.SetData(new Color[] { Color.White });
-            this.TintColor = color;
             this.Name = name;
 
         }
@@ -107,10 +78,16 @@ namespace Yetibyte.Himalaya.Graphics {
 
         #region Methods
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+        public virtual void Awake() {
 
-            spriteBatch.Draw(Texture, Position, null, null, Origin, 0f, Vector2.One, TintColor);
+        }
 
+        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+
+        }
+
+        public virtual void Update(GameTime gameTime, float globalTimeScale) {
+            
         }
 
         #endregion

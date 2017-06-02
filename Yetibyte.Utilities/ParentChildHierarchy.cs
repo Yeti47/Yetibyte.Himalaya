@@ -69,19 +69,7 @@ namespace Yetibyte.Utilities {
 
         public bool IsParentOf(T child) => Children.Contains(child);
 
-        public T GetAncestor() {
-
-            ParentChildHierarchy<T> currentChild = this;
-
-            while (currentChild.Parent != null) {
-
-                currentChild = currentChild.Parent;
-
-            }
-
-            return (T)currentChild;
-
-        }
+        public T GetAncestor() => !HasParent ? (T)this : Parent.GetAncestor();
 
     }
 
