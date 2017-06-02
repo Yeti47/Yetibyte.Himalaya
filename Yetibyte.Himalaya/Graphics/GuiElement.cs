@@ -14,7 +14,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
     public enum GuiTextureScalingMode { ScaleToFit, Tile }
 
-    public class GuiWindow : IDraw {
+    public class GuiElement : IDraw {
 
         #region Fields
 
@@ -85,7 +85,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         #region Constructors
 
-        public GuiWindow(GuiCanvas canvas, Texture2D texture, string name) {
+        public GuiElement(GuiCanvas canvas, Texture2D texture, string name) {
 
             this.Canvas = canvas;
             this.Texture = texture;
@@ -93,7 +93,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
-        public GuiWindow(GuiCanvas canvas, Color color, string name) {
+        public GuiElement(GuiCanvas canvas, Color color, string name) {
 
             this.Canvas = canvas;
             this.Texture = new Texture2D(canvas.GraphicsDevice, 1, 1);

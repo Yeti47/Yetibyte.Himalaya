@@ -14,7 +14,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         private SpriteBatch _spriteBatch;
 
-        private List<GuiWindow> _windows = new List<GuiWindow>();
+        private List<GuiElement> _elements = new List<GuiElement>();
 
         #endregion
 
@@ -51,9 +51,9 @@ namespace Yetibyte.Himalaya.Graphics {
 
             _spriteBatch.Begin(SpriteSortMode);
 
-            foreach (GuiWindow window in _windows.Where(w => w.IsVisible).OrderBy(w => w.DrawOrder)) {
+            foreach (GuiElement element in _elements.Where(w => w.IsVisible).OrderBy(w => w.DrawOrder)) {
 
-                window.Draw(_spriteBatch, gameTime);
+                element.Draw(_spriteBatch, gameTime);
 
             }
 
@@ -62,13 +62,13 @@ namespace Yetibyte.Himalaya.Graphics {
         }
 
         /// <summary>
-        /// Returns the first <see cref="GuiWindow"/> on this <see cref="GuiCanvas"/> with the given name.
+        /// Returns the first <see cref="GuiElement"/> on this <see cref="GuiCanvas"/> with the given name.
         /// </summary>
         /// <param name="name">The name of the GuiWindow to look for.</param>
-        /// <returns>The first <see cref="GuiWindow"/> on this <see cref="GuiCanvas"/> with the given name.</returns>
-        public GuiWindow FindWindow(string name) {
+        /// <returns>The first <see cref="GuiElement"/> on this <see cref="GuiCanvas"/> with the given name.</returns>
+        public GuiElement FindElement(string name) {
 
-            return _windows.Where(w => w.Name == name).FirstOrDefault();
+            return _elements.Where(w => w.Name == name).FirstOrDefault();
 
         }
 

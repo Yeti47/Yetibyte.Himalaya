@@ -12,6 +12,7 @@ using Yetibyte.Himalaya.Extensions;
 using Yetibyte.Himalaya;
 using Yetibyte.Himalaya.Debugging;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace TestGame {
 
