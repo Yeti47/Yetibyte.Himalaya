@@ -22,6 +22,9 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public string Name { get; set; } = "unnamed";
 
+        /// <summary>
+        /// The GuiCanvas this GuiElement is assigned to.
+        /// </summary>
         public GuiCanvas Canvas { get; set; }
 
         public GuiScalingUnit ScalingUnit { get; set; } = GuiScalingUnit.Pixels;
@@ -34,7 +37,7 @@ namespace Yetibyte.Himalaya.Graphics {
         public Vector2 Position { get; set; }
 
         /// <summary>
-        /// The absolute position of this <see cref="GuiElement"/> on the screen in pixels.
+        /// The absolute position of this <see cref="GuiElement"/> on the screen in pixels. Setting this value will recalculate the local position.
         /// </summary>
         public Vector2 AbsolutePosition {
 
