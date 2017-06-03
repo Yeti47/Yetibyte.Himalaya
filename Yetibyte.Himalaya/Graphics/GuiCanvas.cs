@@ -72,6 +72,28 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        public void AddGuiElement(GuiElement element) {
+
+            if (HasGuiElement(element))
+                return;
+
+            _elements.Add(element);
+            element.Canvas = this;
+
+        }
+
+        public void RemoveGuiElement(GuiElement element) {
+
+            if (!HasGuiElement(element))
+                return;
+
+            element.Canvas = null;
+            _elements.Remove(element);
+
+        }
+
+        public bool HasGuiElement(GuiElement element) => _elements.Contains(element);
+
         #endregion
 
     }

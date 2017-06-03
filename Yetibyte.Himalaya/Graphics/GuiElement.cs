@@ -22,15 +22,70 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public string Name { get; set; } = "unnamed";
 
-        public GuiCanvas Canvas { get; private set; }
+        public GuiCanvas Canvas { get; set; }
 
         public GuiScalingUnit ScalingUnit { get; set; } = GuiScalingUnit.Pixels;
         public GuiAnchorPoint AnchorPoint { get; set; } = GuiAnchorPoint.TopLeft;
 
         public Vector2 Position { get; set; }
 
+        public Vector2 AbsolutePosition {
+
+            get;
+            set;
+
+        }
+
+        /// <summary>
+        /// Gets the size in pixels of the object in the GUI's hierarchy that determines this <see cref="GuiElement"/>'s relative size.
+        /// </summary>
+        public Vector2 ReferenceSize {
+
+            get => HasParent ? Parent.AbsoluteSize : (HasCanvas ? Canvas.ScreenSize : Vector2.One);
+
+        }
+
+        /// <summary>
+        /// The unprocessed scaling values. This can be either in procent or in pixels depending on the <see cref="GuiScalingUnit"/>.
+        /// For retrieving the actual size on the screen in pixels, use <see cref="AbsoluteSize"/>.
+        /// </summary>
+        public Vector2 Size { get; set; }
+
+        /// <summary>
+        /// The effective size of this <see cref="GuiElement"/> on the screen in pixels. Setting this value will calculate the new value 
+        /// for <see cref="Size"/> if the <see cref="GuiScalingUnit"/> is set to "percent".
+        /// </summary>
+        public Vector2 AbsoluteSize {
+
+            get {
+
+                if (ScalingUnit == GuiScalingUnit.Pixels)
+                    return Size;
+
+                Vector2 reference = ReferenceSize;
+
+                return new Vector2(reference.X * Size.X / 100f, reference.Y * Size.Y / 100f);
+
+            }
+
+            set {
+
+                if (ScalingUnit == GuiScalingUnit.Pixels)
+                    Size = value;
+
+                Vector2 reference = ReferenceSize;
+
+                Size = new Vector2(value.X * 100f / reference.X, value.Y * 100f / reference.Y);
+
+            }
+
+        }
+
         public Vector2 Origin { get; set; }
 
+        /// <summary>
+        /// The visibility state of this <see cref="GuiElement"/>. Elements that are set to invisible will not be rendered on the screen.
+        /// </summary>
         public bool IsVisible {
 
             get => IsVisibleSelf && (!HasParent || Parent.IsVisible);
@@ -38,6 +93,9 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        /// <summary>
+        /// The active state of this <see cref="GuiElement"/>. Elements that are inactive will be ignored by the <see cref="GuiCanvas"/>.
+        /// </summary>
         public bool IsActive {
 
             get => IsActiveSelf && (!HasParent || Parent.IsActive);
@@ -45,6 +103,10 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        /// <summary>
+        /// The local visibility state of this <see cref="GuiElement"/>. This ignores the visibility state of the parent. Please note that, even if this is
+        /// set to true, the GuiElement may still be invisible because its parent is invisible.
+        /// </summary>
         public bool IsVisibleSelf {
 
             get => _isVisible;
@@ -52,6 +114,11 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        /// <summary>
+        /// The local active state of this <see cref="GuiElement"/>. This ignores the active state of the parent. Please note that, even if this is set to true, the GuiElement 
+        /// may still be considered inactive by the <see cref="GuiCanvas"/> because the parent is not active.
+        /// </summary>
+        /// <seealso cref="IsActive"/>
         public bool IsActiveSelf {
 
             get => _isActive;
@@ -59,6 +126,9 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        /// <summary>
+        /// Whether or not this <see cref="GuiElement"/> was assigned to a <see cref="GuiCanvas"/>.
+        /// </summary>
         public bool HasCanvas => Canvas != null;
 
         public int DrawOrder { get; set; }
@@ -67,9 +137,8 @@ namespace Yetibyte.Himalaya.Graphics {
 
         #region Constructors
 
-        public GuiElement(GuiCanvas canvas, string name) {
+        public GuiElement(string name) {
 
-            this.Canvas = canvas;
             this.Name = name;
 
         }
@@ -88,6 +157,12 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public virtual void Update(GameTime gameTime, float globalTimeScale) {
             
+        }
+
+        private Vector2 GetAnchorCoordinates() {
+
+            throw new NotImplementedException("TODO!");
+
         }
 
         #endregion
