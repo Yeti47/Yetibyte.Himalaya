@@ -9,6 +9,11 @@ using Yetibyte.Utilities;
 
 namespace Yetibyte.Himalaya.Graphics {
 
+    /// <summary>
+    /// The base of every element in a GUI. Provides all the basic functionality that is shared among all GUI components.
+    /// A GuiElement needs to be attached to a <see cref="GuiCanvas"/> via the appropriate method in order to be processed.
+    /// Please be aware, that a <see cref="GuiElement"/> cannot be assigned to multiple canvases at once.
+    /// </summary>
     public abstract class GuiElement : ParentChildHierarchy<GuiElement>, IDraw, IUpdate, IBounds {
 
         #region Fields
@@ -204,7 +209,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         #region Constructors
 
-        public GuiElement(string name) {
+        protected GuiElement(string name) {
 
             this.Name = name;
 

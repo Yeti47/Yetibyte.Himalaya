@@ -121,6 +121,12 @@ namespace Yetibyte.Himalaya.GameElements {
 
             }
 
+            foreach (GuiCanvas guiCanvas in _guiCanvases.Where(c => c.IsActive).OrderBy(c => c.Order)) {
+
+                guiCanvas.Update(gameTime, TimeScale);
+
+            }
+
         }
 
         /// <summary>
@@ -128,12 +134,6 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
         public virtual void Draw(GameTime gameTime) {
-
-            foreach (GuiCanvas guiCanvas in _guiCanvases.Where(c => c.IsVisible).OrderBy(c => c.DrawOrder)) {
-
-                guiCanvas.Draw(gameTime);
-
-            }
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.GetViewMatrix());
 
@@ -145,6 +145,12 @@ namespace Yetibyte.Himalaya.GameElements {
             }
 
             _spriteBatch.End();
+
+            foreach (GuiCanvas guiCanvas in _guiCanvases.Where(c => c.IsActive && c.IsVisible).OrderBy(c => c.DrawOrder)) {
+
+                guiCanvas.Draw(gameTime);
+
+            }
 
         }
         /// <summary>

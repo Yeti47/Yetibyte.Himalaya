@@ -70,7 +70,9 @@
     <Compile Include="Graphics\GuiCanvas.cs" />
     <Compile Include="Graphics\GuiElement.cs" />
     <Compile Include="Graphics\GuiScalingUnit.cs" />
+    <Compile Include="Graphics\GuiText.cs" />
     <Compile Include="Graphics\GuiTextureScalingMode.cs" />
+    <Compile Include="Graphics\GuiBox.cs" />
     <Compile Include="Vector2Helper.cs" />
     <Compile Include="GameElements\Actor.cs" />
     <Compile Include="Collision\CollisionController.cs" />
