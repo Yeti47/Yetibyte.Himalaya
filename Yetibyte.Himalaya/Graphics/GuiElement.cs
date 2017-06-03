@@ -26,6 +26,7 @@ namespace Yetibyte.Himalaya.Graphics {
         #region Properties
 
         public string Name { get; set; } = "unnamed";
+        public string HierarchyPath => HasParent ? Parent.HierarchyPath + "/" + Name : Name;
 
         /// <summary>
         /// The GuiCanvas this GuiElement is assigned to.

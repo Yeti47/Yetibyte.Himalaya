@@ -53,7 +53,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
-        public String Name { get; protected set; } = "unnamed";
+        public string Name { get; protected set; } = "unnamed";
+
+        public string HierarchyPath => HasParent ? ParentEntity.HierarchyPath + "/" + Name : Name;
 
         /// <summary>
         /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
