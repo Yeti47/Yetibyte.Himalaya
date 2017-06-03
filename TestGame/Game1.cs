@@ -25,6 +25,8 @@ namespace TestGame {
 
         KeyboardState previousKeyboardState;
 
+        private Texture2D testGuiTexture;
+
         // ----
 
         public Scene CurrentScene { get; private set; }
@@ -138,6 +140,20 @@ namespace TestGame {
             }
 
             Debug.WriteLine("");
+
+            // vvvvv GUI Test vvvvvvvv
+
+            testGuiTexture = Content.Load<Texture2D>("GuiTestTexture1");
+
+            GuiCanvas guiCanvas = new GuiCanvas(GraphicsDevice, "TestGui");
+            TestGuiElement testGuiBox = new TestGuiElement("TestGuiBox", testGuiTexture);
+            guiCanvas.AddGuiElement(testGuiBox);
+            testGuiBox.AbsolutePosition = new Vector2(10, 10);
+            testGuiBox.AbsoluteSize = new Vector2(200, 100);
+            Debug.WriteLine("Absolute Position: " + testGuiBox.AbsolutePosition);
+            Debug.WriteLine("Absolute Size: " + testGuiBox.AbsoluteSize);
+            Debug.WriteLine("Reference Position: " + testGuiBox.ReferencePosition);
+            CurrentScene.AddGuiCanvas(guiCanvas);
 
         }
 

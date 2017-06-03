@@ -159,6 +159,12 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        private void HandleMouseInput() {
+
+
+
+        }
+
         #endregion
 
     }

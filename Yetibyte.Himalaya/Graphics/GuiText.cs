@@ -17,7 +17,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public SpriteFont Font { get; set; }
         public string Text { get; set; }
-        public Color TextColor { get; set; }
+        public Color TextColor { get; set; } = Color.White;
         public SpriteEffects SpriteEffect { get; set; } = SpriteEffects.None;
         public float RenderLayerDepth { get; set; } = 0f;
 

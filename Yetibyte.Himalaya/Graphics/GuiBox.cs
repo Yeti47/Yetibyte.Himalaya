@@ -16,7 +16,7 @@ namespace Yetibyte.Himalaya.Graphics {
         #region Properties
 
         public Texture2D Texture { get; set; }
-        public Color TintColor { get; set; }
+        public Color TintColor { get; set; } = Color.White;
         public GuiTextureScalingMode TextureScalingMode { get; set; }
         public SpriteEffects SpriteEffect { get; set; } = SpriteEffects.None;
         public float RenderLayerDepth { get; set; } = 0f;
