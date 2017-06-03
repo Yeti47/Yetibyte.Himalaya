@@ -56,7 +56,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
             get {
 
-                Vector2 localPosition = (ScalingUnit == GuiScalingUnit.Pixels) ? Position : new Vector2(Position.X * ReferenceSize.X, Position.Y * ReferenceSize.Y);
+                Vector2 localPosition = (ScalingUnit == GuiScalingUnit.Pixels) ? Position : new Vector2(Position.X /100f * ReferenceSize.X, Position.Y / 100f * ReferenceSize.Y);
                 return ReferencePosition + localPosition;
 
             }
@@ -70,7 +70,7 @@ namespace Yetibyte.Himalaya.Graphics {
                 else {
 
                     Vector2 referenceSize = ReferenceSize;
-                    Position = new Vector2(100f / referenceSize.X * localPositionPixels.X, 100f / referenceSize.Y) * localPositionPixels.Y;
+                    Position = new Vector2(100f / referenceSize.X * localPositionPixels.X, 100f / referenceSize.Y * localPositionPixels.Y);
 
                 }
                 

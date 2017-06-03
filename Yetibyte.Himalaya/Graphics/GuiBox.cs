@@ -41,7 +41,7 @@ namespace Yetibyte.Himalaya.Graphics {
             if (Texture == null)
                 return;
 
-            Vector2 scale = new Vector2(Size.X / Texture.Width, Size.Y / Texture.Height);
+            Vector2 scale = new Vector2(AbsoluteSize.X / Texture.Width, AbsoluteSize.Y / Texture.Height);
 
             spriteBatch.Draw(Texture, AbsolutePosition, null, null, Origin, Rotation, scale, TintColor, SpriteEffect, RenderLayerDepth);
 
