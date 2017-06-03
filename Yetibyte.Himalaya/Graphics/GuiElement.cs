@@ -28,8 +28,8 @@ namespace Yetibyte.Himalaya.Graphics {
         public GuiAnchorPoint AnchorPoint { get; set; } = GuiAnchorPoint.TopLeft;
 
         /// <summary>
-        /// The local position of this <see cref="GuiElement"/>. It is relative to the <see cref="GuiAnchorPoint"/> and can be in either pixels or percent.
-        /// The unit used is determined by <see cref="ScalingUnit"/>.
+        /// The local position of this <see cref="GuiElement"/>. It is relative to the <see cref="GuiAnchorPoint"/> and can be in either pixels or percent
+        /// depending on the <see cref="GuiScalingUnit"/>. To get the actual position of this element on the screen, use <see cref="AbsolutePosition"/>.
         /// </summary>
         public Vector2 Position { get; set; }
 
@@ -88,7 +88,7 @@ namespace Yetibyte.Himalaya.Graphics {
         }
 
         /// <summary>
-        /// The unprocessed size of this <see cref="GuiElement"/>. This can be either in procent or in pixels depending on the <see cref="GuiScalingUnit"/>.
+        /// The unprocessed size of this <see cref="GuiElement"/>. This can be in either percent or pixels depending on the <see cref="GuiScalingUnit"/>.
         /// To retrieve the actual size on the screen in pixels, use <see cref="AbsoluteSize"/>.
         /// </summary>
         public Vector2 Size { get; set; }
