@@ -27,7 +27,14 @@ namespace Yetibyte.Himalaya.Graphics {
         /// </summary>
         public GuiCanvas Canvas { get; set; }
 
+        /// <summary>
+        /// Determines the unit in which the local positioning and scaling values are measured.
+        /// </summary>
         public GuiScalingUnit ScalingUnit { get; set; } = GuiScalingUnit.Pixels;
+
+        /// <summary>
+        /// The orientation point of this element's position.
+        /// </summary>
         public GuiAnchorPoint AnchorPoint { get; set; } = GuiAnchorPoint.TopLeft;
 
         /// <summary>
@@ -127,6 +134,16 @@ namespace Yetibyte.Himalaya.Graphics {
         }
 
         public Vector2 Origin { get; set; }
+
+        /// <summary>
+        /// The local rotation of this <see cref="GuiElement"/> in radians.
+        /// </summary>
+        public float LocalRotation { get; set; }
+
+        /// <summary>
+        /// The global rotation of this <see cref="GuiElement"/> i radians.
+        /// </summary>
+        public float Rotation => (HasParent ? Parent.Rotation : 0f) + LocalRotation;
 
         /// <summary>
         /// The visibility state of this <see cref="GuiElement"/>. Elements that are set to invisible will not be rendered on the screen.

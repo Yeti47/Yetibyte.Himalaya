@@ -276,7 +276,7 @@ namespace Yetibyte.Utilities {
         /// <returns>The distance converted to meters.</returns>
         public static float FeetToMeters(float feet) => feet * CONVERSION_FEET_TO_METERS;
 
-
+        public static uint GaussianSum(uint n) => (n * (n + 1)) / 2;
 
     }
 		
