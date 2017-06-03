@@ -9,7 +9,7 @@ using Yetibyte.Utilities;
 
 namespace Yetibyte.Himalaya.Graphics {
 
-    public abstract class GuiElement : ParentChildHierarchy<GuiElement>, IDraw, IUpdate {
+    public abstract class GuiElement : ParentChildHierarchy<GuiElement>, IDraw, IUpdate, IBounds {
 
         #region Fields
 
@@ -27,12 +27,35 @@ namespace Yetibyte.Himalaya.Graphics {
         public GuiScalingUnit ScalingUnit { get; set; } = GuiScalingUnit.Pixels;
         public GuiAnchorPoint AnchorPoint { get; set; } = GuiAnchorPoint.TopLeft;
 
+        /// <summary>
+        /// The local position of this <see cref="GuiElement"/>. It is relative to the <see cref="GuiAnchorPoint"/> and can be in either pixels or percent.
+        /// The unit used is determined by <see cref="ScalingUnit"/>.
+        /// </summary>
         public Vector2 Position { get; set; }
 
+        /// <summary>
+        /// The absolute position of this <see cref="GuiElement"/> on the screen in pixels.
+        /// </summary>
         public Vector2 AbsolutePosition {
 
-            get;
-            set;
+            get {
+
+                Vector2 localPosition = (ScalingUnit == GuiScalingUnit.Pixels) ? Position : new Vector2(Position.X * ReferenceSize.X, Position.Y * ReferenceSize.Y);
+                return ReferencePosition + localPosition;
+
+            }
+
+            set {
+
+                Vector2 localPositionPixels = value - AbsolutePosition;
+
+                if (ScalingUnit == GuiScalingUnit.Pixels)
+                    Position = localPositionPixels;
+
+                Vector2 referenceSize = ReferenceSize;
+                Position = new Vector2(100f / referenceSize.X * localPositionPixels.X, 100f / referenceSize.Y) * localPositionPixels.Y;
+
+            }
 
         }
 
@@ -41,13 +64,32 @@ namespace Yetibyte.Himalaya.Graphics {
         /// </summary>
         public Vector2 ReferenceSize {
 
-            get => HasParent ? Parent.AbsoluteSize : (HasCanvas ? Canvas.ScreenSize : Vector2.One);
+            get => HasParent ? Parent.AbsoluteSize : (HasCanvas ? Canvas.ScreenSize : Vector2.Zero);
 
         }
 
         /// <summary>
-        /// The unprocessed scaling values. This can be either in procent or in pixels depending on the <see cref="GuiScalingUnit"/>.
-        /// For retrieving the actual size on the screen in pixels, use <see cref="AbsoluteSize"/>.
+        /// The origin point from where this <see cref="GuiElement"/>'s absolute position is determined. This takes into account the
+        /// position of the parent element (if there is one) as well as the <see cref="GuiAnchorPoint"/> of this element.
+        /// </summary>
+        public Vector2 ReferencePosition {
+
+            get {
+
+                Vector2 normalizedAnchorCoords = GetNormalizedAnchorChoordinates();
+
+                Vector2 anchorCoords = HasParent ?
+                    (Parent.AbsolutePosition + new Vector2(normalizedAnchorCoords.X * Parent.AbsoluteSize.X, normalizedAnchorCoords.Y * Parent.AbsoluteSize.Y)) :
+                    (new Vector2(normalizedAnchorCoords.X * Canvas.ScreenSize.X, normalizedAnchorCoords.Y * Canvas.ScreenSize.Y));
+
+                return anchorCoords;
+            }
+
+        }
+
+        /// <summary>
+        /// The unprocessed size of this <see cref="GuiElement"/>. This can be either in procent or in pixels depending on the <see cref="GuiScalingUnit"/>.
+        /// To retrieve the actual size on the screen in pixels, use <see cref="AbsoluteSize"/>.
         /// </summary>
         public Vector2 Size { get; set; }
 
@@ -133,6 +175,11 @@ namespace Yetibyte.Himalaya.Graphics {
 
         public int DrawOrder { get; set; }
 
+        /// <summary>
+        /// The bounding box of this <see cref="GuiElement"/>.
+        /// </summary>
+        public RectangleF Bounds => new RectangleF(AbsolutePosition, AbsoluteSize);
+
         #endregion
 
         #region Constructors
@@ -159,9 +206,50 @@ namespace Yetibyte.Himalaya.Graphics {
             
         }
 
-        private Vector2 GetAnchorCoordinates() {
+        /// <summary>
+        /// Gets the normalized coordinates of the <see cref="AnchorPoint"/>, meaning that its components will range from 0 to 1. For example,
+        /// if the anchor point is set to <see cref="GuiAnchorPoint.Top"/>, this method returns {X: 0.5 | Y: 0}.
+        /// </summary>
+        /// <returns>The normalized coordinates of this elements anchor point.</returns>
+        public Vector2 GetNormalizedAnchorChoordinates() {
 
-            throw new NotImplementedException("TODO!");
+            Vector2 anchor = Vector2.Zero;
+
+            switch (AnchorPoint) {
+
+                case GuiAnchorPoint.TopLeft:
+                    anchor = Vector2.Zero;
+                    break;
+                case GuiAnchorPoint.Top:
+                    anchor = new Vector2(0.5f, 0f);
+                    break;
+                case GuiAnchorPoint.TopRight:
+                    anchor = Vector2.UnitX;
+                    break;
+                case GuiAnchorPoint.Right:
+                    anchor = new Vector2(1f, 0.5f);
+                    break;
+                case GuiAnchorPoint.BottomRight:
+                    anchor = Vector2.One;
+                    break;
+                case GuiAnchorPoint.Bottom:
+                    anchor = new Vector2(0.5f, 1f);
+                    break;
+                case GuiAnchorPoint.BottomLeft:
+                    anchor = Vector2.UnitY;
+                    break;
+                case GuiAnchorPoint.Left:
+                    anchor = new Vector2(0f, 0.5f);
+                    break;
+                case GuiAnchorPoint.Center:
+                    anchor = new Vector2(0.5f, 0.5f);
+                    break;
+                default:
+                    break;
+
+            }
+
+            return anchor;
 
         }
 
