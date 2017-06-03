@@ -148,9 +148,10 @@ namespace TestGame {
             GuiCanvas guiCanvas = new GuiCanvas(GraphicsDevice, "TestGui");
             TestGuiElement testGuiBox = new TestGuiElement("TestGuiBox", testGuiTexture);
             guiCanvas.AddGuiElement(testGuiBox);
-            testGuiBox.ScalingUnit = GuiScalingUnit.Pixels;
-            testGuiBox.AbsolutePosition = new Vector2(10, 10);
-            testGuiBox.AbsoluteSize = new Vector2(200, 100);
+            testGuiBox.AnchorPoint = GuiAnchorPoint.TopRight;
+            testGuiBox.ScalingUnit = GuiScalingUnit.Percent;
+            testGuiBox.Position = new Vector2(-10, -10);
+            testGuiBox.Size = new Vector2(100, 100);
             Debug.WriteLine("Absolute Position: " + testGuiBox.AbsolutePosition);
             Debug.WriteLine("Absolute Size: " + testGuiBox.AbsoluteSize);
             Debug.WriteLine("Reference Position: " + testGuiBox.ReferencePosition);

@@ -38,6 +38,8 @@ namespace Yetibyte.Himalaya.Graphics {
         /// </summary>
         public GuiScalingUnit ScalingUnit { get; set; } = GuiScalingUnit.Pixels;
 
+        public GuiScalingUnit PositioningUnit { get; set; } = GuiScalingUnit.Pixels;
+
         /// <summary>
         /// The orientation point of this element's position.
         /// </summary>
@@ -56,7 +58,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
             get {
 
-                Vector2 localPosition = (ScalingUnit == GuiScalingUnit.Pixels) ? Position : new Vector2(Position.X /100f * ReferenceSize.X, Position.Y / 100f * ReferenceSize.Y);
+                Vector2 localPosition = (PositioningUnit == GuiScalingUnit.Pixels) ? Position : new Vector2(Position.X /100f * ReferenceSize.X, Position.Y / 100f * ReferenceSize.Y);
                 return ReferencePosition + localPosition;
 
             }
@@ -65,7 +67,7 @@ namespace Yetibyte.Himalaya.Graphics {
 
                 Vector2 localPositionPixels = value - AbsolutePosition;
 
-                if (ScalingUnit == GuiScalingUnit.Pixels)
+                if (PositioningUnit == GuiScalingUnit.Pixels)
                     Position = localPositionPixels;
                 else {
 
