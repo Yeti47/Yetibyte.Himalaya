@@ -146,15 +146,14 @@ namespace TestGame {
             testGuiTexture = Content.Load<Texture2D>("GuiTestTexture1");
 
             GuiCanvas guiCanvas = new GuiCanvas(GraphicsDevice, "TestGui");
+
             TestGuiElement testGuiBox = new TestGuiElement("TestGuiBox", testGuiTexture);
             guiCanvas.AddGuiElement(testGuiBox);
-            testGuiBox.AnchorPoint = GuiAnchorPoint.TopRight;
-            testGuiBox.ScalingUnit = GuiScalingUnit.Percent;
-            testGuiBox.Position = new Vector2(-10, -10);
-            testGuiBox.Size = new Vector2(100, 100);
-            Debug.WriteLine("Absolute Position: " + testGuiBox.AbsolutePosition);
-            Debug.WriteLine("Absolute Size: " + testGuiBox.AbsoluteSize);
-            Debug.WriteLine("Reference Position: " + testGuiBox.ReferencePosition);
+            testGuiBox.AnchorPoint = GuiAnchorPoint.TopLeft;
+            testGuiBox.ScalingUnit = GuiScalingUnit.Pixels;
+            testGuiBox.Position = new Vector2(0, -10);
+            testGuiBox.Size = new Vector2(10, 10);
+
             CurrentScene.AddGuiCanvas(guiCanvas);
 
         }
