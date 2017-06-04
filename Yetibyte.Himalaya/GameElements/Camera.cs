@@ -55,7 +55,7 @@ namespace Yetibyte.Himalaya.GameElements {
         public float ZoomFactor {
 
             get => _zoomFactor;
-            set => _zoomFactor = MathHelper.Clamp(_zoomFactor, MIN_ZOOM_FACTOR, MAX_ZOOM_FACTOR);
+            set => _zoomFactor = MathHelper.Clamp(value, MIN_ZOOM_FACTOR, MAX_ZOOM_FACTOR);
 
         }
 
