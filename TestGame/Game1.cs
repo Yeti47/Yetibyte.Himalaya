@@ -148,12 +148,12 @@ namespace TestGame {
 
             GuiCanvas guiCanvas = new GuiCanvas(GraphicsDevice, "TestGui");
 
-            TestGuiElement testGuiBox = new TestGuiElement("TestGuiBox", testGuiTexture);
+            GuiBox testGuiBox = new GuiBox("TestGuiBox", testGuiTexture);
             guiCanvas.AddGuiElement(testGuiBox);
             testGuiBox.AnchorPoint = GuiAnchorPoint.TopLeft;
             testGuiBox.ScalingUnit = GuiScalingUnit.Pixels;
-            testGuiBox.Position = new Vector2(0, -10);
-            testGuiBox.Size = new Vector2(10, 10);
+            testGuiBox.Position = new Vector2(8, 8);
+            testGuiBox.Size = new Vector2(100, 100);
 
             CurrentScene.AddGuiCanvas(guiCanvas);
 

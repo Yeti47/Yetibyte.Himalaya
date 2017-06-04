@@ -25,7 +25,7 @@ namespace Yetibyte.Himalaya.Gui {
 
         #region Constructors
 
-        protected GuiText(string name, SpriteFont font, string text = "") : base(name) {
+        public GuiText(string name, SpriteFont font, string text = "") : base(name) {
 
             this.Font = font;
             this.Text = text;

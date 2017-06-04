@@ -25,7 +25,7 @@ namespace Yetibyte.Himalaya.Gui {
 
         #region Constructors
 
-        protected GuiBox(string name, Texture2D texture = null) : base(name) {
+        public GuiBox(string name, Texture2D texture = null) : base(name) {
 
             this.Texture = texture;
 

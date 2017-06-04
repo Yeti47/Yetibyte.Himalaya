@@ -219,7 +219,7 @@ namespace Yetibyte.Himalaya.Gui {
 
         #region Constructors
 
-        protected GuiElement(string name) {
+        public GuiElement(string name) {
 
             this.Name = name;
 

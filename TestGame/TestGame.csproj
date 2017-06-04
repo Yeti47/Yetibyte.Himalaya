@@ -47,7 +47,6 @@
     <Compile Include="PlayerTestBehavior.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestGuiElement.cs" />
     <Compile Include="TestScene1.cs" />
   </ItemGroup>
   <ItemGroup>
