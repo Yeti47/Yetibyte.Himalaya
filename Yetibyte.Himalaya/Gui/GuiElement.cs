@@ -14,7 +14,7 @@ namespace Yetibyte.Himalaya.Gui {
     /// A GuiElement needs to be attached to a <see cref="GuiCanvas"/> via the appropriate method in order to be processed.
     /// Please be aware, that a <see cref="GuiElement"/> cannot be assigned to multiple canvases at once.
     /// </summary>
-    public abstract class GuiElement : ParentChildHierarchy<GuiElement>, IDraw, IUpdate, IBounds {
+    public class GuiElement : ParentChildHierarchy<GuiElement>, IDraw, IUpdate, IBounds {
 
         #region Fields
 

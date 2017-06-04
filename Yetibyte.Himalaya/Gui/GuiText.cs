@@ -11,7 +11,7 @@ namespace Yetibyte.Himalaya.Gui {
     /// <summary>
     /// A <see cref="GuiElement"/> responsible for rendering text on the screen.
     /// </summary>
-    public abstract class GuiText : GuiElement {
+    public class GuiText : GuiElement {
 
         #region Properties
 

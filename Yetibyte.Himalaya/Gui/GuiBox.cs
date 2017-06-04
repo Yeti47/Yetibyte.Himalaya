@@ -11,7 +11,7 @@ namespace Yetibyte.Himalaya.Gui {
     /// <summary>
     /// A <see cref="GuiElement"/> that renders a texture on the screen.
     /// </summary>
-    public abstract class GuiBox : GuiElement {
+    public class GuiBox : GuiElement {
 
         #region Properties
 
