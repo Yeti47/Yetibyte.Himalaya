@@ -29,6 +29,7 @@ namespace TestGame {
 
             _controlListener = GameEntity.GetComponent<ControlListener>();
             _collisionController = GameEntity.GetComponent<CollisionController>();
+            GameEntity.Scene.Camera.Target = GameEntity;
 
         }
 

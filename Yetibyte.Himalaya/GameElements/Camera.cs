@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Yetibyte.Himalaya.GameElements {
 
+    /// <summary>
+    /// The camera is used to determine what part of the game world should be displayed in the game window.
+    /// </summary>
     public sealed class Camera : IUpdate {
 
         #region Constants
@@ -81,6 +84,22 @@ namespace Yetibyte.Himalaya.GameElements {
         /// of the viewport. If the Target is set to 'null', the camera will stop following any GameEntity.
         /// </summary>
         public GameEntity Target { get; set; }
+
+        /// <summary>
+        /// The camera's bounds in world space.
+        /// </summary>
+        public RectangleF WorldBounds {
+
+            get {
+
+                Vector2 location = ViewportToWorldPoint(Vector2.Zero);
+                Vector2 size = ViewportToWorldPoint(new Vector2(Viewport.Width, Viewport.Height)) - location;
+
+                return new RectangleF(location, size);
+
+            }
+
+        }
 
         #endregion
 
