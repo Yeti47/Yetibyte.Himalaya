@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Yetibyte.Himalaya.Graphics {
+namespace Yetibyte.Himalaya.Gui {
 
     /// <summary>
     /// <para>A GuiCanvas is responsible for managing and rendering <see cref="GuiElement"/>s. All GuiElements must be attached to a canvas in order

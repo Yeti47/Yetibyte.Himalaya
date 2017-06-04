@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Yetibyte.Himalaya.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Yetibyte.Himalaya.Gui;
 
 namespace TestGame {
 

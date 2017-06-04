@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Yetibyte.Utilities;
 
-namespace Yetibyte.Himalaya.Graphics {
+namespace Yetibyte.Himalaya.Gui {
 
     /// <summary>
     /// The base of every element in a GUI. Provides all the basic functionality that is shared among all GUI components.

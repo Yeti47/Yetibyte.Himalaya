@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Yetibyte.Himalaya.Graphics {
+namespace Yetibyte.Himalaya.Gui {
 
     /// <summary>
     /// A <see cref="GuiElement"/> responsible for rendering text on the screen.

@@ -1,4 +1,4 @@
-﻿namespace Yetibyte.Himalaya.Graphics {
+﻿namespace Yetibyte.Himalaya.Gui {
     public enum GuiTextureScalingMode { ScaleToFit, Tile }
 
 }

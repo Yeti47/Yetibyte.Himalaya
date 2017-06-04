@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Yetibyte.Himalaya.Collision;
 using Yetibyte.Himalaya.Graphics;
+using Yetibyte.Himalaya.Gui;
 
 namespace Yetibyte.Himalaya.GameElements {
 	

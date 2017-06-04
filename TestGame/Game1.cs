@@ -13,6 +13,7 @@ using System.Diagnostics;
 using Yetibyte.Himalaya.Debugging;
 using Yetibyte.Utilities;
 using Yetibyte.Utilities.Extensions;
+using Yetibyte.Himalaya.Gui;
 
 namespace TestGame {
     /// <summary>
