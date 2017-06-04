@@ -59,8 +59,7 @@ namespace Yetibyte.Himalaya.GameElements {
             this.GameEntitiesToAdd = new Queue<GameEntity>();
             this.GameEntitiesToRemove = new Queue<GameEntity>();
             this.Physics = new Physics(this);
-            this.Camera = new Camera(new Vector2(game.GraphicsDevice.Viewport.Width/2, game.GraphicsDevice.Viewport.Height/2));
-            this.Camera.Scene = this;
+            this.Camera = new Camera(this, game.GraphicsDevice.Viewport);
 
         }
 
@@ -128,6 +127,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
             }
 
+            Camera.Update(gameTime, TimeScale);
+
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
         public virtual void Draw(GameTime gameTime) {
 
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.GetViewMatrix());
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.ViewMatrix);
 
             foreach (GameEntity gameEntity in GameEntities.OrderBy(e => e.DrawOrder)) {
 
