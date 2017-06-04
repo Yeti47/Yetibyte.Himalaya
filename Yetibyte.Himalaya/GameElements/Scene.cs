@@ -246,6 +246,72 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
+        /// <summary>
+        /// Returns an array of all GameEntities with the given tag. 
+        /// </summary>
+        /// <param name="tag">The tag to search for.</param>
+        /// <returns>An array of all GameEntities with the given tag or an empty array if not entities could be found. </returns>
+        public GameEntity[] FindEntitiesByTag(string tag) {
+
+            return GameEntities.Where(e => e.Tags.Contains(tag)).ToArray();
+
+        }
+
+        /// <summary>
+        /// Returns the first GameEntity with the given tag.
+        /// </summary>
+        /// <param name="tag">The tag to search for.</param>
+        /// <returns>The first GameEntity with the given tag or null if not entity could be found.</returns>
+        public GameEntity FindEntityByTag(string tag) {
+
+            return GameEntities.Where(e => e.Tags.Contains(tag)).FirstOrDefault();
+
+        }
+
+        /// <summary>
+        /// Returns an array of every <see cref="GameEntity"/> that matches ALL of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>An array of every GameEntity that matches all of the given tags or an empty array if there were no matches.</returns>
+        public GameEntity[] FindEntitiesWithTags(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => !tags.Except(e.Tags).Any()).ToArray();
+
+        }
+
+        /// <summary>
+        /// Returns the first <see cref="GameEntity"/> that matches ALL of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>The first <see cref="GameEntity"/> that matches ALL of the given tags or null if no entity was found.</returns>
+        public GameEntity FindEntityWithTags(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => !tags.Except(e.Tags).Any()).FirstOrDefault();
+
+        }
+
+        /// <summary>
+        /// Returns an array of every <see cref="GameEntity"/> that matches EITHER of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>An array of every GameEntity that matches EITHER of the given tags or an empty array if there were no matches.</returns>
+        public GameEntity[] FindEntitiesWithEitherTag(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => e.Tags.Intersect(tags).Any()).ToArray();
+
+        }
+
+        /// <summary>
+        /// Returns the first <see cref="GameEntity"/> that matches EITHER of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>The first <see cref="GameEntity"/> that matches EITHER of the given tags or null if no entity was found.</returns>
+        public GameEntity FindEntityWithEitherTag(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => e.Tags.Intersect(tags).Any()).FirstOrDefault();
+
+        }
+
         #endregion
 
     }

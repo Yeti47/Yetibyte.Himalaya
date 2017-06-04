@@ -152,8 +152,9 @@ namespace TestGame {
             guiCanvas.AddGuiElement(testGuiBox);
             testGuiBox.AnchorPoint = GuiAnchorPoint.TopLeft;
             testGuiBox.ScalingUnit = GuiScalingUnit.Pixels;
-            testGuiBox.Position = new Vector2(8, 8);
+            testGuiBox.Position = new Vector2(80, 8);
             testGuiBox.Size = new Vector2(100, 100);
+            testGuiBox.LocalRotation = MathHelper.PiOver4;
 
             CurrentScene.AddGuiCanvas(guiCanvas);
 
