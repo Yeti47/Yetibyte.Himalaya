@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Yetibyte.Himalaya.GameElements;
 using Microsoft.Xna.Framework;
+using Yetibyte.Himalaya.DataStructures;
 
 namespace Yetibyte.Himalaya.Collision {
 

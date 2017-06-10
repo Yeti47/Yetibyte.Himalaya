@@ -32,6 +32,11 @@ namespace Yetibyte.Himalaya.DataStructures {
         public QuadTreeNodeRectF RootNode => _rootNode;
         public Vector2 Position { get; private set; }
 
+        /// <summary>
+        /// An enumeration of all nodes in this <see cref="QuadTreeRectF"/>.
+        /// </summary>
+        public IEnumerable<QuadTreeNodeRectF> Nodes => _rootNode.DeepSubnodes.Concat(new[] { _rootNode });
+
         #endregion
 
         #region Constructors
@@ -99,6 +104,17 @@ namespace Yetibyte.Himalaya.DataStructures {
                 rootNodeSize = MinNodeSize;
 
             _rootNode = new QuadTreeNodeRectF(this, new RectangleF(position, new Vector2(rootNodeSize, rootNodeSize)));
+
+        }
+
+        /// <summary>
+        /// Adds the given <see cref="IBounds"/> to the dictionary that keeps track of which objects are included in this <see cref="QuadTreeRectF"/>
+        /// and which node they're assigned to.
+        /// </summary>
+        /// <param name="boundingBoxObject"></param>
+        internal void AddToObjectNodeMap(IBounds boundingBoxObject, QuadTreeNodeRectF node) {
+
+
 
         }
 

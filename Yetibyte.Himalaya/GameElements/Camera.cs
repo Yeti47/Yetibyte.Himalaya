@@ -36,6 +36,10 @@ namespace Yetibyte.Himalaya.GameElements {
         #region Properties
 
         public Vector2 Position { get; set; } = Vector2.Zero;
+
+        /// <summary>
+        /// The camera's rotation in radians.
+        /// </summary>
         public float Rotation { get; set; }
         
         public Scene Scene { get; internal set; }
@@ -60,7 +64,9 @@ namespace Yetibyte.Himalaya.GameElements {
         }
 
         /// <summary>
-        /// The translation <see cref="Matrix"/> of this camera.
+        /// The translation <see cref="Matrix"/> of this camera. Pass this matrix as an argument when calling the
+        /// Draw method of a <see cref="SpriteBatch"/> to apply the offset, rotation and zoom defined by this camera
+        /// to the rendered area.
         /// </summary>
         public Matrix ViewMatrix {
 
@@ -81,7 +87,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
         /// <summary>
         /// The Target can be used to make the <see cref="Camera"/> follow a specific GameEntity, so that it is always in the center
-        /// of the viewport. If the Target is set to 'null', the camera will stop following any GameEntity.
+        /// of the viewport. If the Target is set to 'null', the camera will stop following any GameEntity. The target will automatically be set
+        /// to 'null' if the GameEntity is destroyed.
         /// </summary>
         public GameEntity Target { get; set; }
 
@@ -127,6 +134,9 @@ namespace Yetibyte.Himalaya.GameElements {
         }
 
         public void Update(GameTime gameTime, float globalTimeScale) {
+
+            if (Target.IsDestroyed)
+                Target = null;
 
             if (Target != null)
                 LookAt(Target);

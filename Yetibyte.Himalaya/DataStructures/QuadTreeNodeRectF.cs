@@ -31,6 +31,22 @@ namespace Yetibyte.Himalaya.DataStructures {
         public bool CanSplit => (NodeBounds.Width / 2 >= _parentTree.MinNodeSize) && (NodeBounds.Height / 2 >= _parentTree.MinNodeSize);
         public bool HasSubnodes => SubNodes[0] != null;
 
+        /// <summary>
+        /// A recursive enumeration of all nodes that descend from this node.
+        /// </summary>
+        public IEnumerable<QuadTreeNodeRectF> DeepSubnodes {
+
+            get {
+
+                if (!HasSubnodes)
+                    return new QuadTreeNodeRectF[0];
+
+                return SubNodes.Concat(SubNodes.SelectMany(s => s.DeepSubnodes));
+
+            }
+
+        }
+
         #endregion
 
         #region Constructors
@@ -149,6 +165,10 @@ namespace Yetibyte.Himalaya.DataStructures {
         /// <returns>An enumeration of all objects located in the nodes that overlap the given area.</returns>
         public IEnumerable<IBounds> GetObjectsAt(RectangleF area) {
 
+            // TODO: Currently, we do not check whether the given area overlaps the bounds of this node at all.
+            // This results in this method retrieving objects even if the given area is completely outside of the quad tree's boundaries.
+            // For now, this can be ingored since it does not cause any problems with what we're going to use this data structure for.
+
             List<IBounds> resultList = new List<IBounds>();
 
             if (HasSubnodes) {
@@ -183,6 +203,19 @@ namespace Yetibyte.Himalaya.DataStructures {
                 }
 
             }
+
+        }
+
+        /// <summary>
+        /// Removes the given <see cref="IBounds"/> object from this node.
+        /// </summary>
+        /// <param name="boundingBoxObject">The IBounds object to remove.</param>
+        public void Remove(IBounds boundingBoxObject) {
+
+            if (!BoundingBoxObjects.Contains(boundingBoxObject))
+                return;
+
+            BoundingBoxObjects.Remove(boundingBoxObject);
 
         }
                 
