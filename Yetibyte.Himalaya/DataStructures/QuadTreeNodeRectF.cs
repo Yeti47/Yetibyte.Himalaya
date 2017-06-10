@@ -16,6 +16,7 @@ namespace Yetibyte.Himalaya.DataStructures {
         #region Fields
 
         private QuadTreeRectF _parentTree;
+        private Dictionary<IBounds, QuadTreeNodeRectF> _objectNodeMap;
 
         #endregion
 
@@ -51,10 +52,11 @@ namespace Yetibyte.Himalaya.DataStructures {
 
         #region Constructors
 
-        public QuadTreeNodeRectF(QuadTreeRectF parentTree, RectangleF bounds) {
+        public QuadTreeNodeRectF(QuadTreeRectF parentTree, Dictionary<IBounds, QuadTreeNodeRectF> objectNodeMap, RectangleF bounds) {
 
             _parentTree = parentTree;
             this.NodeBounds = bounds;
+            _objectNodeMap = objectNodeMap;
 
         }
 
@@ -78,6 +80,9 @@ namespace Yetibyte.Himalaya.DataStructures {
             }
 
             BoundingBoxObjects.Add(boundingBoxObject);
+
+            // In the Object/Node-Map set the node of the inserted object to this node in order to keep track of which object is assigned to which node.
+            _objectNodeMap[boundingBoxObject] = this;
 
             if(BoundingBoxObjects.Count > _parentTree.MaxObjectsPerNode && CanSplit) {
 
@@ -107,10 +112,10 @@ namespace Yetibyte.Himalaya.DataStructures {
 
             Vector2 subnodeSize = new Vector2(NodeBounds.Width / 2, NodeBounds.Height / 2);
 
-            SubNodes[0] = new QuadTreeNodeRectF(_parentTree, new RectangleF(NodeBounds.Location, subnodeSize));
-            SubNodes[1] = new QuadTreeNodeRectF(_parentTree, new RectangleF(NodeBounds.Location + new Vector2(subnodeSize.X, 0), subnodeSize));
-            SubNodes[2] = new QuadTreeNodeRectF(_parentTree, new RectangleF(NodeBounds.Location + new Vector2(subnodeSize.X, subnodeSize.Y), subnodeSize));
-            SubNodes[3] = new QuadTreeNodeRectF(_parentTree, new RectangleF(NodeBounds.Location + new Vector2(0, subnodeSize.Y), subnodeSize));
+            SubNodes[0] = new QuadTreeNodeRectF(_parentTree, _objectNodeMap, new RectangleF(NodeBounds.Location, subnodeSize));
+            SubNodes[1] = new QuadTreeNodeRectF(_parentTree, _objectNodeMap, new RectangleF(NodeBounds.Location + new Vector2(subnodeSize.X, 0), subnodeSize));
+            SubNodes[2] = new QuadTreeNodeRectF(_parentTree, _objectNodeMap, new RectangleF(NodeBounds.Location + new Vector2(subnodeSize.X, subnodeSize.Y), subnodeSize));
+            SubNodes[3] = new QuadTreeNodeRectF(_parentTree, _objectNodeMap, new RectangleF(NodeBounds.Location + new Vector2(0, subnodeSize.Y), subnodeSize));
 
         }
 
