@@ -66,6 +66,7 @@
     <Compile Include="Extensions\GameTimeExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="Extensions\Vector2Extensions.cs" />
+    <Compile Include="GameElements\EntityMovedEventArgs.cs" />
     <Compile Include="Gui\GuiAnchorPoint.cs" />
     <Compile Include="Gui\GuiCanvas.cs" />
     <Compile Include="Gui\GuiElement.cs" />

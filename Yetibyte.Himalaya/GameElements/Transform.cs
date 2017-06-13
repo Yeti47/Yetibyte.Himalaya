@@ -82,7 +82,11 @@ namespace Yetibyte.Himalaya.GameElements {
                 foreach (Transform child in Children)
                     child.Position += delta;
 
+                Vector2 originalPosition = _position;
                 _position = value;
+
+                // Raise OnEntityMoved event
+                OnRaiseEntityMoved(new EntityMovedEventArgs(GameEntity, originalPosition, delta));
 
             }
 
@@ -114,12 +118,29 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #endregion
 
+        #region Events
+
+        public event EventHandler<EntityMovedEventArgs> EntityMoved;
+
+        #endregion
+
         #region Methods
 
         public Vector2 Translate(Vector2 offset) {
 
             Position += offset;
             return Position;
+
+        }
+
+        /// <summary>
+        /// Raises the EntityMoved event.
+        /// </summary>
+        /// <param name="eventArgs">The EventArgs to send.</param>
+        public void OnRaiseEntityMoved(EntityMovedEventArgs eventArgs) {
+
+            EventHandler<EntityMovedEventArgs> eventHandler = EntityMoved;
+            eventHandler?.Invoke(this, eventArgs);
 
         }
 
