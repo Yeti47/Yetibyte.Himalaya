@@ -131,6 +131,13 @@ namespace Yetibyte.Himalaya.DataStructures {
 
         }
 
+        /// <summary>
+        /// Checks whether this <see cref="QuadTreeRectF"/> contains the given object.
+        /// </summary>
+        /// <param name="boundingBoxObject">The object to locate in the tree.</param>
+        /// <returns>True if the object was found in the tree, false otherwise.</returns>
+        public bool Contains(IBounds boundingBoxObject) => _objectNodeMap.ContainsKey(boundingBoxObject);
+
         #endregion
 
 

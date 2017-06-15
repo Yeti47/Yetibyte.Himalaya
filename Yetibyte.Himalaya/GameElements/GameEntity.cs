@@ -122,6 +122,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool HasParent => _parentEntity != null;
 
+        /// <summary>
+        /// Whether or nor this GameEntity has been assigned to a <see cref="GameElements.Scene"/>.
+        /// </summary>
+        public bool IsInScene => Scene != null;
+
         public int DrawOrder { get; set; }
 
         internal bool IsAwake => _isAwake;
@@ -137,6 +142,8 @@ namespace Yetibyte.Himalaya.GameElements {
             this.Transform = new Transform();
             this.AddComponent(Transform);
             this.Transform.Position = position;
+
+            this.Transform.EntityMoved += OnEntityMoved;
 
         }
 
@@ -431,6 +438,12 @@ namespace Yetibyte.Himalaya.GameElements {
                 collisionResponsiveComponent.OnTriggerLeave(ownCollider, otherCollider);
 
             }
+
+        }
+
+        private void OnEntityMoved(object sender, EntityMovedEventArgs e) {
+
+            Scene?.Physics.ReinsertEntityCollidersIntoCollisionTree(this);
 
         }
 

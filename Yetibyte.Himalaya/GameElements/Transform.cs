@@ -120,6 +120,9 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Events
 
+        /// <summary>
+        /// Raised whenever the position changed.
+        /// </summary>
         public event EventHandler<EntityMovedEventArgs> EntityMoved;
 
         #endregion
