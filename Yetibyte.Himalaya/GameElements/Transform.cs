@@ -23,8 +23,14 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public override bool IsRemovable => false;
 
+        /// <summary>
+        /// The parent <see cref="Transform"/> of this Transform.
+        /// </summary>
         public Transform Parent => GameEntity?.ParentEntity?.Transform;
 
+        /// <summary>
+        /// An enumeration of all children of this <see cref="Transform"/>.
+        /// </summary>
         public IEnumerable<Transform> Children => IsAttached ? GameEntity.GetComponentsInChildren<Transform>(false, true) : new Transform[0];
 
         /// <summary>
@@ -116,6 +122,36 @@ namespace Yetibyte.Himalaya.GameElements {
         public Vector2 LocalScale { get; set; } = Vector2.One;
         public float LocalRotation { get; set; }
 
+        /// <summary>
+        /// Creates and returns the matrix representing the global position, scale and rotation of this <see cref="Transform"/>.
+        /// </summary>
+        public Matrix Matrix {
+
+            get {
+
+                return Matrix.CreateTranslation(_position.X, _position.Y, 0f) *
+                    Matrix.CreateRotationZ(Rotation) *
+                    Matrix.CreateScale(new Vector3(Scale.X, Scale.Y, 1));
+
+            }
+            
+        }
+
+        /// <summary>
+        /// Creates and returns the matrix that stores this <see cref="Transform"/>'s local position, scale and rotation.
+        /// </summary>
+        public Matrix LocalMatrix {
+
+            get {
+
+                return Matrix.CreateTranslation(LocalPosition.X, LocalPosition.Y, 0f) *
+                    Matrix.CreateRotationZ(LocalRotation) *
+                    Matrix.CreateScale(new Vector3(LocalScale.X, LocalScale.Y, 1));
+
+            }
+
+        }
+
         #endregion
 
         #region Events
@@ -129,12 +165,25 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Methods
 
+        /// <summary>
+        /// Moves the entity by the given offset.
+        /// </summary>
+        /// <param name="offset">The offset to apply to the entity's position.</param>
+        /// <returns>The new position.</returns>
         public Vector2 Translate(Vector2 offset) {
 
             Position += offset;
             return Position;
 
         }
+
+        /// <summary>
+        /// Moves the entity by the given offset.
+        /// </summary>
+        /// <param name="x">The x component of the offset to apply to the entity's position.</param>
+        /// <param name="y">The y component of the offset to apply to the entity's position.</param>
+        /// <returns>The new position.</returns>
+        public Vector2 Translate(float x, float y) => Translate(new Vector2(x, y));
 
         /// <summary>
         /// Raises the EntityMoved event.

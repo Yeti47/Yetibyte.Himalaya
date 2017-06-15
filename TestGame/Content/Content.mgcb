@@ -55,3 +55,10 @@
 /processorParam:TextureFormat=Color
 /build:GuiTestTexture1.png
 
+#begin DefaultSpriteFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:DefaultSpriteFont.spritefont
+
