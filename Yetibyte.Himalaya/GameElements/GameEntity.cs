@@ -21,8 +21,20 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Events
 
+        /// <summary>
+        /// Raised when a component was added to this entity.
+        /// </summary>
         public event EventHandler<ComponentEventArgs> ComponentAdded;
+
+        /// <summary>
+        /// Raised when a component was removed from this entity.
+        /// </summary>
         public event EventHandler<ComponentEventArgs> ComponentRemoved;
+
+        /// <summary>
+        /// Raised during <see cref="DestroyEntity"/> just before the entity is actually destroyed.
+        /// </summary>
+        public event EventHandler BeforeDestroy;
 
         #endregion
 
@@ -204,15 +216,27 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         public void DestroyEntity() {
 
-            foreach (GameEntity childEntity in ChildEntities)
+            foreach (GameEntity childEntity in ChildEntities) 
                 childEntity.DestroyEntity();
 
             if (!IsDestroyed) {
 
+                OnBeforeDestroy(); // Raise OnBeforeDestroy event
+                Transform.EntityMoved -= OnEntityMoved; // Unsubscribe from EntityMoved event
                 IsDestroyed = true;
                 Scene.RemoveGameEntity(this);
 
             }
+
+        }
+
+        /// <summary>
+        /// Raises the BeforeDestroy event.
+        /// </summary>
+        protected virtual void OnBeforeDestroy() {
+
+            EventHandler beforeDestroyHandler = BeforeDestroy;
+            beforeDestroyHandler?.Invoke(this, EventArgs.Empty);
 
         }
 

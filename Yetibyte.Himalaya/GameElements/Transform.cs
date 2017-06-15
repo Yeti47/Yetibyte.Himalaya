@@ -140,10 +140,10 @@ namespace Yetibyte.Himalaya.GameElements {
         /// Raises the EntityMoved event.
         /// </summary>
         /// <param name="eventArgs">The EventArgs to send.</param>
-        public void OnRaiseEntityMoved(EntityMovedEventArgs eventArgs) {
+        protected virtual void OnRaiseEntityMoved(EntityMovedEventArgs eventArgs) {
 
-            EventHandler<EntityMovedEventArgs> eventHandler = EntityMoved;
-            eventHandler?.Invoke(this, eventArgs);
+            EventHandler<EntityMovedEventArgs> entityMovedHandler = EntityMoved;
+            entityMovedHandler?.Invoke(this, eventArgs);
 
         }
 
