@@ -23,6 +23,7 @@ namespace Yetibyte.Himalaya.Extensions {
         /// <returns>The <see cref="Vector2"/> perpendicular to this one in clockwise direction.</returns>
         public static Vector2 PerpendicularClockwise(this Vector2 v) => Vector2Helper.PerpendicularClockwise(v);
 
+
     }
 
 }

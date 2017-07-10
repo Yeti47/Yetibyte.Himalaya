@@ -101,7 +101,7 @@ namespace Yetibyte.Himalaya.Gui {
                 Vector2 normalizedAnchorCoords = GetNormalizedAnchorChoordinates();
 
                 Vector2 anchorCoords = HasParent ?
-                    (Parent.AbsolutePosition + new Vector2(normalizedAnchorCoords.X * Parent.AbsoluteSize.X, normalizedAnchorCoords.Y * Parent.AbsoluteSize.Y)) :
+                    (Parent.AbsolutePosition + Vector2Helper.Rotate(new Vector2(normalizedAnchorCoords.X * Parent.AbsoluteSize.X, normalizedAnchorCoords.Y * Parent.AbsoluteSize.Y), Rotation)) :
                     (new Vector2(normalizedAnchorCoords.X * Canvas.ScreenSize.X, normalizedAnchorCoords.Y * Canvas.ScreenSize.Y));
 
                 return anchorCoords;

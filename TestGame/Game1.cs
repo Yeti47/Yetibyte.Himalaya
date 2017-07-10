@@ -156,6 +156,13 @@ namespace TestGame {
             testGuiBox.Size = new Vector2(100, 100);
             testGuiBox.LocalRotation = MathHelper.PiOver4;
 
+            SpriteFont testFont = Content.Load<SpriteFont>("DefaultSpriteFont");
+            GuiText testGuiText = new GuiText("TestGuiText", testFont, "TEST!");
+            guiCanvas.AddGuiElement(testGuiText);
+            testGuiText.AnchorPoint = GuiAnchorPoint.Center;
+            testGuiBox.AddChild(testGuiText);
+            testGuiText.Position = new Vector2(0, 0);
+
             CurrentScene.AddGuiCanvas(guiCanvas);
 
         }
