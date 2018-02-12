@@ -467,7 +467,8 @@ namespace Yetibyte.Himalaya.GameElements {
 
         private void OnEntityMoved(object sender, EntityMovedEventArgs e) {
 
-            Scene?.Physics.ReinsertEntityCollidersIntoCollisionTree(this);
+            if(IsActive)
+                Scene?.Physics.ReinsertEntityCollidersIntoCollisionTree(this);
 
         }
 

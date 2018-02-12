@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="CollectionUtil.cs" />
     <Compile Include="Extensions\FloatExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="MathUtil.cs" />
     <Compile Include="ParentChildHierarchy.cs" />
