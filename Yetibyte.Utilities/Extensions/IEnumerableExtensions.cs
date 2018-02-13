@@ -24,6 +24,12 @@ namespace Yetibyte.Utilities.Extensions {
 
         }
 
+        /// <summary>
+        /// Finds the most frequent elements in this sequence.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
+        /// <param name="collection">The sequence to check.</param>
+        /// <returns>An enumeration of the most frequent elements in this sequence.</returns>
         public static IEnumerable<T> Modes<T>(this IEnumerable<T> collection) {
 
             if (collection.Count() <= 0)
@@ -41,6 +47,7 @@ namespace Yetibyte.Utilities.Extensions {
         /// Finds the minimum or maximum element in this sequence by comparing the objects returned by the given selector delegate.
         /// </summary>
         /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
+        /// <typeparam name="TResult">The return type of the selector function.</typeparam>
         /// <param name="source">The sequence to find the mininum or maximum element of.</param>
         /// <param name="selector">A function to extract the comparison value for each element. The objects to compare must implement the generic <see cref="IComparable{T}"/> interface.</param>
         /// <param name="doFindMax">Whether to look for the maximum or minimum value. True = maximum; false = minimum. True by default.</param>
@@ -78,12 +85,28 @@ namespace Yetibyte.Utilities.Extensions {
 
         }
 
+        /// <summary>
+        /// Finds the maximum of the elements in this sequence by comparing the objects returned by the given transform function.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
+        /// <typeparam name="TResult">The return type of the selector function.</typeparam>
+        /// <param name="source">The sequence to determine the maximum element of.</param>
+        /// <param name="selector">A function to extract the comparison value for each element. The objects to compare must implement the generic <see cref="IComparable{T}"/> interface.</param>
+        /// <returns>The maximum element in this sequence.</returns>
         public static T MaxBy<T, TResult>(this IEnumerable<T> source, Func<T, TResult> selector) where TResult : IComparable<TResult> {
 
             return ExtremumBy(source, selector, true);
 
         }
 
+        /// <summary>
+        /// Finds the minimum of the elements in this sequence by comparing the objects returned by the given transform function.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
+        /// <typeparam name="TResult">The return type of the selector function.</typeparam>
+        /// <param name="source">The sequence to determine the maximum element of.</param>
+        /// <param name="selector">A function to extract the comparison value for each element. The objects to compare must implement the generic <see cref="IComparable{T}"/> interface.</param>
+        /// <returns>The minimum element in this sequence.</returns>
         public static T MinBy<T, TResult>(this IEnumerable<T> source, Func<T, TResult> selector) where TResult : IComparable<TResult> {
 
             return ExtremumBy(source, selector, false);
