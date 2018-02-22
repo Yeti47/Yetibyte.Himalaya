@@ -44,6 +44,7 @@
     <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
+    <Compile Include="Fraction.cs" />
     <Compile Include="MathUtil.cs" />
     <Compile Include="ParentChildHierarchy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
