@@ -121,7 +121,7 @@ namespace Yetibyte.Utilities.Extensions {
         /// <param name="doIgnoreNull">Whether or not elements that are null should be ignored. If true, a collection that
         /// only contains null references is considered empty.</param>
         /// <returns>True if the collection is empty; false otherwise.</returns>
-        public static bool IsEmpty<T>(this IEnumerable<T> collection, bool doIgnoreNull = false) => collection.Any(x => x != null || !doIgnoreNull);
+        public static bool IsEmpty<T>(this IEnumerable<T> collection, bool doIgnoreNull = false) => !collection.Any(x => x != null || !doIgnoreNull);
 
         /// <summary>
         /// Creates a new sequence from the current sequence with all null references removed.
