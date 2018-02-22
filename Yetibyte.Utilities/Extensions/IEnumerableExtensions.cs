@@ -114,22 +114,12 @@ namespace Yetibyte.Utilities.Extensions {
         }
 
         /// <summary>
-        /// Checks whether this <see cref="IEnumerable{T}"/> is empty.
-        /// </summary>
-        /// <typeparam name="T">The type of the elements in this collection.</typeparam>
-        /// <param name="collection">The collection to check.</param>
-        /// <param name="doIgnoreNull">Whether or not elements that are null should be ignored. If true, a collection that
-        /// only contains null references is considered empty.</param>
-        /// <returns>True if the collection is empty; false otherwise.</returns>
-        public static bool IsEmpty<T>(this IEnumerable<T> collection, bool doIgnoreNull = false) => !collection.Any(x => x != null || !doIgnoreNull);
-
-        /// <summary>
         /// Creates a new sequence from the current sequence with all null references removed.
         /// </summary>
         /// <typeparam name="T">The type of the elements in this sequence.</typeparam>
         /// <param name="source">The sequence.</param>
         /// <returns>A new sequence of all elements that are not null.</returns>
-        public static IEnumerable<T> NotNull<T>(this IEnumerable<T> source) => source.Where(x => x != null);
+        public static IEnumerable<T> NotNull<T>(this IEnumerable<T> source) where T : class => source.Where(x => x != null);
 
     }
 
