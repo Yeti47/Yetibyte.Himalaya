@@ -101,6 +101,34 @@ namespace Yetibyte.Himalaya.Collision {
         }
 
         /// <summary>
+        /// Reinserts all active colliders attached to the given <see cref="GameEntity"/> into the collision tree if necessary. When a GameEntity moves,
+        /// its colliders may no longer be assigned to the correct node in the collision tree. This method makes sure all colliders are still
+        /// correctly represented in the quad tree data structure.
+        /// </summary>
+        public void ReinsertEntityCollidersIntoCollisionTree(GameEntity gameEntity) {
+
+            if (gameEntity == null || CollisionTree == null)
+                return;
+
+            foreach (Collider collider in gameEntity.GetActiveComponents<Collider>()) {
+
+                if (!CollisionTree.Contains(collider))
+                    continue;
+
+                // If the collider is not included in the list of objects we retrieve from the collision tree using the collider's current bounds,
+                // it apparently moved into a different node within this frame.
+                if (!CollisionTree.GetObjectsAt(collider.Bounds).Contains(collider)) {
+
+                    CollisionTree.Remove(collider);
+                    CollisionTree.Insert(collider);
+
+                }
+
+            }
+
+        }
+
+        /// <summary>
         /// Casts a ray that is defined by 'origin', 'direction' and 'length' against active <see cref="Collider"/>s in the <see cref="Scene"/>. This can be used to
         /// detect colliders that intersect with the ray's path and determine the closest intersection point. A bitmask can be used to only detect Colliders on certain layers.
         /// </summary>

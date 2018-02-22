@@ -13,8 +13,11 @@ using System.Diagnostics;
 using Yetibyte.Himalaya.Debugging;
 using Yetibyte.Utilities;
 using Yetibyte.Utilities.Extensions;
+using Yetibyte.Himalaya.Gui;
+using System;
 
 namespace TestGame {
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -24,6 +27,8 @@ namespace TestGame {
         SpriteBatch spriteBatch;
 
         KeyboardState previousKeyboardState;
+
+        private Texture2D testGuiTexture;
 
         // ----
 
@@ -48,6 +53,41 @@ namespace TestGame {
 
             
             base.Initialize();
+
+            // Test, please delete
+
+            List<Rectangle> rects = new List<Rectangle> {
+                new Rectangle(0, 0, 10, 10),
+                new Rectangle(0, 0, 20, 40),
+                new Rectangle(4, 4, 5, 30),
+                new Rectangle(10, 10, 13, 50),
+                new Rectangle(10, 10, 47, 11),
+                new Rectangle(0, 0, 36, 10),
+                new Rectangle(12, 12, 20, 40)
+            };
+
+            Rectangle maxWidthRect = rects.ExtremumBy(r => r.Width);
+
+            Debug.WriteLine("The rectangle with the max width is: " + maxWidthRect);
+
+            List<RectCollider> rectColliders = new List<RectCollider> {
+                new RectCollider() { Width = 10 },
+                new RectCollider() { Width = 89 },
+                new RectCollider() { Width = 40 },
+                new RectCollider() { Width = 12 },
+                new RectCollider() { Width = 99 },
+                new RectCollider() { Width = 12 },
+                new RectCollider() { Width = 1 }
+            };
+
+            RectCollider maxWidthCollider = rectColliders.MaxBy(c => c.Width);
+
+            Debug.WriteLine("The RectCollider with the max width is: " + maxWidthCollider.Width);
+
+            RectCollider minWidthCollider = rectColliders.MinBy(c => c.Width);
+
+            Debug.WriteLine("The RectCollider with the min width is: " + minWidthCollider.Width);
+
         }
 
         /// <summary>
@@ -97,6 +137,7 @@ namespace TestGame {
 
             player.AddComponent(new RectCollider() { Width = 16, Height = 16 });
             player.AddComponent(new CollisionController());
+            player.GetComponent<CollisionController>().CollisionDetectionMethod = CollisionDetectionMethods.Lazy;
 
             EmptyTestEntity testEntity = new EmptyTestEntity("testEntity", new Vector2(-80, 0));
             CurrentScene.AddGameEntity(testEntity);
@@ -117,8 +158,11 @@ namespace TestGame {
             Debug.WriteLine("The line segment's slope is: " + lineSeg.Slope);
             Debug.WriteLine("The point is on the line segment: " + LineSegment.IsPointOnLineSegment(point, lineSeg));
 
+            /* 
+             * Random numbers and shuffle test
+             * 
             int[] randomNumbers = CollectionUtil.GenerateUniqueIntegers(6, 1, 49, true);
-
+            
             Debug.WriteLine("The random numbers are: ");
 
             for (int i = 0; i < randomNumbers.Length; i++) {
@@ -138,6 +182,29 @@ namespace TestGame {
             }
 
             Debug.WriteLine("");
+            */
+            // vvvvv GUI Test vvvvvvvv
+
+            testGuiTexture = Content.Load<Texture2D>("GuiTestTexture1");
+
+            GuiCanvas guiCanvas = new GuiCanvas(GraphicsDevice, "TestGui");
+
+            GuiBox testGuiBox = new GuiBox("TestGuiBox", testGuiTexture);
+            guiCanvas.AddGuiElement(testGuiBox);
+            testGuiBox.AnchorPoint = GuiAnchorPoint.TopLeft;
+            testGuiBox.ScalingUnit = GuiScalingUnit.Pixels;
+            testGuiBox.Position = new Vector2(80, 8);
+            testGuiBox.Size = new Vector2(100, 100);
+            testGuiBox.LocalRotation = MathHelper.PiOver4;
+
+            SpriteFont testFont = Content.Load<SpriteFont>("DefaultSpriteFont");
+            GuiText testGuiText = new GuiText("TestGuiText", testFont, "TEST!");
+            guiCanvas.AddGuiElement(testGuiText);
+            testGuiText.AnchorPoint = GuiAnchorPoint.Center;
+            testGuiBox.AddChild(testGuiText);
+            testGuiText.Position = new Vector2(0, 0);
+
+            CurrentScene.AddGuiCanvas(guiCanvas);
 
         }
 

@@ -21,8 +21,20 @@ namespace Yetibyte.Himalaya.GameElements {
 
         #region Events
 
+        /// <summary>
+        /// Raised when a component was added to this entity.
+        /// </summary>
         public event EventHandler<ComponentEventArgs> ComponentAdded;
+
+        /// <summary>
+        /// Raised when a component was removed from this entity.
+        /// </summary>
         public event EventHandler<ComponentEventArgs> ComponentRemoved;
+
+        /// <summary>
+        /// Raised during <see cref="DestroyEntity"/> just before the entity is actually destroyed.
+        /// </summary>
+        public event EventHandler BeforeDestroy;
 
         #endregion
 
@@ -53,7 +65,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         }
 
-        public String Name { get; protected set; } = "unnamed";
+        public string Name { get; protected set; } = "unnamed";
+
+        public string HierarchyPath => HasParent ? ParentEntity.HierarchyPath + "/" + Name : Name;
+
+        public List<string> Tags { get; } = new List<string>();
 
         /// <summary>
         /// The <see cref="Yetibyte.Himalaya.GameElements.Scene"/> this GameEntity lives in.
@@ -118,6 +134,11 @@ namespace Yetibyte.Himalaya.GameElements {
 
         public bool HasParent => _parentEntity != null;
 
+        /// <summary>
+        /// Whether or nor this GameEntity has been assigned to a <see cref="GameElements.Scene"/>.
+        /// </summary>
+        public bool IsInScene => Scene != null;
+
         public int DrawOrder { get; set; }
 
         internal bool IsAwake => _isAwake;
@@ -133,6 +154,8 @@ namespace Yetibyte.Himalaya.GameElements {
             this.Transform = new Transform();
             this.AddComponent(Transform);
             this.Transform.Position = position;
+
+            this.Transform.EntityMoved += OnEntityMoved;
 
         }
 
@@ -193,15 +216,27 @@ namespace Yetibyte.Himalaya.GameElements {
         /// </summary>
         public void DestroyEntity() {
 
-            foreach (GameEntity childEntity in ChildEntities)
+            foreach (GameEntity childEntity in ChildEntities) 
                 childEntity.DestroyEntity();
 
             if (!IsDestroyed) {
 
+                OnBeforeDestroy(); // Raise OnBeforeDestroy event
+                Transform.EntityMoved -= OnEntityMoved; // Unsubscribe from EntityMoved event
                 IsDestroyed = true;
                 Scene.RemoveGameEntity(this);
 
             }
+
+        }
+
+        /// <summary>
+        /// Raises the BeforeDestroy event.
+        /// </summary>
+        protected virtual void OnBeforeDestroy() {
+
+            EventHandler beforeDestroyHandler = BeforeDestroy;
+            beforeDestroyHandler?.Invoke(this, EventArgs.Empty);
 
         }
 
@@ -389,7 +424,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// Gets the <see cref="GameEntity"/> that is on top of the entity hierarchy.
         /// </summary>
         /// <returns>The GameEntity that is on top of the entity hierarchy.</returns>
-        public GameEntity GetAncestor() => !HasParent ? this : GetAncestor();
+        public GameEntity GetAncestor() => !HasParent ? this : ParentEntity.GetAncestor();
 
         internal void OnTrigger(Collider ownCollider, Collider otherCollider) {
 
@@ -427,6 +462,13 @@ namespace Yetibyte.Himalaya.GameElements {
                 collisionResponsiveComponent.OnTriggerLeave(ownCollider, otherCollider);
 
             }
+
+        }
+
+        private void OnEntityMoved(object sender, EntityMovedEventArgs e) {
+
+            if(IsActive)
+                Scene?.Physics.ReinsertEntityCollidersIntoCollisionTree(this);
 
         }
 

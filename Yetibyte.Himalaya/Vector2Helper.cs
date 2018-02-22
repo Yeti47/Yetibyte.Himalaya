@@ -43,6 +43,21 @@ namespace Yetibyte.Himalaya {
         /// <returns>The <see cref="Vector2"/> perpendicular to this one in clockwise direction.</returns>
         public static Vector2 PerpendicularClockwise(Vector2 v) => new Vector2(v.Y, -v.X);
 
+        /// <summary>
+        /// Applies the given rotation in radians to the given <see cref="Vector2"/>.
+        /// </summary>
+        /// <param name="vector">The vector to rotate.</param>
+        /// <param name="radians">The rotation in radians.</param>
+        /// <returns>The given Vector2 rotated by the given amount.</returns>
+        public static Vector2 Rotate(this Vector2 vector, float radians) {
+
+            float cos = (float)Math.Cos(radians);
+            float sin = (float)Math.Sin(radians);
+
+            return new Vector2(vector.X * cos - vector.Y * sin, vector.X * sin + vector.Y * cos);
+
+        }
+
     }
 
 }

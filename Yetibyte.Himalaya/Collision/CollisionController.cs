@@ -23,7 +23,7 @@ namespace Yetibyte.Himalaya.Collision {
         #region Fields
 
         private Physics _physics;
-        private IEnumerable<Collider> myActiveNonTriggerColliders;
+        private IEnumerable<Collider> _myActiveNonTriggerColliders;
 
         #endregion
 
@@ -102,12 +102,13 @@ namespace Yetibyte.Himalaya.Collision {
                 return;
 
             _physics = GetPhysics();
-            myActiveNonTriggerColliders = GetAttachedColliders().Where(c => c.IsActive && !c.IsTrigger);
+            _myActiveNonTriggerColliders = GetAttachedColliders().Where(c => c.IsActive && !c.IsTrigger);
 
             if (CollisionDetectionMethod == CollisionDetectionMethods.Lazy) {
 
                 DetectCollisions(ref offset);
                 GameEntity.Transform.Position += offset;
+                
             }
             else {
 
@@ -134,7 +135,7 @@ namespace Yetibyte.Himalaya.Collision {
             bool hasCollided = false;
 
             // Check collision for all colliders attached to this Collision Controller
-            foreach (Collider myCollider in myActiveNonTriggerColliders) {
+            foreach (Collider myCollider in _myActiveNonTriggerColliders) {
 
                 RectangleF futureBounds = new RectangleF(myCollider.Bounds.Location + offset, myCollider.Bounds.Size);
                 RectangleF velocityBounds = RectangleF.Union(myCollider.Bounds, futureBounds);
@@ -145,7 +146,7 @@ namespace Yetibyte.Himalaya.Collision {
                     Collider potentialTargetCollider = potentialTarget as Collider;
 
                     // skip detection for triggers and colliders that belong to this controller
-                    if (potentialTargetCollider == null || potentialTargetCollider.IsTrigger || myActiveNonTriggerColliders.Contains(potentialTargetCollider)) 
+                    if (potentialTargetCollider == null || potentialTargetCollider.IsTrigger || _myActiveNonTriggerColliders.Contains(potentialTargetCollider)) 
                         continue;
 
                     CollisionInfo collisionInfo = CollisionInfo.Default;

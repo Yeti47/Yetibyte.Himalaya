@@ -22,6 +22,7 @@ namespace Yetibyte.Himalaya.DataStructures {
         #region Fields 
 
         private QuadTreeNodeRectF _rootNode;
+        private Dictionary<IBounds, QuadTreeNodeRectF> _objectNodeMap = new Dictionary<IBounds, QuadTreeNodeRectF>();
 
         #endregion 
 
@@ -31,6 +32,16 @@ namespace Yetibyte.Himalaya.DataStructures {
         public float MinNodeSize { get; }
         public QuadTreeNodeRectF RootNode => _rootNode;
         public Vector2 Position { get; private set; }
+
+        /// <summary>
+        /// An enumeration of all nodes in this <see cref="QuadTreeRectF"/>.
+        /// </summary>
+        public IEnumerable<QuadTreeNodeRectF> Nodes => _rootNode.DeepSubnodes.Concat(new[] { _rootNode });
+
+        /// <summary>
+        /// An enumeration of all objects included in this <see cref="QuadTreeRectF"/>.
+        /// </summary>
+        public IEnumerable<IBounds> AllObjects => _objectNodeMap.Keys;
 
         #endregion
 
@@ -55,7 +66,7 @@ namespace Yetibyte.Himalaya.DataStructures {
             if (rootNodeSize < minNodeSize)
                 rootNodeSize = minNodeSize;
 
-            _rootNode = new QuadTreeNodeRectF(this, new RectangleF(position, new Vector2(rootNodeSize, rootNodeSize)));
+            _rootNode = new QuadTreeNodeRectF(this, _objectNodeMap, new RectangleF(position, new Vector2(rootNodeSize, rootNodeSize)));
 
         }
 
@@ -68,6 +79,9 @@ namespace Yetibyte.Himalaya.DataStructures {
         /// </summary>
         /// <param name="boundingBoxObject">The object to insert.</param>
         public void Insert(IBounds boundingBoxObject) {
+
+            if (!_objectNodeMap.ContainsKey(boundingBoxObject))
+                _objectNodeMap.Add(boundingBoxObject, null);
 
             _rootNode.Insert(boundingBoxObject);
 
@@ -98,9 +112,31 @@ namespace Yetibyte.Himalaya.DataStructures {
             if (rootNodeSize < MinNodeSize)
                 rootNodeSize = MinNodeSize;
 
-            _rootNode = new QuadTreeNodeRectF(this, new RectangleF(position, new Vector2(rootNodeSize, rootNodeSize)));
+            _rootNode = new QuadTreeNodeRectF(this, _objectNodeMap, new RectangleF(position, new Vector2(rootNodeSize, rootNodeSize)));
 
         }
+
+        /// <summary>
+        /// Removes the given <see cref="IBounds"/> object from this <see cref="QuadTreeRectF"/>.
+        /// </summary>
+        /// <param name="boundingBoxObject">The <see cref="IBounds"/> object to remove.</param>
+        public void Remove(IBounds boundingBoxObject) {
+
+            if (!_objectNodeMap.ContainsKey(boundingBoxObject))
+                return;
+
+            QuadTreeNodeRectF node = _objectNodeMap[boundingBoxObject];
+            node.BoundingBoxObjects.Remove(boundingBoxObject);
+            _objectNodeMap.Remove(boundingBoxObject);
+
+        }
+
+        /// <summary>
+        /// Checks whether this <see cref="QuadTreeRectF"/> contains the given object.
+        /// </summary>
+        /// <param name="boundingBoxObject">The object to locate in the tree.</param>
+        /// <returns>True if the object was found in the tree, false otherwise.</returns>
+        public bool Contains(IBounds boundingBoxObject) => _objectNodeMap.ContainsKey(boundingBoxObject);
 
         #endregion
 

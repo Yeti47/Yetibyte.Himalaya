@@ -21,6 +21,9 @@ namespace Yetibyte.Himalaya.GameElements {
         public virtual bool AllowMultiple => false;
         public virtual bool IsRemovable => true;
 
+        /// <summary>
+        /// The <see cref="GameElements.GameEntity"/> this component is attached to.
+        /// </summary>
         public GameEntity GameEntity {
 
             get => _gameEntity;

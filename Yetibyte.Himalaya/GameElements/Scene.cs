@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Yetibyte.Himalaya.Collision;
 using Yetibyte.Himalaya.Graphics;
+using Yetibyte.Himalaya.Gui;
 
 namespace Yetibyte.Himalaya.GameElements {
 	
@@ -58,8 +59,7 @@ namespace Yetibyte.Himalaya.GameElements {
             this.GameEntitiesToAdd = new Queue<GameEntity>();
             this.GameEntitiesToRemove = new Queue<GameEntity>();
             this.Physics = new Physics(this);
-            this.Camera = new Camera(new Vector2(game.GraphicsDevice.Viewport.Width/2, game.GraphicsDevice.Viewport.Height/2));
-            this.Camera.Scene = this;
+            this.Camera = new Camera(this, game.GraphicsDevice.Viewport);
 
         }
 
@@ -121,6 +121,14 @@ namespace Yetibyte.Himalaya.GameElements {
 
             }
 
+            foreach (GuiCanvas guiCanvas in _guiCanvases.Where(c => c.IsActive).OrderBy(c => c.Order)) {
+
+                guiCanvas.Update(gameTime, TimeScale);
+
+            }
+
+            Camera.Update(gameTime, TimeScale);
+
         }
 
         /// <summary>
@@ -129,13 +137,7 @@ namespace Yetibyte.Himalaya.GameElements {
         /// <param name="gameTime">Provides snapshot of current timing values.</param>
         public virtual void Draw(GameTime gameTime) {
 
-            foreach (GuiCanvas guiCanvas in _guiCanvases.Where(c => c.IsVisible).OrderBy(c => c.DrawOrder)) {
-
-                guiCanvas.Draw(gameTime);
-
-            }
-
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.GetViewMatrix());
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Camera.ViewMatrix);
 
             foreach (GameEntity gameEntity in GameEntities.OrderBy(e => e.DrawOrder)) {
 
@@ -145,6 +147,12 @@ namespace Yetibyte.Himalaya.GameElements {
             }
 
             _spriteBatch.End();
+
+            foreach (GuiCanvas guiCanvas in _guiCanvases.Where(c => c.IsActive && c.IsVisible).OrderBy(c => c.DrawOrder)) {
+
+                guiCanvas.Draw(gameTime);
+
+            }
 
         }
         /// <summary>
@@ -236,6 +244,72 @@ namespace Yetibyte.Himalaya.GameElements {
                 return;
 
             _guiCanvases.Remove(guiCanvas);
+
+        }
+
+        /// <summary>
+        /// Returns an array of all GameEntities with the given tag. 
+        /// </summary>
+        /// <param name="tag">The tag to search for.</param>
+        /// <returns>An array of all GameEntities with the given tag or an empty array if not entities could be found. </returns>
+        public GameEntity[] FindEntitiesByTag(string tag) {
+
+            return GameEntities.Where(e => e.Tags.Contains(tag)).ToArray();
+
+        }
+
+        /// <summary>
+        /// Returns the first GameEntity with the given tag.
+        /// </summary>
+        /// <param name="tag">The tag to search for.</param>
+        /// <returns>The first GameEntity with the given tag or null if not entity could be found.</returns>
+        public GameEntity FindEntityByTag(string tag) {
+
+            return GameEntities.Where(e => e.Tags.Contains(tag)).FirstOrDefault();
+
+        }
+
+        /// <summary>
+        /// Returns an array of every <see cref="GameEntity"/> that matches ALL of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>An array of every GameEntity that matches all of the given tags or an empty array if there were no matches.</returns>
+        public GameEntity[] FindEntitiesWithTags(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => !tags.Except(e.Tags).Any()).ToArray();
+
+        }
+
+        /// <summary>
+        /// Returns the first <see cref="GameEntity"/> that matches ALL of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>The first <see cref="GameEntity"/> that matches ALL of the given tags or null if no entity was found.</returns>
+        public GameEntity FindEntityWithTags(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => !tags.Except(e.Tags).Any()).FirstOrDefault();
+
+        }
+
+        /// <summary>
+        /// Returns an array of every <see cref="GameEntity"/> that matches EITHER of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>An array of every GameEntity that matches EITHER of the given tags or an empty array if there were no matches.</returns>
+        public GameEntity[] FindEntitiesWithEitherTag(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => e.Tags.Intersect(tags).Any()).ToArray();
+
+        }
+
+        /// <summary>
+        /// Returns the first <see cref="GameEntity"/> that matches EITHER of the given tags.
+        /// </summary>
+        /// <param name="tags">The list of tags to search for.</param>
+        /// <returns>The first <see cref="GameEntity"/> that matches EITHER of the given tags or null if no entity was found.</returns>
+        public GameEntity FindEntityWithEitherTag(IEnumerable<string> tags) {
+
+            return GameEntities.Where(e => e.Tags.Intersect(tags).Any()).FirstOrDefault();
 
         }
 
