@@ -72,6 +72,47 @@ namespace Yetibyte.Himalaya.Graphics {
 
         }
 
+        /// <summary>
+        /// Creates a new <see cref="GuiWindow"/> and adds it to this <see cref="GuiCanvas"/>.
+        /// </summary>
+        /// <param name="name">The name of the new GuiWindow.</param>
+        /// <param name="texture">The texture to use for the new GuiWindow.</param>
+        /// <returns>The newly created GuiWindow.</returns>
+        public GuiWindow CreateWindow(string name, Texture2D texture) {
+
+            GuiWindow window = new GuiWindow(this, texture, name);
+            _windows.Add(window);
+            return window;
+
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="GuiWindow"/> and adds it to this <see cref="GuiCanvas"/>.
+        /// </summary>
+        /// <param name="name">The name of the new GuiWindow.</param>
+        /// <param name="color">The color of the new GuiWindow.</param>
+        /// <returns>The newly created GuiWindow.</returns>
+        public GuiWindow CreateWindow(string name, Color color) {
+
+            GuiWindow window = new GuiWindow(this, color, name);
+            _windows.Add(window);
+            return window;
+
+        }
+
+        /// <summary>
+        /// Removes the given <see cref="GuiWindow"/> from this <see cref="GuiCanvas"/>.
+        /// </summary>
+        /// <param name="guiWindow">The GuiWindow to remove.</param>
+        public void RemoveWindow(GuiWindow guiWindow) {
+
+            if (!_windows.Contains(guiWindow))
+                return;
+
+            _windows.Remove(guiWindow);
+
+        }
+
         #endregion
 
     }
