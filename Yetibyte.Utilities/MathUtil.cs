@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Yetibyte.Utilities {
 	
@@ -29,7 +31,7 @@ namespace Yetibyte.Utilities {
         /// <summary>
         /// Provides a static collection of prime numbers.
         /// </summary>
-        public static readonly int[] PRIMES = {
+        private static readonly List<int> _primes = new List<int> {
 
             3, 7, 11, 17, 23, 29, 37,
             47, 59, 71, 89, 107, 131,
@@ -55,6 +57,8 @@ namespace Yetibyte.Utilities {
 
         // Properties
 
+        public static IReadOnlyList<int> Primes => _primes.AsReadOnly();
+
         /// <summary>
         /// Provides a static instance of the Random class for quick access to random number generation. The seed for this Random
         /// instance never changes.
@@ -75,7 +79,7 @@ namespace Yetibyte.Utilities {
         /// The maximum value if the value is greater than max.
         /// Otherwise the value will be returned as is.</returns>
         public static T Clamp<T> (T min, T max, T value) where T : IComparable {
-			
+            
 			if(value.CompareTo(min) < 0)
 				return min;
 			
