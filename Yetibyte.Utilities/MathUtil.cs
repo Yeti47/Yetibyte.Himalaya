@@ -282,6 +282,26 @@ namespace Yetibyte.Utilities {
 
         public static uint GaussianSum(uint n) => (n * (n + 1)) / 2;
 
+        /// <summary>
+        /// Finds the greatest common divisor of the two given numbers.
+        /// </summary>
+        /// <param name="x">The first number.</param>
+        /// <param name="y">The second number.</param>
+        /// <returns>The greatest common divisor of the two numbers.</returns>
+        public static int Gcd(int x, int y) {
+
+            while(y != 0) {
+
+                int remainder = x % y;
+                x = y;
+                y = remainder;
+
+            }
+
+            return x;
+
+        }
+
     }
 		
 }
