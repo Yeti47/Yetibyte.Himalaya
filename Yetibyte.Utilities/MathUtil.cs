@@ -302,6 +302,14 @@ namespace Yetibyte.Utilities {
 
         }
 
+        /// <summary>
+        /// Finds the lowest common multiple of the two given numbers.
+        /// </summary>
+        /// <param name="x">The first number.</param>
+        /// <param name="y">The second number.</param>
+        /// <returns>The lowest common multiple of the two numbers.</returns>
+        public static int Lcm(int x, int y) => (x * y) / Gcd(x, y);
+
     }
 		
 }
