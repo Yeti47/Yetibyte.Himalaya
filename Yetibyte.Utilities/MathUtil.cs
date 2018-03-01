@@ -267,6 +267,20 @@ namespace Yetibyte.Utilities {
         }
 
         /// <summary>
+        /// Swaps the given objects.
+        /// </summary>
+        /// <typeparam name="T">The type of the objects to swap.</typeparam>
+        /// <param name="objA">The first object.</param>
+        /// <param name="objB">The second object.</param>
+        public static void Swap<T>(ref T objA, ref T objB) {
+
+            T temp = objA;
+            objA = objB;
+            objB = temp;
+
+        }
+
+        /// <summary>
         /// Converts meters to feet.
         /// </summary>
         /// <param name="meters">The distance in meters to convert.</param>

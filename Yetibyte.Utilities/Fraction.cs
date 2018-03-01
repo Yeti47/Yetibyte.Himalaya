@@ -8,6 +8,12 @@ namespace Yetibyte.Utilities {
 
     public struct Fraction : IEquatable<Fraction>, IComparable<Fraction>, IComparable {
 
+        #region Constants
+
+        public const double DOUBLE_CONVERSION_PRECISION = 0.000001;
+
+        #endregion
+
         #region Properties
 
         public int Numerator { get; }
@@ -21,8 +27,9 @@ namespace Yetibyte.Utilities {
             get {
 
                 int gcd = MathUtil.Gcd(Numerator, Denominator);
+                int gcdSign = Math.Sign(gcd);
                 
-                return new Fraction(Numerator / gcd, Denominator / gcd);
+                return new Fraction(Numerator * gcdSign / gcd, Denominator * gcdSign / gcd);
 
             }
 
@@ -37,6 +44,8 @@ namespace Yetibyte.Utilities {
         public static Fraction Third => new Fraction(1, 3);
 
         public static Fraction Quarter => new Fraction(1, 4);
+
+        public static Fraction Zero => new Fraction(0);
 
         #endregion
 
@@ -53,6 +62,8 @@ namespace Yetibyte.Utilities {
         }
 
         public Fraction(int number) : this(number, 1) { }
+
+        public Fraction(double d) => this = ConvertDouble(d);
 
         #endregion
 
@@ -93,6 +104,8 @@ namespace Yetibyte.Utilities {
         public static bool operator <(Fraction fraction, double d) => fraction.Value < d;
 
         public static Fraction operator ~(Fraction fraction) => fraction.Inverse;
+
+        public static explicit operator Fraction(double d) => ConvertDouble(d);
 
         #endregion
 
@@ -136,7 +149,7 @@ namespace Yetibyte.Utilities {
 
             }
 
-            if(maxDenomFraction.Denominator % minDenomFraction.Denominator == 0) {
+            if(maxDenomFraction.Denominator % minDenomFraction.Denominator == 0 && minDenomFraction.Denominator > 1) {
 
                 if(maxDenomFraction.Numerator % minDenomFraction.Denominator == 0) {
 
@@ -185,7 +198,69 @@ namespace Yetibyte.Utilities {
 
         }
 
+        /// <summary>
+        /// Converts the given double value to a <see cref="Fraction"/>. 
+        /// </summary>
+        /// <param name="d">The double value to convert.</param>
+        /// <param name="repetendThreshold">The number of identical consecutive digits the double needs
+        /// to be considered a repetend. Note that only repetends where all decimal places are identical can be detected.
+        /// Pass 0 or a negative number if you do not wish to detect repetends but get a precise result instead.
+        /// Example: Calling Fraction.ConvertDouble(0.333, 3) will return {1/3}, while Fraction.ConvertDouble(0.33, 3) 
+        /// will return {33/100}.</param>
+        /// <returns></returns>
+        public static Fraction ConvertDouble(double d, int repetendThreshold = 0) {
 
+            checked {
+
+                try {
+
+                    int preDecimal = (int)d;
+                    double decimalPlaces = Math.Abs(d - preDecimal);
+
+                    double remainingDecimals = decimalPlaces;
+                    double shifted = decimalPlaces;
+
+                    int factor = 1;
+
+                    bool isRepetend = false;
+
+                    int previousPredecimal = 0;
+
+                    int numberDecimalPlaces = 0;
+
+                    while (remainingDecimals > DOUBLE_CONVERSION_PRECISION) {
+
+                        factor *= 10;
+                        shifted = decimalPlaces * factor;
+
+                        int currentPredecimal = (int)shifted;
+
+                        isRepetend = currentPredecimal != previousPredecimal && previousPredecimal != 0;
+
+                        remainingDecimals = (shifted - currentPredecimal) / factor;
+
+                        previousPredecimal = currentPredecimal;
+
+                        numberDecimalPlaces++;
+
+                    }
+
+                    isRepetend = isRepetend && repetendThreshold > 0 && numberDecimalPlaces >= repetendThreshold;
+
+                    Fraction fraction = new Fraction((int)shifted * Math.Sign(d), factor - (isRepetend ? 1 : 0)).Reduced;
+
+                    return fraction + new Fraction(preDecimal);
+
+                }
+                catch(OverflowException oe) { 
+
+                    throw new OverflowException("An overflow occurred while converting the double value to a Fraction. The number may be too large.", oe);
+
+                }
+
+            }
+            
+        }
 
         #endregion
 
