@@ -201,31 +201,29 @@ namespace Yetibyte.Utilities {
         /// <summary>
         /// Converts the given double value to a <see cref="Fraction"/>. 
         /// </summary>
-        /// <param name="d">The double value to convert.</param>
-        /// <param name="repetendThreshold">The number of identical consecutive digits the double needs
+        /// <param name="value">The double value to convert.</param>
+        /// <param name="repetendThreshold">The number of identical consecutive decimal digits the double needs
         /// to be considered a repetend. Note that only repetends where all decimal places are identical can be detected.
         /// Pass 0 or a negative number if you do not wish to detect repetends but get a precise result instead.
         /// Example: Calling Fraction.ConvertDouble(0.333, 3) will return {1/3}, while Fraction.ConvertDouble(0.33, 3) 
         /// will return {33/100}.</param>
-        /// <returns></returns>
-        public static Fraction ConvertDouble(double d, int repetendThreshold = 0) {
+        /// <returns>The given double converted to a <see cref="Fraction"/>.</returns>
+        public static Fraction ConvertDouble(double value, int repetendThreshold = 0) {
 
             checked {
 
                 try {
 
-                    int preDecimal = (int)d;
-                    double decimalPlaces = Math.Abs(d - preDecimal);
+                    int preDecimal = (int)value;
+                    double decimalPlaces = Math.Abs(value - preDecimal);
 
                     double remainingDecimals = decimalPlaces;
                     double shifted = decimalPlaces;
 
-                    int factor = 1;
-
                     bool isRepetend = false;
-
+                    
+                    int factor = 1;
                     int previousPredecimal = 0;
-
                     int numberDecimalPlaces = 0;
 
                     while (remainingDecimals > DOUBLE_CONVERSION_PRECISION) {
@@ -247,7 +245,7 @@ namespace Yetibyte.Utilities {
 
                     isRepetend = isRepetend && repetendThreshold > 0 && numberDecimalPlaces >= repetendThreshold;
 
-                    Fraction fraction = new Fraction((int)shifted * Math.Sign(d), factor - (isRepetend ? 1 : 0)).Reduced;
+                    Fraction fraction = new Fraction((int)shifted * Math.Sign(value), factor - (isRepetend ? 1 : 0)).Reduced;
 
                     return fraction + new Fraction(preDecimal);
 
@@ -263,9 +261,6 @@ namespace Yetibyte.Utilities {
         }
 
         #endregion
-
-
-
 
     }
 

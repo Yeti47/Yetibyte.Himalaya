@@ -89,10 +89,15 @@ namespace TestGame {
 
             Debug.WriteLine("The RectCollider with the min width is: " + minWidthCollider.Width);
 
-            double testDouble = 0.33;
+            double testDouble = 5;
             Fraction frac = Fraction.ConvertDouble(testDouble, 3);
 
+            Fraction fracInt = (Fraction)7;
+
+            Console.WriteLine($"fracInt: {fracInt}");
+
             Console.WriteLine($"Double value {testDouble} converted to Fraction: {frac}");
+            Console.WriteLine($"Double value {testDouble} converted to Fraction via explicit cast: {(Fraction)testDouble}");
 
             Fraction fracA = new Fraction(2, 3);
             Fraction fracB = new Fraction(7, 1);
