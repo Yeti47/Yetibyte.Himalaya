@@ -95,7 +95,7 @@ namespace TestGame {
             Fraction fracInt = (Fraction)7;
 
             Console.WriteLine($"fracInt: {fracInt}");
-
+            
             Console.WriteLine($"Double value {testDouble} converted to Fraction: {frac}");
             Console.WriteLine($"Double value {testDouble} converted to Fraction via explicit cast: {(Fraction)testDouble}");
 

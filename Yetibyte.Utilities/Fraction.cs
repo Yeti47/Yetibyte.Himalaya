@@ -10,18 +10,35 @@ namespace Yetibyte.Utilities {
 
         #region Constants
 
+        /// <summary>
+        /// The precision limit for converting a double into a <see cref="Fraction"/>. Decimal places
+        /// lower than this number will be lost.
+        /// </summary>
         public const double DOUBLE_CONVERSION_PRECISION = 0.000001;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// The numerator (top number) of this <see cref="Fraction"/>.
+        /// </summary>
         public int Numerator { get; }
 
+        /// <summary>
+        /// The denominator (bottom number) of this <see cref="Fraction"/>.
+        /// </summary>
         public int Denominator { get; }
 
+        /// <summary>
+        /// The actual numeric value (read-only).
+        /// </summary>
         public double Value => Numerator / (double)Denominator;
 
+        /// <summary>
+        /// Returns a new <see cref="Fraction"/> that has the same value as this Fraction, but is reduced
+        /// to the lowest terms.
+        /// </summary>
         public Fraction Reduced {
 
             get {
@@ -34,23 +51,53 @@ namespace Yetibyte.Utilities {
             }
 
         }
-
+        
+        /// <summary>
+        /// The reciprocal of this <see cref="Fraction"/>.
+        /// </summary>
         public Fraction Inverse => new Fraction(Denominator, Numerator);
-
+        
+        /// <summary>
+        /// Returns the fraction 1/1.
+        /// </summary>
         public static Fraction Whole => new Fraction(1);
 
+        /// <summary>
+        /// Returns the fraction 1/2.
+        /// </summary>
         public static Fraction Half => new Fraction(1, 2);
 
+        /// <summary>
+        /// Returns the fraction 1/3.
+        /// </summary>
         public static Fraction Third => new Fraction(1, 3);
 
+        /// <summary>
+        /// Returns the fraction 1/4.
+        /// </summary>
         public static Fraction Quarter => new Fraction(1, 4);
 
+        /// <summary>
+        /// Returns the fraction 1/5.
+        /// </summary>
+        public static Fraction Fifth => new Fraction(1, 5);
+
+        /// <summary>
+        /// Returns the fraction 0/1.
+        /// </summary>
         public static Fraction Zero => new Fraction(0);
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a new <see cref="Fraction"/> with the numerator and the denominator set to the
+        /// given values respectively.
+        /// </summary>
+        /// <param name="numerator">The value of the fraction's numerator.</param>
+        /// <param name="denominator">The value of the fraction's denominator; must not be 0 (zero), otherwise
+        /// an exception is thrown.</param>
         public Fraction(int numerator, int denominator) {
 
             if (denominator == 0)
@@ -61,8 +108,16 @@ namespace Yetibyte.Utilities {
 
         }
 
+        /// <summary>
+        /// Constructs a new <see cref="Fraction"/> with the numerator set to the given number and a denominator of 1.
+        /// </summary>
+        /// <param name="number">The numerator of the fraction.</param>
         public Fraction(int number) : this(number, 1) { }
 
+        /// <summary>
+        /// Creates a new <see cref="Fraction"/> by converting the given double.
+        /// </summary>
+        /// <param name="d">The double precision value to convert into a Fraction.</param>
         public Fraction(double d) => this = ConvertDouble(d);
 
         #endregion
@@ -103,6 +158,11 @@ namespace Yetibyte.Utilities {
 
         public static bool operator <(Fraction fraction, double d) => fraction.Value < d;
 
+        /// <summary>
+        /// Returns the reciprocal of this <see cref="Fraction"/>.
+        /// </summary>
+        /// <param name="fraction">The fraction to invert.</param>
+        /// <returns>The reciprocal (inverse value) of this Fraction.</returns>
         public static Fraction operator ~(Fraction fraction) => fraction.Inverse;
 
         public static explicit operator Fraction(double d) => ConvertDouble(d);
@@ -130,8 +190,18 @@ namespace Yetibyte.Utilities {
 
         public override bool Equals(object obj) => obj is Fraction && this.Equals((Fraction)obj);
 
+        /// <summary>
+        /// Returns a <see cref="string"/> representation of this Fraction in the format {Numerator}/{Denominator}.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString() => $"{Numerator}/{Denominator}";
 
+        /// <summary>
+        /// Finds the common denominator of the two given <see cref="Fraction"/>s and adjusts their numerator and
+        /// denominator accordingly.
+        /// </summary>
+        /// <param name="left">The first Fraction.</param>
+        /// <param name="right">The second Fraction.</param>
         public static void CommonDenominator(ref Fraction left, ref Fraction right) {
 
             if (left.Denominator == right.Denominator)
@@ -226,7 +296,7 @@ namespace Yetibyte.Utilities {
                     int previousPredecimal = 0;
                     int numberDecimalPlaces = 0;
 
-                    while (remainingDecimals > DOUBLE_CONVERSION_PRECISION) {
+                    while (remainingDecimals >= DOUBLE_CONVERSION_PRECISION) {
 
                         factor *= 10;
                         shifted = decimalPlaces * factor;
