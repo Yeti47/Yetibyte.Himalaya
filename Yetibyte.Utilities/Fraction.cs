@@ -179,6 +179,10 @@ namespace Yetibyte.Utilities {
 
         public static explicit operator Fraction(double d) => ConvertDouble(d);
 
+        public static explicit operator Fraction(decimal d) => ConvertDouble((double)d);
+
+        public static implicit operator Fraction(int i) => new Fraction(i);
+
         #endregion
 
         #region Methods
