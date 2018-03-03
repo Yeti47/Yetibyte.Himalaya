@@ -17,7 +17,7 @@ namespace Yetibyte.Utilities.Extensions {
         /// <returns>The most frequent element in this collection.</returns>
         public static T Mode<T>(this IEnumerable<T> collection) {
 
-            if (collection.Count() <= 0)
+            if (!collection.Any())
                 throw new InvalidOperationException("Cannot determine the mode of an empty collection.");
 
             return collection.GroupBy(x => x).OrderByDescending(g => g.Count()).First().Key;
@@ -32,7 +32,7 @@ namespace Yetibyte.Utilities.Extensions {
         /// <returns>An enumeration of the most frequent elements in this sequence.</returns>
         public static IEnumerable<T> Modes<T>(this IEnumerable<T> collection) {
 
-            if (collection.Count() <= 0)
+            if (!collection.Any())
                 throw new InvalidOperationException("Cannot determine the modes of an empty collection.");
 
             IEnumerable<IGrouping<T, T>> modeMap = collection.GroupBy(x => x);

@@ -118,7 +118,11 @@ namespace Yetibyte.Utilities {
         /// Creates a new <see cref="Fraction"/> by converting the given double.
         /// </summary>
         /// <param name="d">The double precision value to convert into a Fraction.</param>
-        public Fraction(double d) => this = ConvertDouble(d);
+        public Fraction(double d) {
+
+            this = ConvertDouble(d);
+
+        }
 
         #endregion
 
@@ -137,12 +141,20 @@ namespace Yetibyte.Utilities {
         public static Fraction operator /(Fraction fraction, int divisor) => new Fraction(fraction.Numerator, fraction.Denominator * divisor);
 
         public static Fraction operator +(Fraction fractionA, Fraction fractionB) {
-
+            
             CommonDenominator(ref fractionA, ref fractionB);
 
             return new Fraction(fractionA.Numerator + fractionB.Numerator, fractionA.Denominator);
 
         }
+
+        public static double operator +(Fraction left, double right) => left.Value + right;
+
+        public static double operator +(double left, Fraction right) => left + right.Value;
+
+        public static double operator -(Fraction left, double right) => left.Value - right;
+
+        public static double operator -(double left, Fraction right) => left - right.Value;
 
         public static Fraction operator -(Fraction fractionA, Fraction fractionB) => fractionA + (-fractionB);
 
